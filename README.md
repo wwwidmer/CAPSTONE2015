@@ -14,6 +14,7 @@
 # TODO
 
 - Document due Thursday, Add the questions below or forward Google Docs
+https://docs.google.com/document/d/18djg0Fb6pioyJdTSNxdp2v9ekjWIMw64cD_tAjeNku8/edit?usp=sharing
 
 - Determine list of functionality
 
