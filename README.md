@@ -13,7 +13,14 @@
 
 # TODO
 
-Document due Thursday, Add the questions below or forward Google Docs
+- Document due Thursday, Add the questions below or forward Google Docs
+
+- Determine list of functionality
+
+- Define / Brainstorm Database Schema (Models)
+
+- Create Frontend Templates
+
 
 # TO RESEARCH
 
