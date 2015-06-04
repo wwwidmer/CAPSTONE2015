@@ -1,6 +1,5 @@
 # CAPSTONE2015
 
-
 # Contact
 
   williamwidmerr@gmail.com 9175447010  Project Overseer / Full Stack
