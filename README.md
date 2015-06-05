@@ -12,9 +12,15 @@
 
 # TODO
 
+- Weekly Progress Report
+- Check github Issue tracker
+
 - Create Frontend Templates
 
--
+- Code Django Models
+
+- Define Index View
+
 
 # TO RESEARCH
 

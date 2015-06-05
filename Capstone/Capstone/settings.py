@@ -99,5 +99,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+# STATIC information will change after development into production
 
-STATIC_URL = '/static/'
+
+if DEBUG:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static"\
+)
+    STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static',
+    )
+
+    MEDIA_ROOT = 'static/'
+    MEDIA_URL = '/media/'
+else:
+    # Different according to our deployment / production
+    pass

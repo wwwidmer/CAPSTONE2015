@@ -1,0 +1,4 @@
+# Media.txt
+
+Media are files uploaded by Users.
+Images that are served in the media folder for example are User Profile pictures, Food menu items, etc.

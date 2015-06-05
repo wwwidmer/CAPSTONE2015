@@ -1,3 +1,4 @@
 from django.contrib import admin
 
-# Register your models here.
+# Register Models are will be edited in the Admin screen
+# This may not include all models
