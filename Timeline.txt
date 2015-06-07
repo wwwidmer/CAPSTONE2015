@@ -1,34 +1,28 @@
 Dates are Tuesday/Thursday 
 
-6/2 -
-6/4 -
+6/9 - Databse Schema
+6/11 - Views and URL routing
 
-6/9 -
-6/11 -
+6/16 - Classes and Methods detailed 
 
-6/16 -
-6/18 -
+6/23 - Browse
+6/25 - Search 
 
-6/23 -
-6/25 -
+6/30 - Rating System
+7/2 - Reviews 
 
-6/30 -
-7/2 -
+7/7 - Code review / Documentation 
 
-7/7 -
-7/9 -
+7/14 - Review Deployment System 
 
-7/14 -
-7/16 -
+7/21 - Google Maps API 
+7/23 - Web Service Deployment
 
-7/21 -
-7/23 -
+7/28 - GUI Revamp 
+7/30 - Responsive design for phone
 
-7/28 -
-7/30 -
-
-8/4 -
-8/6 -
+8/4 - Login
+8/6 - Facebook / G+ login
  
-8/11 -
+8/11 - Cleanup
 8/13 - 
