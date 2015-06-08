@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from menu import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'menu.views.index'),
+    url(r'^menus/(?P<m_id>\d+)', 'menu.views.render_menu'),
+    url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
+    url(r'^search/', 'menu.views.render_search'),
+    url(r'^search/results/', 'menu.views.render_search_results')
 ]
