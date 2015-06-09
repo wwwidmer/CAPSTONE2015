@@ -20,5 +20,9 @@ def render_food(request,f_id):
 
 def render_search(request):
     get = request.GET.get('search')
-    context = {"GET":get}
+    #food = FoodItem.objects.all().filter(title).order_by('id')
+    #menu = Menu.objects.all().filter(title).order_by('id')
+    food = ""
+    menu = ""
+    context = {"GET":get,'menu':menu,'food':food}
     return render_to_response("search.html",context)
