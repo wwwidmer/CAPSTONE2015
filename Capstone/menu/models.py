@@ -4,11 +4,11 @@ from django.db import models
 # class nameOfModel(models.Model): ....
 
 
-def Menu(models.Model):
+class Menu(models.Model):
     pass
 
-def FoodItem(models.Model):
+class FoodItem(models.Model):
     pass
 
-def Review(models.Model):
+class Review(models.Model):
     pass
