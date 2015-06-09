@@ -1,7 +1,11 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
 {%  block page %}
 
 {% if GET %}
-    {{ GET }}
-{% endif %}
-
+    <h2> Search results for</h2>
+    <p> "{{ GET }}"</p>
+{% else %}
+    <p> Unable to search for empty strings. </p>
+{%  endif %}
 {% endblock %}
