@@ -1,7 +1,10 @@
 {% extends 'header.html' %}
-
+{% load staticfiles %}
 {% block page %}
 
-<p> Index</p>
+    <h3> Look up a restaurant menu</h3>
+    <input> </input> <button> Search </button>
+
+    <img src="{%  static 'google_maps_hello_world.jpg' %}" />
 
 {% endblock %}

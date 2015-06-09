@@ -1,0 +1,26 @@
+*{
+    text-decoration: none;
+    list-style-type: none;
+}
+#mast{
+    display:block;
+    clear:both;
+    margin:20px;
+    width:100%;
+    margin-right: auto;
+}
+
+ul li a{
+    color:black;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+}
+
+.page, #mast{
+    margin-left:20%;
+}
+.page *{
+    display: block;
+}
+

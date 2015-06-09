@@ -6,9 +6,9 @@ from django.db import models
 
 class Menu(models.Model):
     pass
-
-class FoodItem(models.Model):
+class Food(models.Model):
     pass
-
+class FoodItem(Food):
+    pass
 class Review(models.Model):
     pass

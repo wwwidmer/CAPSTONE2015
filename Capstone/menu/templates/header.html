@@ -5,20 +5,36 @@
     <title> Menu </title>
     {% load staticfiles %}
     <!-- Import styles and scripts-->
+    <link rel="stylesheet" href="{%  static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'assets/custom_style.css' %}">
+
 </head>
 <body>
-<div class = "row">
-    <div class="header">
-        <p> Header</p>
+<div class = "container">
+    <div class="left nav navbar-header">
+        <ul class ="nav navbar nav" id="nav">
+            <li> <a href=""> Home </a></li>
+        </ul>
     </div>
-    <div class="container" id ="page">
+    <div class="right nav navbar-header">
+        <ul class ="nav navbar nav">
+            <li><a href="">Login</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div id="mast">
+        <div class="header">
+            <h1> Restaurant Menu Ratings</h1>
+        </div>
+    </div>
+    <div class="page">
         {% block page %}
 
         {% endblock %}
-    </div>
 
+    </div>
     <div class="footer">
-        <p> Footer</p>
     </div>
 </div>
 </body>
