@@ -5,6 +5,9 @@
 {% if menu %}
     {% for m in menu %}
     <h2> {{ m.title }}</h2>
+        {%  for f in food %}
+            {{ f.dishname }}
+        {% endfor %}
     {% endfor %}
 {% else %}
 <p> There doesn't appear to be anything here</p>
