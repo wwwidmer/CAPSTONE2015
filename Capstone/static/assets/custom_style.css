@@ -13,6 +13,7 @@
 ul li a{
     color:black;
     border-width: 1px;
+
     border-style: solid;
     border-color: #000000;
 }

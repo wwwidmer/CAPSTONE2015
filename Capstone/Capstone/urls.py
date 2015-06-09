@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^menus/(?P<m_id>\d+)', 'menu.views.render_menu'),
     url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
     url(r'^search/', 'menu.views.render_search'),
-    url(r'^search/results/', 'menu.views.render_search_results')
+    url(r'^search/results', 'menu.views.render_search_results'),
 ]
