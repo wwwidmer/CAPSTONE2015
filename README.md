@@ -13,15 +13,14 @@
 # TODO
 
 - Weekly Progress Report
+
 - Check github Issue tracker
 
 - Create Frontend Templates
 
-- Code Django Models
+- Django Models from our schema
 
-- Define Index View
+- Define Views
 
+- Google Maps Research
 
-# TO RESEARCH
-
-Django, Python, Bootstrap, AWS, Git
