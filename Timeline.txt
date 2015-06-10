@@ -3,7 +3,8 @@ Dates are Tuesday/Thursday
 6/9 - Databse Schema
 6/11 - Views and URL routing
 
-6/16 - Classes and Methods detailed 
+6/16 - Sitemap 
+6/18 - Classes and Methods detailed 
 
 6/23 - Browse
 6/25 - Search 
