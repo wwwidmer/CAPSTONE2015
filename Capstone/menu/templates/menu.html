@@ -4,11 +4,15 @@
 
 {% if menu %}
     {% for m in menu %}
-    <h2> {{ m.menu_title }}</h2>
+    <h2> {{ m.title }}</h2>
 
         {%  for f in food %}
+<<<<<<< HEAD
             {{ f.food_name }}
             {{ f.food_type }}
+=======
+            {{ f.type }}
+>>>>>>> q2
         {% endfor %}
     {% endfor %}
 {% else %}
