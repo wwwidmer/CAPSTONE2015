@@ -7,13 +7,13 @@
     <p> "{{ GET }}"</p>
     {% if menu %}
         {% for m in menu %}
-            {{ m.title }}
+           <button id="menu_id"> {{m.menu_title}} </button>
         {% endfor %}
 
     {% endif %}
     {% if food %}
         {% for k in food %}
-            {{ k.dishname }}
+            {{ k.food_type }}
         {% endfor %}
     {% endif %}
 {% else %}

@@ -10,27 +10,28 @@ def index(request):
 
 def render_menu(request,m_id):
     # get menu by id, get all food associated with
-    menu = Menu.objects.all().filter(id=m_id)
-    food = FoodItem.objects.all().filter(menu__id=m_id)
-    context = {'menu':menu, 'food':food}
+    menu = Menu.objects.all().filter(menu_title=m_id)
+    food = FoodItem.objects.all().filter(menu=menu) #accessing menu within FoodItem and limiting food t
+    review = Review.objects.all()                   #that foriegn key
+    context = {'menu':menu, 'food':food, 'review':review}
     return render_to_response("menu.html",context)
 
 def render_food(request,f_id):
-    # get food by id, get all comments associated with
+    #get food by id, get all comments associated with
     food = FoodItem.objects.all().filter(f_id=f_id)
     reviews = Review.objects.all().filter(food__id=f_id)
-    context = {'food':food}
+    #context = {'food':food}
     return render_to_response("food.html",context)
 
 def render_search(request):
-    query_string = ''
-    menu = ""
-    food = ""
+    #query_string = ''
+    #menu = ""
+    #food = ""
     found = None
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
-        mentry = get_query(query_string,['title'])
-        fentry = get_query(query_string,['dishname'])
+        mentry = get_query(query_string,['menu_title'])
+        fentry = get_query(query_string,['food_type'])
         menu = Menu.objects.filter(mentry).order_by('-id')
         food = FoodItem.objects.filter(fentry).order_by('-id')
 
