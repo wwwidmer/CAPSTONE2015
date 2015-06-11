@@ -12,11 +12,6 @@ class FoodItem(models.Model):
     dishname = models.CharField(max_length=200)
     menu = models.ForeignKey(Menu, default=None)
 
-    def getAverage(self):
-        return 1
-    def getSimilar(self):
-        return 1
-
 class Review(models.Model):
     #reviewer = models.CharField(max_length=200)
     food = models.ForeignKey(FoodItem, default=None)
