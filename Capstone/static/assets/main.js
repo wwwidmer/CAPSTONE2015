@@ -11,3 +11,10 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $("#menu_id").click(function(){
+        window.history.back(-1);
+        window.open("$");
+    });
+});
+
