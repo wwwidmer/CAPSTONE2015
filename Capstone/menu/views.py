@@ -1,14 +1,21 @@
 from django.shortcuts import render_to_response
-from menu.models import Menu, FoodItem, Review
+from menu.models import Menu, FoodItem, Review, FoodType
 from django.db.models import Q
 import re
 
+
 def index(request):
-    # Get certain models to populate context
     context = {}
     return render_to_response("index.html",context)
 
 def render_menu(request,m_id):
+    menu = Menu.objects.all().filter(id=m_id)
+    food = FoodItem.objects.all().filter(menu__id=m_id)
+    context = {'menu':menu, 'food':food}
+    return render_to_response("menu.html",context)
+
+def render_food(request,f_id):
+    food = FoodItem.objects.all().filter(id=f_id)
     # get menu by id, get all food associated with
     menu = Menu.objects.all().filter(title=m_id)
     food = FoodItem.objects.all().filter(menu=menu) #accessing menu within FoodItem and limiting food t
@@ -23,15 +30,41 @@ def render_food(request,f_id):
     #context = {'food':food}
     return render_to_response("food.html",context)
 
+def render_browse_top(request):
+    pass
+
+def render_browse_type(request,type):
+    pass
+
+def render_browse_loc(request,loc):
+    pass
+
+# Grab a list from food types most similar to food
+def get_similar(food):
+    pass
+
+# Get all reviews of food ratings and average
+def get_Average(food):
+    pass
+
+#  All below isn't working - don't worry for now...
 def render_search(request):
+    query_string = ''
+    menu = ''
+    food = ''
     #query_string = ''
     #menu = ""
     #food = ""
     found = None
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
+<<<<<<< HEAD
+        mentry = get_query(query_string,['menu_title'])
+        fentry = get_query(query_string,['food_type'])
+=======
         mentry = get_query(query_string,['title'])
         fentry = get_query(query_string,['name'])
+>>>>>>> q2
         menu = Menu.objects.filter(mentry).order_by('-id')
         food = FoodItem.objects.filter(fentry).order_by('-id')
 
