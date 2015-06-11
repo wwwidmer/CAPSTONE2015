@@ -4,7 +4,7 @@ from django.db import models
 # class nameOfModel(models.Model): ....
 #This model is utilized to setup a new menu name (eg restaurant name)
 class Menu(models.Model):
-    menu_title = models.CharField(max_length=200)
+    menu_title = models.CharField(max_length=20)
     def __str__(self): #This returns the value of title in the admin view
         return self.menu_title
 
@@ -27,7 +27,7 @@ class FoodItem(models.Model):
     menu_title = models.ForeignKey(Menu, default=None) #requires a specific menu
     food_type = models.ForeignKey(FoodType,default=None)#requires a specific type of food item
     #Data
-    food_name = models.CharField(max_length=200) #then define the dishname to assign to this menu/type
+    food_name = models.CharField(max_length=20) #then define the dishname to assign to this menu/type
     def __str__(self):
         return self.food_name
 
@@ -55,4 +55,4 @@ class Review(models.Model):
 
     review = models.TextField(max_length=200, default=None)
     def __str__(self):
-        return self.reviews
+        return self.review
