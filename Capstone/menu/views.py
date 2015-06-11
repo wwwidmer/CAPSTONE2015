@@ -10,7 +10,7 @@ def index(request):
 
 def render_menu(request,m_id):
     # get menu by id, get all food associated with
-    menu = Menu.objects.all().filter(menu_title=m_id)
+    menu = Menu.objects.all().filter(title=m_id)
     food = FoodItem.objects.all().filter(menu=menu) #accessing menu within FoodItem and limiting food t
     review = Review.objects.all()                   #that foriegn key
     context = {'menu':menu, 'food':food, 'review':review}
@@ -31,7 +31,7 @@ def render_search(request):
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
         mentry = get_query(query_string,['menu_title'])
-        fentry = get_query(query_string,['food_type'])
+        fentry = get_query(query_string,['food_name'])
         menu = Menu.objects.filter(mentry).order_by('-id')
         food = FoodItem.objects.filter(fentry).order_by('-id')
 
@@ -48,7 +48,7 @@ def get_query(query_string, search_fields):
 	for t in terms:
 		or_query = None
 		for field_name in search_fields:
-			q = Q(**{"%s__icontains" % field_name: t})
+			q = Q(**{"%s__icontains" % field_name : t})
 			if or_query is None:
 				or_query = q
 			else:
