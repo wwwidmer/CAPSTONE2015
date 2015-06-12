@@ -2,21 +2,23 @@
 {% load staticfiles %}
 {% block page %}
 
-{% if menu %}
-    {% for m in menu %}
-    <h2> {{ m.title }}</h2>
-
-        {%  for f in food %}
-<<<<<<< HEAD
-            {{ f.food_name }}
-            {{ f.food_type }}
-=======
-            {{ f.type }}
->>>>>>> q2
-        {% endfor %}
+{% if menus %}
+    <ul id="menu">
+    {%  for m in menus %}
+        <li><a href="/menus/{{ m.id }}">{{ m.title }}</a></li>
     {% endfor %}
-{% else %}
-<p> There doesn't appear to be anything here</p>
+    </ul>
 {% endif %}
+
+    {% if menu %}
+       <h3> {{ menu.title }}</h3>
+        <ul id="menu">
+        {% if food %}
+            {%  for f in food %}
+             <li><a href="/menus/food/{{ f.id }}">  {{ f.name }}</a></li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    {% endif %}
 
 {% endblock %}
