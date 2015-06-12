@@ -58,13 +58,10 @@ def render_search(request):
     found = None
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
-<<<<<<< HEAD
         mentry = get_query(query_string,['menu_title'])
         fentry = get_query(query_string,['food_type'])
-=======
         mentry = get_query(query_string,['title'])
         fentry = get_query(query_string,['name'])
->>>>>>> q2
         menu = Menu.objects.filter(mentry).order_by('-id')
         food = FoodItem.objects.filter(fentry).order_by('-id')
 
