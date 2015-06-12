@@ -5,6 +5,7 @@
 }
 .c{
     float:left;
+    width:80%;
 }
 
 ul.errorlist{
@@ -39,6 +40,10 @@ ul#nav li a{
 }
 .page *{
     display: block;
+}
+
+.page ul{
+    width:75%;
 }
 
 ul#menu li{
