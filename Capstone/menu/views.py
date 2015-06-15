@@ -1,13 +1,19 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.template import RequestContext
-from menu.models import Menu, FoodItem, Review, FoodType
+from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
 from django.db.models import Q
 from math import floor
+from random import randrange
 import re, datetime
 
 def index(request):
-    context = {}
+    try:
+        rand = randrange(0,Menu.objects.all().count())
+        menus = Menu.objects.all()[rand]
+    except ValueError:
+        menus = None
+    context = {'rand_menu':menus}
     return render_to_response("index.html",context)
 
 '''
@@ -21,19 +27,30 @@ def render_menu(request,m_id):
     food = FoodItem.objects.all().filter(title__id=m_id)
     context = {'menu':menu, 'food':food}
     return render_to_response("menu.html",context)
-
+'''
+Request method for comment form.
+if POST (ie we've submitted a form from this page)
+handle the form to add a new review object to the database
+'''
 def render_food(request,f_id):
     food = FoodItem.objects.get(id=f_id)
     review = Review.objects.all().filter(name__id=f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            render_new_review(form,request,f_id)
+            return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
     context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
+'''
+render new review
+get information from the POST request pertaining to adding a new comment
+get fooditem related to this with .get and using an ID
+set all data without a default and save to database
+return a redirect to the same page.
+'''
 def render_new_review(form,request, f_id):
     instance = form.save(commit=False)
     instance.name = FoodItem.objects.get(id=f_id)
@@ -41,7 +58,7 @@ def render_new_review(form,request, f_id):
     instance.type = instance.name.type
     instance.date = datetime.datetime.now()
     instance.save()
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("")
 
 
 
@@ -55,8 +72,9 @@ def render_browse_top_menu(request):
 def render_browse_type_food(request,type):
     pass
 
-def render_browse_loc_menu(request,loc):
-    pass
+def render_browse_loc_menu(request):
+    context = {}
+    return render_to_response('index.html',context)
 
 # Grab a list from food types most similar to food
 # Right now it just grabs food items of same type
@@ -66,17 +84,6 @@ def get_similar(food_type_id):
     food = FoodItem.objects.all().filter(type__id=food_type_id)
     return food
 
-# Get all reviews of food ratings and average
-# UNTESTED
-def get_Average(food_id):
-    try:
-        reviews = Review.objects.all().filter(name_id=food_id)
-        total = 0
-        for x in reviews:
-            total = x.rating + total
-        return floor((total / reviews.count()))
-    except ZeroDivisionError:
-        return 0
 
 
 #

@@ -25,6 +25,7 @@ class FoodItem(models.Model):
     title = models.ForeignKey(Menu, default=None)
     type = models.ForeignKey(FoodType,default=None)
     name = models.CharField(max_length=30)
+
     def __str__(self):
         return self.name
 
@@ -42,3 +43,15 @@ class Review(models.Model):
     review = models.TextField(max_length=200, default=None)
     def __str__(self):
         return self.review
+
+# Get all reviews of food ratings and average
+# UNTESTED
+def get_Average(food_id):
+    try:
+        reviews = Review.objects.all().filter(name_id=food_id)
+        total = 0
+        for x in reviews:
+            total = x.rating + total
+        return floor((total / reviews.count()))
+    except ZeroDivisionError:
+        return 0

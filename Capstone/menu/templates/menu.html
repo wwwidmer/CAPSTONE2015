@@ -15,7 +15,7 @@
         <ul id="menu">
         {% if food %}
             {%  for f in food %}
-             <li><a href="/menus/food/{{ f.id }}">  {{ f.name }}</a></li>
+             <li>{{ f.type }}<a href="/menus/food/{{ f.id }}">  {{ f.name }}</a> </li>
             {% endfor %}
         {% endif %}
         </ul>
