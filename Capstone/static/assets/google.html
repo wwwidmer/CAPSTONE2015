@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+        #map-canvas {
+        height: 500px;
+        }
+    </style>
+      <title></title>
+
+      <script type ="text/javascript"
+              src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=place‌​s">
+
+      </script>
+
+      <script type="text/javascript">
+
+          var map;
+          var service;
+
+          function handleSearchResults(results, status){
+          console.log(results)
+
+          }
+
+          function performSearch(){
+            var request ={
+                bounds: map.getBounds(),
+                name: "McDonald's"
+            }
+          service.nearbySearch(request,callback);
+          }
+
+
+          function initialise(location){
+          console.log(location);
+          var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+
+          var mapOption= {
+          center: currentLocation,
+          zoom:15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          map = new google.maps.Map(document.getElementById("map-canvas"),
+                mapOption);
+
+          var marker = new google.maps.Marker({
+          position:currentLocation,
+          map: map
+          });
+
+          service = new google.maps.places.PlacesService(map);
+
+          google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
+
+          }
+
+            navigator.geolocation.getCurrentPosition(initialise);
+
+
+      </script>
+      </head>
+  <body>
+  <div id="map-canvas"></div>
+  </body>
+  </html>
+
