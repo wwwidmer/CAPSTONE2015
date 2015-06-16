@@ -1,4 +1,5 @@
 from django.db import models
+from math import floor
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 #This model is utilized to setup a new menu name (eg restaurant name)
@@ -41,6 +42,7 @@ class Review(models.Model):
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(5)])
     date = models.DateField('Published on')
     review = models.TextField(max_length=200, default=None)
+    average = models.IntegerField(default=0)
     def __str__(self):
         return self.review
 
@@ -52,6 +54,10 @@ def get_Average(food_id):
         total = 0
         for x in reviews:
             total = x.rating + total
-        return floor((total / reviews.count()))
+        for x in reviews:
+            avg=floor((total / reviews.count()))
+            setattr(x,'average',avg)
+            #x.average = avg
+        return avg
     except ZeroDivisionError:
-        return 0
+       return 0
