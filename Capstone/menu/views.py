@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
+from django.http import Http404
 from django.template import RequestContext
 from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
@@ -23,7 +24,10 @@ Render food - get food by id
     Then get all relation on reviews
 '''
 def render_menu(request,m_id):
-    menu = Menu.objects.get(id=m_id)
+    try:
+        menu = Menu.objects.get(id=m_id)
+    except Menu.DoesNotExist:
+        raise Http404
     food = FoodItem.objects.all().filter(title__id=m_id)
     context = {'menu':menu, 'food':food}
     return render_to_response("menu.html",context)
@@ -33,7 +37,10 @@ if POST (ie we've submitted a form from this page)
 handle the form to add a new review object to the database
 '''
 def render_food(request,f_id):
-    food = FoodItem.objects.get(id=f_id)
+    try:
+        food = FoodItem.objects.get(id=f_id)
+    except FoodItem.DoesNotExist:
+        raise Http404
     review = Review.objects.all().filter(name__id=f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -84,7 +91,9 @@ def get_similar(food_type_id):
     food = FoodItem.objects.all().filter(type__id=food_type_id)
     return food
 
-#
+"""
+Search Handlers
+"""
 def render_search(request):
     query_string = ''
     menu = ''
@@ -126,14 +135,22 @@ def get_query(query_string, search_fields):
 Ajax handlers
 """
 
-def isAjax(request):
+def ajax_get_food_by_id(request):
     if request.is_ajax():
         try:
-            fid = request.GET.get('id')
-            gotfood = FoodItem.objects.get(id=fid)
-            return HttpResponse(fid + " " + gotfood.name)
+            if 'id' in request.GET:
+                fid = request.GET.get('id')
+                gotfood = FoodItem.objects.get(id=fid)
+                return HttpResponse(fid + " " + gotfood.name)
+            else:
+                return HttpResponse("Error using AJAX")
         except:
             return HttpResponse("Did not find ID: " + fid)
     else:
         return HttpResponse("Didn't use ajax")
 
+def ajax_get_menu_by_id(request):
+    pass
+
+def ajax_get_review_by_food(request):
+    pass

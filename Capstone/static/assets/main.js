@@ -11,8 +11,9 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
+    // Ajax template
     $("form").click(function(){
-        $.get("http://127.0.0.1:8000/ajax/get/id",{id:getID()},function(data) {
+        $.get("http://127.0.0.1:8000/ajax/food/id",{id:getID()},function(data) {
             console.log(data);
         });
     });
