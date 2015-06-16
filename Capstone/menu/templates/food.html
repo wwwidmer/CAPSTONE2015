@@ -2,11 +2,33 @@
 {% load staticfiles %}
 {% block page %}
 
+
 {% if food %}
-<h2> {{ food.dishname }}</h2>
+    <h3> {{ food.name }}</h3>
+
+    <p> <img src="/static/assets/images/{{ avg }}.png" alt="{{ avg }}" title="Based on {{ reviews.count }} reviews."/></p>
+
+    {% if reviews %}
+        <ul>
+        {% for r in reviews %}
+            <li>
+                <p>{{ r.date }}</p>
+                <p>Rating: {{ r.rating }}</p>
+                <p>{{ r.review }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% if form %}
+    <form action="/menus/food/{{ food.id }}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit"/>
+    </form>
+{% endif %}
 
 {% else %}
-<p> There doesn't appear to be anything here</p>
-{% endof %}
+    <p> There doesn't appear to be anything here</p>
+{% endif %}
 
 {% endblock %}

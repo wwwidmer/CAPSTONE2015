@@ -1,7 +1,25 @@
 *{
     text-decoration: none;
     list-style-type: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.c{
+    float:left;
+    width:80%;
+}
+
+ul.errorlist{
+    border-color: indianred;
+    border-style: solid;
+    border-width: 1px;
+    font-weight:700;
+}
+.header h1{
+    font-weight:800;
+    font-size: 40px;
+    text-decoration: underline;
+}
+
 #mast{
     display:block;
     clear:both;
@@ -10,10 +28,9 @@
     margin-right: auto;
 }
 
-ul li a{
+ul#nav li a{
     color:black;
     border-width: 1px;
-
     border-style: solid;
     border-color: #000000;
 }
@@ -25,3 +42,11 @@ ul li a{
     display: block;
 }
 
+.page ul{
+    width:75%;
+}
+
+ul#menu li{
+    margin: auto;
+    border:none;
+}
