@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
   <head>
     <style type="text/css">
         #map-canvas {
@@ -8,55 +7,63 @@
     </style>
       <title></title>
 
-      <script type ="text/javascript"
-              src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=place‌​s">
-
-      </script>
+     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
       <script type="text/javascript">
 
           var map;
           var service;
 
-          function handleSearchResults(results, status){
-          console.log(results)
-
-          }
-
-          function performSearch(){
-            var request ={
-                bounds: map.getBounds(),
-                name: "McDonald's"
-            }
-          service.nearbySearch(request,callback);
-          }
-
 
           function initialise(location){
-          console.log(location);
-          var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+              console.log("location:"+location);
+              var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
 
-          var mapOption= {
-          center: currentLocation,
-          zoom:15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
+              var mapOption= {
+                  center: currentLocation,
+                  zoom:15,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
 
-          map = new google.maps.Map(document.getElementById("map-canvas"),
-                mapOption);
+              map = new google.maps.Map(document.getElementById("map-canvas"),
+                      mapOption);
 
-          var marker = new google.maps.Marker({
-          position:currentLocation,
-          map: map
-          });
+              var marker = new google.maps.Marker({
+                  position:currentLocation,
+                  map: map
+              });
 
-          service = new google.maps.places.PlacesService(map);
+              service = new google.maps.places.PlacesService(map);
+              google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
 
-          google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
+              function handleSearchResults(results, status){
+                  console.log(results)
+              }
 
+              function callback(results, status) {
+                  if (status == google.maps.places.PlacesServiceStatus.OK) {
+                      for (var i = 0; i < results.length; i++) {
+                          createMarker(results[i]);
+                      }
+                  }
+              }
+              function createMarker(place) {
+                  var placeLoc = place.geometry.location;
+                  var marker = new google.maps.Marker({
+                      map: map,
+                      position: place.geometry.location
+                  });
+              }
+              function performSearch(){
+                  var request ={
+                      bounds: map.getBounds(),
+                      name: "Mcdonald's"
+                  }
+                  service.nearbySearch(request,callback);
+              }
           }
 
-            navigator.geolocation.getCurrentPosition(initialise);
+          navigator.geolocation.getCurrentPosition(initialise);
 
 
       </script>
