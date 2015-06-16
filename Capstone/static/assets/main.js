@@ -2,8 +2,6 @@
  * Created by wwidmer on 6/9/15.
  */
 
-console.log("LOGGGG");
-
 $(document).ready(function(){
     $("#getSearch").click(function(){
         var search = $("#search").val();
@@ -11,11 +9,16 @@ $(document).ready(function(){
     });
 });
 
+
 $(document).ready(function(){
-    $("#menu_id").click(function(){
-        window.history.back(-1);
-        window.open("$");
+    $("form").click(function(){
+        $.get("http://127.0.0.1:8000/ajax/get/id",{id:getID()},function(data) {
+            console.log(data);
+        });
     });
+    function getID(){
+        return $("#fid").html();
+    }
 });
 
 

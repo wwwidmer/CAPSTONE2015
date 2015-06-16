@@ -22,6 +22,7 @@ from menu import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'menu.views.index'),
+    url(r'^ajax/get/id','menu.views.isAjax'),
     url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
     url(r'^menus/(?P<m_id>\d+)', 'menu.views.render_menu'),
     url(r'^menus', 'menu.views.render_browse_top_menu'),

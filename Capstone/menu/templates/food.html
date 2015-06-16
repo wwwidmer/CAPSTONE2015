@@ -5,6 +5,7 @@
 
 {% if food %}
     <h3> {{ food.name }}</h3>
+    <div id="fid" class="hidden hdn"> {{ food.id }}</div>
     <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
     {% if reviews %}
 

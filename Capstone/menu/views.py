@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, HttpResponseRedirect
+from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
@@ -122,3 +122,20 @@ def get_query(query_string, search_fields):
 		else:
 			query = query & or_query
 	return query
+
+
+"""
+Ajax handlers
+"""
+
+def isAjax(request):
+    if request.is_ajax():
+        try:
+            fid = request.GET.get('id')
+            gotfood = FoodItem.objects.get(id=fid)
+            return HttpResponse(fid + " " + gotfood.name)
+        except:
+            return HttpResponse("Did not find ID: " + fid)
+    else:
+        return HttpResponse("Didn't use ajax")
+
