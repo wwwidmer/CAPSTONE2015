@@ -55,10 +55,7 @@ def get_Average(food_id):
         total = 0
         for x in reviews:
             total = x.rating + total
-        for x in reviews:
-            avg=floor((total / reviews.count()))
-            setattr(x,'average',avg)
-            #x.average = avg
-        return avg
+        return floor((total / reviews.count()))
+
     except ZeroDivisionError:
        return 0
