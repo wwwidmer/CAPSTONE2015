@@ -84,8 +84,6 @@ def get_similar(food_type_id):
     food = FoodItem.objects.all().filter(type__id=food_type_id)
     return food
 
-
-
 #
 def render_search(request):
     query_string = ''
