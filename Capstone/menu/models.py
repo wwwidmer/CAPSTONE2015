@@ -1,6 +1,7 @@
 from django.db import models
 from math import floor
 from django.core.validators import MinValueValidator, MaxValueValidator
+from math import floor
 
 #This model is utilized to setup a new menu name (eg restaurant name)
 class Menu(models.Model):

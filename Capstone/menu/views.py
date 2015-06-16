@@ -3,7 +3,7 @@ from django.template import RequestContext
 from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
 from django.db.models import Q
-from math import floor
+
 from random import randrange
 import re, datetime
 
