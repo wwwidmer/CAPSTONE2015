@@ -19,13 +19,18 @@
         {% endfor %}
         </ul>
     {% endif %}
-{% if form %}
+
+
+    {% if form %}
+        <h3>Write a review:</h3>
     <form action="/menus/food/{{ food.id }}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit"/>
+        {% csrf_token %}
+
+        {{ form }}
+
+        <input type="submit" value="Submit"/>
     </form>
-{% endif %}
+    {% endif %}
 
 {% else %}
     <p> There doesn't appear to be anything here</p>

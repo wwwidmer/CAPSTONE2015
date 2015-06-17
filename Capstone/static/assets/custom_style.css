@@ -50,3 +50,30 @@ ul#menu li{
     margin: auto;
     border:none;
 }
+
+ul#fiveStar li{
+    float:left;
+}
+
+textarea#id_review{
+    clear:both;
+}
+
+label{
+    clear:both;
+}
+#fiveStar input[type='radio']{
+    opacity: 0;
+    width:20px;
+    cursor:pointer;
+}
+#fiveStar li, input[type='radio'] + label {
+    margin:0;
+    clear:none;
+    cursor:pointer;
+    background: url('/static/assets/images/no-star.png') no-repeat;
+}
+
+#fiveStar li:hover, input[type='radio']:checked + label{
+    background: url('/static/assets/images/star.png') no-repeat;
+}
