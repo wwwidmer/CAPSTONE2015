@@ -3,7 +3,7 @@ from django.template import RequestContext
 from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
 from django.db.models import Q
-
+from math import floor
 from random import randrange
 import re, datetime
 
@@ -25,7 +25,8 @@ Render food - get food by id
 def render_menu(request,m_id):
     menu = Menu.objects.get(id=m_id)
     food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food}
+
+    context = {'menu':menu, 'food':food,'avg':get_Average(m_id)} #avg gets the total menu average
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.
@@ -41,6 +42,9 @@ def render_food(request,f_id):
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
+    #this defines the average rating in FoodItem each time render_food is called
+    setattr(food,'average',get_Average(f_id))
+    food.save()
     context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
