@@ -20,6 +20,7 @@ class MenuAdmin(admin.ModelAdmin):
     ordering = ['title']
     fieldsets = [
         (None, {'fields':['title']}),
+        (None, {'fields':['logo']}),
     ]
     inlines = [FoodAdmin,Reviews]
 
