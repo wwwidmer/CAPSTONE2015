@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
 from django.http import Http404, JsonResponse
 from django.template import RequestContext
-from menu.models import Menu, FoodItem, Review, FoodType, get_Average
+from menu.models import Menu, FoodItem, Review, FoodType, get_Average, get_Taverage
 from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
@@ -31,7 +31,7 @@ def render_menu(request,m_id):
     except Menu.DoesNotExist:
         raise Http404
     food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food,'avg':get_Average(m_id)} #avg gets the total menu average
+    context = {'menu':menu, 'food':food,'avg':get_Taverage(m_id)} #avg gets the total menu average
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.

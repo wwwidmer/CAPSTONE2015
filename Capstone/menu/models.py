@@ -61,7 +61,7 @@ class FoodItem(models.Model):
 
         super(FoodItem, self).save()
         logo = Image.open(self.logo)
-        size = ( 100, 100)
+        size = (75, 75)
         logo = logo.resize(size, Image.ANTIALIAS)
         logo.save(self.logo.path)
 #:End Image Resizer for menu.logo
@@ -102,6 +102,16 @@ class Review(models.Model):
 def get_Average(food_id):
     try:
         reviews = Review.objects.all().filter(name_id=food_id)
+        total = 0
+        for x in reviews:
+            total = x.rating + total
+        return floor((total / reviews.count()))
+
+    except ZeroDivisionError:
+       return 0
+def get_Taverage(title_id): #Sadly a seperate nearly identical function that navigates by a passed title_id
+    try:
+        reviews = Review.objects.all().filter(title_id=title_id)
         total = 0
         for x in reviews:
             total = x.rating + total
