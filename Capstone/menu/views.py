@@ -31,7 +31,7 @@ def render_menu(request,m_id):
     except Menu.DoesNotExist:
         raise Http404
     food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food}
+    context = {'menu':menu, 'food':food,'avg':get_Average(m_id)} #avg gets the total menu average
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.
@@ -41,6 +41,9 @@ handle the form to add a new review object to the database
 def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
+         #this defines the average rating in FoodItem each time render_food is called
+        setattr(food,'average',get_Average(f_id))
+        food.save()
     except FoodItem.DoesNotExist:
         raise Http404
     review = Review.objects.all().filter(name__id=f_id)
