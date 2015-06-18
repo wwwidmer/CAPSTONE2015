@@ -5,6 +5,7 @@
 
 {% if food %}
     <h3> {{ food.name }}</h3>
+    <div id="fid" class="hidden hdn"> {{ food.id }}</div>
     <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
     {% if reviews %}
 
@@ -18,13 +19,18 @@
         {% endfor %}
         </ul>
     {% endif %}
-{% if form %}
+
+
+    {% if form %}
+        <h3>Write a review:</h3>
     <form action="/menus/food/{{ food.id }}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit"/>
+        {% csrf_token %}
+
+        {{ form }}
+
+        <input type="submit" value="Submit"/>
     </form>
-{% endif %}
+    {% endif %}
 
 {% else %}
     <p> There doesn't appear to be anything here</p>
