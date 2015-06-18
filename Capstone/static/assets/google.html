@@ -57,7 +57,9 @@
 
                   var infowindow = new google.maps.InfoWindow({
 
-                    content:(place.name)
+                    content:('<div><strong>' + place.name + '</strong><br>' +
+                                            'Place ID: ' + place.place_id + '<br>' +
+                     place.formatted_addres)
                     });
 
 
