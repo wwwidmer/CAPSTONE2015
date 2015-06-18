@@ -53,15 +53,41 @@
                       map: map,
                       position: place.geometry.location
                   });
-              }
+
+
+                  var infowindow = new google.maps.InfoWindow({
+
+                    content:(place.name)
+                    });
+
+
+                google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+                var latitude = this.position.lat();
+                var longitude = this.position.lng();
+                 console.log(this.position);
+                });
+
+                }
+
               function performSearch(){
                   var request ={
                       bounds: map.getBounds(),
-                      name: "Mcdonald's"
+                      name: "starbucks"
                   }
                   service.nearbySearch(request,callback);
               }
-          }
+
+
+
+
+
+}
+
+
+
+
+
 
           navigator.geolocation.getCurrentPosition(initialise);
 
