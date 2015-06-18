@@ -3,27 +3,20 @@ from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
 
-
-#class MenuLogo(models.Model):
-#    logo = models.ImageField(upload_to='media/menu_logo')
-#    def __self__(self):
-#        return logo
 #This model is utilized to setup a new menu name (eg restaurant name)
 class Menu(models.Model):
     title = models.CharField(max_length=30,default = None)
     logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
     def __str__(self): #This returns the value of title in the admin view
+        '{0}'.format(self.logo) #String formating
         return self.title
 
     class Meta: #defines menu admin default name
         verbose_name = 'Menu Management'
         verbose_name_plural = 'Menu Management'
 #:Image Resizer below for logo
-    def __unicode__(self):
-        return "{0}".format(self.logo)
-
     def save(self):
-        if not self.logo:
+        if not self.logo: #check for an image else assign a default
             self.logo = 'media/default.png'
 
         super(Menu, self).save()
@@ -50,11 +43,9 @@ class FoodItem(models.Model):
     average = models.IntegerField(default=0)
 
     def __str__(self):
+        '{0}'.format(self.logo)
         return self.name
 #:Image Resizer below for logo
-    def __unicode__(self):
-        return "{0}".format(self.logo)
-
     def save(self):
         if not self.logo:
             self.logo='media/default.png'
@@ -81,11 +72,9 @@ class Review(models.Model):
     review = models.TextField(max_length=200, default=None)
     #average = models.IntegerField(default=0)
     def __str__(self):
+        '{0}'.format(self.logo)
         return self.review
 #:Image Resizer below for logo
-    def __unicode__(self):
-        return "{0}".format(self.logo)
-
     def save(self):
         if not self.logo:
             self.logo='media/default.png'
@@ -99,19 +88,12 @@ class Review(models.Model):
 
 
 # Get all reviews of food ratings and average, total average of menu
-def get_Average(food_id):
+def get_Average(food_id,menu_id): #(x,y) x = average for single food, y = average for all foods in a menu
     try:
-        reviews = Review.objects.all().filter(name_id=food_id)
-        total = 0
-        for x in reviews:
-            total = x.rating + total
-        return floor((total / reviews.count()))
-
-    except ZeroDivisionError:
-       return 0
-def get_Taverage(title_id): #Sadly a seperate nearly identical function that navigates by a passed title_id
-    try:
-        reviews = Review.objects.all().filter(title_id=title_id)
+        if menu_id == 0: #average for a single food item
+            reviews = Review.objects.all().filter(name_id=food_id)
+        else: #average for entire menu items
+            reviews = Review.objects.all().filter(title_id=menu_id)
         total = 0
         for x in reviews:
             total = x.rating + total

@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
 from django.http import Http404, JsonResponse
 from django.template import RequestContext
-from menu.models import Menu, FoodItem, Review, FoodType, get_Average, get_Taverage
+from menu.models import Menu, FoodItem, Review, FoodType, get_Average
 from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
@@ -31,7 +31,7 @@ def render_menu(request,m_id):
     except Menu.DoesNotExist:
         raise Http404
     food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food,'avg':get_Taverage(m_id)} #avg gets the total menu average
+    context = {'menu':menu, 'food':food,'avg':get_Average(0,m_id)} #avg gets the total menu average
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.
@@ -42,7 +42,7 @@ def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
          #this defines the average rating in FoodItem each time render_food is called
-        setattr(food,'average',get_Average(f_id))
+        setattr(food,'average',get_Average(f_id,0))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
@@ -53,7 +53,7 @@ def render_food(request,f_id):
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,0)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
