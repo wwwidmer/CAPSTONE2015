@@ -25,10 +25,19 @@ $(document).ready(function(){
 // Five star js
 $(document).ready(function(){
     var radioB = $("input[name=rating]");
+    var savedState = 0;
     $("#fiveStar li input#fiveStar_0").parent().remove();
     radioB.click(function(){
         numberOfStars = $("input[name=rating]:checked").val();
+        savedState = numberOfStars;
         setStars(numberOfStars);
+    });
+    $("#fiveStar li").mouseover(function(){
+        numberOfStars = $(this).children("label").children("input").attr("value");
+        setStars(numberOfStars);
+    });
+    $("#fiveStar").mouseleave(function(){
+        setStars(savedState);
     });
     function setStars(numberOfStars){
         $("#fiveStar li:lt("+1+numberOfStars+")").css("background","url('/static/assets/images/star.png') no-repeat");

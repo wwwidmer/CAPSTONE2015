@@ -5,7 +5,10 @@
 {% if menus %}
     <ul id="menu">
     {%  for m in menus %}
-        <li><a href="/menus/{{ m.id }}">{{ m.title }}</a></li>
+        <li>
+            <img src="/static/{{ m.logo }}"/>
+            <a href="/menus/{{ m.id }}">{{ m.title }}</a>
+        </li>
     {% endfor %}
     </ul>
 {% endif %}
