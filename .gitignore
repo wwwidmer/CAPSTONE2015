@@ -1,4 +1,4 @@
-# Gitignore file, when you git add * this will ignore the follow files which are either 
+# Gitignore file, when you git add * this will ignore the follow 1;3802;0cfiles which are either 
 # unimportant, cumbersome, or unique to everyones computer.
 
 *.pyc
@@ -8,3 +8,5 @@ db.sqlite3
 *.xml
 migrations/*
 migrations
+media
+media/*
