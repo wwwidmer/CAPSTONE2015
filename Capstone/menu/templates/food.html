@@ -2,8 +2,21 @@
 {% load staticfiles %}
 {% block page %}
 
+    {% if foodTypes %}
+        {% for f in foodTypes %}
+            <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
+        {% endfor %}
 
-{% if food %}
+{% elif foodsAsType %}
+   <h1> {{ foodType }} </h1>
+    </br>
+        <!-- links to these in their menus -->
+{% for f in foodsAsType %}
+    {{ f.name }}
+    <br/>
+    {% endfor %}
+
+{% elif food %}
     <h3> {{ food.name }}</h3>
     <div id="fid" class="hidden hdn"> {{ food.id }}</div>
     <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>

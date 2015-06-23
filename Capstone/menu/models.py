@@ -64,7 +64,7 @@ class FoodItem(models.Model):
 # - William
 class Review(models.Model):
     title = models.ForeignKey(Menu, default=None) #One menu points to many reviews
-    user = models.CharField(max_length=30,default=None)
+    user = models.CharField(max_length=30,default="No one")
     logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
     type = models.ForeignKey(FoodType, default=None)#One dish_type points to many reviews
     name = models.ForeignKey(FoodItem,default=None)#One dish points to many reviews
@@ -91,9 +91,9 @@ class Review(models.Model):
 # Get all reviews of food ratings and average, total average of menu
 def get_Average(food_id, menu_id): #(x,y) x = average for single food, y = average for all foods in a menu
     try:
-        if menu_id is None: #average for a single food item
+        if menu_id is None:
             reviews = Review.objects.all().filter(name_id=food_id)
-        else: #average for entire menu items
+        else:
             reviews = Review.objects.all().filter(title_id=menu_id)
         total = 0
         for x in reviews:

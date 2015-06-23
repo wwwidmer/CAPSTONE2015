@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
     url(r'^menus/food/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
     url(r'^menus/(?P<m_id>\d+)', 'menu.views.render_menu'),
+    url(r'^menus/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
+    url(r'^menus/type/', 'menu.views.render_browse_type_index'),
     url(r'^menus', 'menu.views.render_browse_top_menu'),
     url(r'^local', 'menu.views.render_browse_loc_menu'),
     url(r'^search/results', 'menu.views.render_search'),

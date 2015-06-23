@@ -80,21 +80,23 @@ def render_new_review(form,request, f_id):
     instance.date = datetime.datetime.now()
     instance.save()
     return HttpResponseRedirect("")
-#def render_upload(form,request, r_id):
-#    instance = form.save(commit=False)
-#    instance.logo = Review.objects.get(id=r_id)
-#    instance
 
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
 def render_browse_top_menu(request):
-    menus = Menu.objects.all().order_by(get_Average(None,id))
+    menus = Menu.objects.all()
+    sorted(menus,key=lambda x: (get_Average(None,x.id)))
     context = {'menus':menus}
     return render_to_response("menu.html",context)
+def render_browse_type_index(request):
+    foodType = FoodType.objects.all()
+    context = {'foodTypes':foodType}
+    return render_to_response("food.html",context)
 
 def render_browse_type_food(request,t_id):
     fetchFood = FoodItem.objects.filter(type__id=t_id)
-    context = {'food':fetchFood}
+    foodType = FoodType.objects.get(id=t_id).type
+    context = {'foodsAsType':fetchFood,'foodType':foodType}
     return render_to_response("food.html",context)
 
 def render_browse_loc_menu(request):
