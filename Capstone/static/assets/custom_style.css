@@ -53,6 +53,7 @@ ul#menu li{
 
 ul#fiveStar li{
     float:left;
+    height:25px;
 }
 
 textarea#id_review{

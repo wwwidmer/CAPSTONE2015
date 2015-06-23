@@ -10,6 +10,9 @@ import json
 from random import randrange
 import re, datetime
 
+def test(request):
+    return render_to_response('test.html')
+
 def index(request):
     try:
         rand = randrange(0,Menu.objects.all().count())
@@ -31,7 +34,7 @@ def render_menu(request,m_id):
     except Menu.DoesNotExist:
         raise Http404
     food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food,'avg':get_Average(0,m_id)} #avg gets the total menu average
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)} #avg gets the total menu average
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.
@@ -42,7 +45,7 @@ def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
          #this defines the average rating in FoodItem each time render_food is called
-        setattr(food,'average',get_Average(f_id,0))
+        setattr(food,'average',get_Average(f_id,None))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
@@ -54,7 +57,7 @@ def render_food(request,f_id):
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,0)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 
@@ -164,15 +167,15 @@ Generally return JSON response
 def ajax_get_food_by_id(request):
     if request.is_ajax():
         try:
-            if 'id' in request.GET:
-                fid = request.GET.get('id')
-                fetchFood = FoodItem.objects.get(id=fid)
+            if 'fid' in request.GET:
+                fid = request.GET.get('fid')
+                fetchFood = FoodItem.objects.filter(id=fid)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
@@ -180,15 +183,15 @@ def ajax_get_food_by_id(request):
 def ajax_get_menu_by_id(request):
     if request.is_ajax():
         try:
-            if 'id' in request.GET:
-                mid = request.GET.get('id')
-                fetchMenu = Menu.objects.get(id=mid)
+            if 'mid' in request.GET:
+                mid = request.GET.get('mid')
+                fetchMenu = Menu.objects.filter(id=mid)
                 data = serializers.serialize('json',fetchMenu)
                 return JsonResponse(data,safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
@@ -203,7 +206,23 @@ def ajax_get_review_by_food(request):
                 return JsonResponse(data, safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
+
+def ajax_get_food_by_menu_id(request):
+    if request.is_ajax():
+        try:
+            if 'mid' in request.GET:
+                mid = request.GET.get('mid')
+                fetchFood = FoodItem.objects.filter(title__id=mid)
+                data = serializers.serialize('json',fetchFood)
+                return JsonResponse(data,safe=False)
+            else:
+                return HttpResponse("Error using AJAX (check parameters)")
+        except Exception as e:
+            return HttpResponse(e)
+    else:
+        return HttpResponse("You do not have permission to access this webpage")
+

@@ -89,9 +89,9 @@ class Review(models.Model):
 
 
 # Get all reviews of food ratings and average, total average of menu
-def get_Average(food_id,menu_id): #(x,y) x = average for single food, y = average for all foods in a menu
+def get_Average(food_id, menu_id): #(x,y) x = average for single food, y = average for all foods in a menu
     try:
-        if menu_id == 0: #average for a single food item
+        if menu_id is None: #average for a single food item
             reviews = Review.objects.all().filter(name_id=food_id)
         else: #average for entire menu items
             reviews = Review.objects.all().filter(title_id=menu_id)

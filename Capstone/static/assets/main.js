@@ -14,7 +14,7 @@ $(document).ready(function(){
     // Ajax template
     $("form").click(function(){
         $.get("http://127.0.0.1:8000/ajax/review/fid",{fid:getID()},function(data) {
-          //  console.log(data);
+          console.log(data);
         });
     });
     function getID(){
@@ -82,4 +82,34 @@ $(document).ready(function() {
         }
     }
 });
+
+ function food(){
+     $.get("http://127.0.0.1:8000/ajax/food/", {fid: getID()}, function (data) {
+         console.log(data);
+         var dd = JSON.parse(data);
+         $(".name").html(dd[0].fields['name']);
+         $(".logo img").attr('src','static/'+dd[0].fields['logo']);
+     });
+ }
+ function menu(){
+     $.get("http://127.0.0.1:8000/ajax/menu/", {mid: getID()}, function (data) {
+         console.log(data);
+         var dd = JSON.parse(data);
+         $(".name").html(dd[0].fields['title']);
+         $(".logo img").attr('src','static/'+dd[0].fields['logo']);
+         });
+ }
+ function review(){
+            $.get("http://127.0.0.1:8000/ajax/review/", {fid: getID()}, function (data) {
+                console.log(data);
+                var dd = JSON.parse(data);
+                $(".name").html("");
+                for(var i = 0; i < dd.length;i++){
+                    $(".name").append(dd[i].fields['review'] + "</br>");
+                }
+            });
+ }
+function getID() {
+    return $("#get").val();
+}
 

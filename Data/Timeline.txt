@@ -1,0 +1,32 @@
+Dates are Tuesday/Thursday
+ / : Most of feature is finished but may be dependant on another section or will need scaling
+ x : Feature is complete
+ * : Needs research
+
+6/9 - Database Schema                  x
+6/11 - Views and URL routing           /
+
+6/16 - Sitemap                         /
+6/18 - Classes and Methods detailed    x
+
+6/23 - Browse                          /
+6/25 - Search                          /
+--------------------------------------
+6/30 - Rating System                   x
+7/2 - Reviews                          x
+
+7/7 - Code review / Documentation      *
+
+7/14 - Review Deployment System        *
+
+7/21 - Google Maps API                 /
+7/23 - Web Service Deployment          *
+
+7/28 - GUI Revamp 
+7/30 - Responsive design for phone
+
+8/4 - Login                            *
+8/6 - Facebook / G+ login              *
+ 
+8/11 - Cleanup
+8/13 - 

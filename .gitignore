@@ -10,3 +10,5 @@ migrations/*
 migrations
 media
 media/*
+static/media
+static/assets/images
