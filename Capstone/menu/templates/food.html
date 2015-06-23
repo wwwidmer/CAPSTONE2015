@@ -14,6 +14,10 @@
             <li>
                 <p>{{ r.date }}</p>
                 <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+                <p>Name: {{ r.user }}</p>
+                    {% if r.logo != 'media/default.png' %} <!-- display a user uploaded image-->
+                        <img src="/static/{{ r.logo }}"/>
+                    {% endif %}
                 <p>{{ r.review }}</p>
             </li>
         {% endfor %}
@@ -22,14 +26,14 @@
 
 
     {% if form %}
+
         <h3>Write a review:</h3>
-    <form action="/menus/food/{{ food.id }}" method="post">
-        {% csrf_token %}
+        <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit"/>
+        </form>
 
-        {{ form }}
-
-        <input type="submit" value="Submit"/>
-    </form>
     {% endif %}
 
 {% else %}

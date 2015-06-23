@@ -64,6 +64,7 @@ class FoodItem(models.Model):
 # - William
 class Review(models.Model):
     title = models.ForeignKey(Menu, default=None) #One menu points to many reviews
+    user = models.CharField(max_length=30,default=None)
     logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
     type = models.ForeignKey(FoodType, default=None)#One dish_type points to many reviews
     name = models.ForeignKey(FoodItem,default=None)#One dish points to many reviews
