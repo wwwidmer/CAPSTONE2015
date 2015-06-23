@@ -10,6 +10,9 @@ import json
 from random import randrange
 import re, datetime
 
+def test(request):
+    return render_to_response('test.html')
+
 def index(request):
     try:
         rand = randrange(0,Menu.objects.all().count())
@@ -155,15 +158,15 @@ Generally return JSON response
 def ajax_get_food_by_id(request):
     if request.is_ajax():
         try:
-            if 'id' in request.GET:
-                fid = request.GET.get('id')
-                fetchFood = FoodItem.objects.get(id=fid)
+            if 'fid' in request.GET:
+                fid = request.GET.get('fid')
+                fetchFood = FoodItem.objects.filter(id=fid)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
@@ -171,15 +174,15 @@ def ajax_get_food_by_id(request):
 def ajax_get_menu_by_id(request):
     if request.is_ajax():
         try:
-            if 'id' in request.GET:
-                mid = request.GET.get('id')
-                fetchMenu = Menu.objects.get(id=mid)
+            if 'mid' in request.GET:
+                mid = request.GET.get('mid')
+                fetchMenu = Menu.objects.filter(id=mid)
                 data = serializers.serialize('json',fetchMenu)
                 return JsonResponse(data,safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
@@ -194,7 +197,23 @@ def ajax_get_review_by_food(request):
                 return JsonResponse(data, safe=False)
             else:
                 return HttpResponse("Error using AJAX (check parameters)")
-        except:
-            return HttpResponse("Something went wrong")
+        except Exception as e:
+            return HttpResponse(e)
     else:
         return HttpResponse("You do not have permission to access this webpage")
+
+def ajax_get_food_by_menu_id(request):
+    if request.is_ajax():
+        try:
+            if 'mid' in request.GET:
+                mid = request.GET.get('mid')
+                fetchFood = FoodItem.objects.filter(title__id=mid)
+                data = serializers.serialize('json',fetchFood)
+                return JsonResponse(data,safe=False)
+            else:
+                return HttpResponse("Error using AJAX (check parameters)")
+        except Exception as e:
+            return HttpResponse(e)
+    else:
+        return HttpResponse("You do not have permission to access this webpage")
+
