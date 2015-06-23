@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 from django.http import Http404, JsonResponse
 from django.template import RequestContext
 from menu.models import Menu, FoodItem, Review, FoodType, get_Average
@@ -6,7 +7,6 @@ from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
 import json
-
 from random import randrange
 import re, datetime
 
@@ -50,14 +50,16 @@ def render_food(request,f_id):
     except FoodItem.DoesNotExist:
         raise Http404
     review = Review.objects.all().filter(name__id=f_id)
+
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
     context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
+
 
 '''
 render new review
@@ -66,15 +68,22 @@ get fooditem related to this with .get and using an ID
 set all data without a default and save to database
 return a redirect to the same page.
 '''
+
 def render_new_review(form,request, f_id):
     instance = form.save(commit=False)
     instance.name = FoodItem.objects.get(id=f_id)
+    instance.user = form.cleaned_data['user']
+    instance.logo = form.cleaned_data['logo']
     instance.title = instance.name.title
     instance.rating = form.cleaned_data['rating']
     instance.type = instance.name.type
     instance.date = datetime.datetime.now()
     instance.save()
     return HttpResponseRedirect("")
+#def render_upload(form,request, r_id):
+#    instance = form.save(commit=False)
+#    instance.logo = Review.objects.get(id=r_id)
+#    instance
 
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
