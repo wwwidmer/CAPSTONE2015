@@ -99,10 +99,6 @@ def render_browse_type_food(request,t_id):
     context = {'foodsAsType':fetchFood,'foodType':foodType}
     return render_to_response("food.html",context)
 
-def render_browse_loc_menu(request):
-    context = {}
-    return render_to_response('index.html',context)
-
 """
 Not strictly View related functions / helpers / wrappers
 """
