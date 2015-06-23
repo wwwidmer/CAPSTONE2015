@@ -18,9 +18,9 @@
 
 - Create Frontend Templates
 
-- Django Models from our schema
+- Facebook Login
 
-- Define Views
+- Edit Views
 
-- Google Maps Research
+- Google Maps integration
 
