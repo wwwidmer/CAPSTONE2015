@@ -79,8 +79,7 @@ def render_new_review(form,request, f_id):
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
 def render_browse_top_menu(request):
-    menus = Menu.objects.all()
-    top_menus = get_top_menus(menus)
+    menus = Menu.objects.all().order_by(get_Average(None,id))
     context = {'menus':menus}
     return render_to_response("menu.html",context)
 
@@ -96,11 +95,6 @@ def render_browse_loc_menu(request):
 """
 Not strictly View related functions / helpers / wrappers
 """
-# get average of all menus
-# define ranking system where Average * Number Rankings
-# return top list of 20 or so
-def get_top_menus(menus):
-    pass
 
 # Grab a list from food types most similar to food
 # Future would be to grab several types, lat / long, name
