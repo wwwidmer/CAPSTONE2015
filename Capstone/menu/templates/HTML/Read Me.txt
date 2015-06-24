@@ -1,0 +1,10 @@
+Still editing.
+I combine some pages together.
+Review comment would make on the same page 
+and refresh page after click enter.
+
+1. index -- The font page which user will visit first.
+I'm trying to short the loading time of goole map 
+and automatically located user's location.
+	
+2. Are we doing the loging system?
