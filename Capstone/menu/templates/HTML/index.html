@@ -19,12 +19,18 @@
 </head>
 
 <body>
-<nav class="navbar navbar-fixed-top">
-  <div class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container" align="center">
     <li class="active">
-    	<a href="index.html"><h2><center>
-    	  Rate This Menu
-    	</center></h2></a></li>
+    	<a href="index.html">
+   		<button type="button" id="log_in" class="btn btn-info dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        Log In
+        </button>
+            <strong>Rate This Menu</strong>
+        <button type="button" id="log_out" class="btn btn-danger dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        Log Out
+        </button>
+    	</a></li>
   </div>
 </nav>
 <table width="100%">
@@ -34,20 +40,12 @@
     <td width="25%"><a href="index.html"><img src="Best_Rate.jpg" alt="" longdesc="index.html" /></a></td>
   </tr>
 </table>
-<table width="100%" height="31" border="0" align="center">
-  <tr>
-    <th height="27%" scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th width="6%" align="center" valign="middle" scope="col"><input type="button" name="Log_In" id="Log_In" value="Log In" /></th>
-    <th width="6%" align="center" valign="middle" scope="col"><input type="button" name="Log_Out" id="Log_Out" value="Log Out"/></th>
-  </tr>
-</table>
+<div align="right" class="btn-group" >
+	<table width="100%" align="right">
+
+	</table>
+</div>
+
 <div align="center">
   <table width="100%" border="0" align="center">
     <tr>
@@ -60,11 +58,10 @@
     	  <li class="Offer">
     	  	<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown<span class="caret"></span></a>
     	  	<ul class="dropdown-menu">
-            	<li><a href="#">Action</a></li>
-  				<li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+            	<li><a href="#">Discount</a></li>
+  				<li><a href="#">Restaurant</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><a href="#">Today Spcial</a></li>
     	  	</ul>
       	  </li>
     	</div>
@@ -79,7 +76,7 @@
 
 <table class="MapTable"width="100%" border="0">
   <tr>
-    <td width="25%" align="center"><p><strong>Menu Search:</strong></p></td>
+    <td width="25%" align="right"><p><strong>Menu Search:</strong></p></td>
     <td width="55%" align="center">
         <div class="row">
             <div class="col-xs-12 .col-sm-6 .col-lg-8">
@@ -94,10 +91,13 @@
     <td width="20%" align="left"></td>
   </tr>
   <tr>
-    <td colspan="3" align="center"><iframe width="500"  height="400" frameborder="0" style="border:0"
-src="https://www.google.com/maps/place/United+States/"></iframe></td>
+    <td colspan="3" align="center"><iframe width="400"  height="300" frameborder="0" scrolling="no"
+src="assets/google.html"><p>Sorry!! Your browser does not support it</p></iframe>
+    </td>
   </tr>
 </table>
 
 </body>
 </html>
+<!--<iframe width="500"  height="400" frameborder="0" style="border:0"
+src="assets/google.html"></iframe>-->
