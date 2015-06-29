@@ -7,6 +7,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Menu</title>
 
+    {% load staticfiles %}
+    <!-- Import styles and scripts-->
+    <link rel="stylesheet" href="{%  static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'assets/custom_style.css' %}">
+    <script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
+
+
     <!-- Bootstrap -->
     <link href="/static/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,6 +52,7 @@
             <li><a href="/">Search</a></li>
             <li><a href="/menus/">View Menus</a></li>
             <li><a href="/menus/type/">Food Type</a></li>
+
           <li><a class="btn btn-large btn-success signup" href="signup">Sign in</a>
         </ul>
       </div><!--/.nav-collapse -->
@@ -58,6 +67,20 @@
         {% endblock %}
     </div>
 
+<div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
 
 
 
@@ -67,15 +90,8 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
   </body>
-<footer class="site-footer">
-    <div class ="container">
 
-        <div class="row">
-            <p>this is my footer</p>
-        </div>
-    </div>
 
-</footer>
 
 </html>
 
