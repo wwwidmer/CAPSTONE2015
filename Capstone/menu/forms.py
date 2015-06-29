@@ -10,11 +10,11 @@ class ReviewForm(forms.ModelForm):
     logo = forms.ImageField(label='Select a Image',required=False)
     class Meta:
         model = Review
-        fields = ['user','rating','logo','review']
+        fields = ['createdBy','rating','logo','reviewComment']
 
 
 class FoodForm(forms.ModelForm):
     class Meta:
         model = FoodItem
-        fields = ['name','type']
+        fields = ['dishName','type']
 

@@ -1,0 +1,56 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+{% block page %}
+
+    <div class ="container">
+        <h2> GOOGLE MAPS</h2>
+        <h3> Look up a restaurant or a specific food - or just narrow down by a specific type below.</h3>
+        <input type="text" id ="search" size="35"> </input> <button id="getSearch"> Search </button>
+    </div>
+
+    <div class="control-group container">
+
+    <!--<div class="controls span2">
+        <label class="checkbox">
+            <input type="checkbox" value="option1" id="inlineCheckbox1"> vegan
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" value="option2" id="inlineCheckbox2"> vegeterian
+        </label>
+
+        <label class="checkbox">
+            <input type="checkbox" value="option3" id="inlineCheckbox3"> food stand
+        </label>
+    </div>
+
+    <div class="controls span2">
+        <label class="checkbox">
+            <input type="checkbox" value="option4" id="inlineCheckbox4"> open now
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" value="option5" id="inlineCheckbox5"> bakery
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" value="option6" id="inlineCheckbox6"> gluten free
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" value="option7" id="inlineCheckbox7"> Halal
+        </label>
+    </div>-->
+
+    {% if types %}
+        <div class="controls span2">
+            {% for t in types %}
+                <div class="col-md-3">
+                    <label class="checkbox">
+                        <input type="checkbox" value="{{ t.id }}"/> {{ t.type }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    </div>
+
+
+{% endblock %}
