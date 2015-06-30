@@ -1,43 +1,52 @@
 {% extends 'header.html' %}
 {% load staticfiles %}
 {% block page %}
-
-
-{% if food %}
-    <h3> {{ food.name }}</h3>
-    <div id="fid" class="hidden hdn"> {{ food.id }}</div>
-    <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
-    {% if reviews %}
-
-        <ul>
-        {% for r in reviews %}
-            <li>
-                <p>{{ r.date }}</p>
-                <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
-                <p>Name: {{ r.user }}</p>
-                    {% if r.logo != 'media/default.png' %} <!-- display a user uploaded image-->
-                        <img src="/static/{{ r.logo }}"/>
-                    {% endif %}
-                <p>{{ r.review }}</p>
-            </li>
+    {% if foodTypes %}
+        {% for f in foodTypes %}
+            <div class="col-sm-5">
+                <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
+            </div>
         {% endfor %}
-        </ul>
+    {% elif foodsAsType %}
+        <h1> {{ foodType }} </h1>
+        </br>
+        <!-- links to these in their menus -->
+        {% for f in foodsAsType %}
+             <div class="col-sm-5">
+                <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
+            </div>
+            <br/>
+        {% endfor %}
+    {% elif food %}
+        <div class="row">
+        <h3> {{ food.dishName }}</h3>
+        <div id="fid" class="hidden hdn"> {{ food.id }}</div>
+        <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
+        {% if reviews %}
+            <ul>
+                {% for r in reviews %}
+                    <li class="col-lg-6">
+                        <p>{{ r.createdOn }}</p>
+                        <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+                        <p>Author: {{ r.createdBy }}</p>
+                        {% if r.logo != 'media/default.png' %} <!-- display a user uploaded image-->
+                            <img src="/static/{{ r.logo }}"/>
+                        {% endif %}
+                        <p>{{ r.reviewComment }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            </div>
+        {% endif %}
+        {% if form %}
+            <h3>Write a review:</h3>
+            <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit"/>
+            </form>
+        {% endif %}
+    {% else %}
+        <p> There doesn't appear to be anything here</p>
     {% endif %}
-
-
-    {% if form %}
-
-        <h3>Write a review:</h3>
-        <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit"/>
-        </form>
-
-    {% endif %}
-
-{% else %}
-    <p> There doesn't appear to be anything here</p>
-{% endif %}
-
 {% endblock %}

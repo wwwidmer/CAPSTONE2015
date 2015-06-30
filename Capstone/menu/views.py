@@ -7,7 +7,7 @@ from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
 import json
-from random import randrange
+from random import randrange, sample
 import re, datetime
 
 def test(request):
@@ -17,11 +17,25 @@ def index(request):
     try:
         rand = randrange(0,Menu.objects.all().count())
         menus = Menu.objects.all()[rand]
+        frand = randrange(0,FoodItem.objects.all().filter(menuName__id=menus.id).count())
+        foods = FoodItem.objects.all().filter(menuName__id=menus.id)[frand]
+        rrand = randrange(0,Review.objects.all().filter(foodItemName__id=foods.id).count())
+        revs = Review.objects.all().filter(foodItemName__id=foods.id)[rrand]
+        avg = get_Average(None,menus.id)
     except ValueError:
         menus = None
-    context = {'rand_menu':menus}
+        foods = None
+        revs = None
+        avg = None
+
+    context = {'rand_menu':menus, 'rand_food':foods, 'rand_rev':revs, 'avg':avg}
     return render_to_response("index.html",context)
 
+def render_search_index(request):
+    allTypes = FoodType.objects.all().order_by("type")
+    rand = sample(list(allTypes),8)
+    context = {'types':rand}
+    return render_to_response("search-index.html",context)
 '''
 Render menu - get menu by id
     Then get all relation on food items
@@ -33,8 +47,8 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
-    food = FoodItem.objects.all().filter(title__id=m_id)
-    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)} #avg gets the total menu average
+    food = FoodItem.objects.all().filter(menuName__id=m_id)
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
 '''
 Request method for comment form.
@@ -44,12 +58,11 @@ handle the form to add a new review object to the database
 def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
-         #this defines the average rating in FoodItem each time render_food is called
         setattr(food,'average',get_Average(f_id,None))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
-    review = Review.objects.all().filter(name__id=f_id)
+    review = Review.objects.all().filter(foodItemName__id=f_id)
 
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
@@ -69,47 +82,37 @@ set all data without a default and save to database
 return a redirect to the same page.
 '''
 
-def render_new_review(form,request, f_id):
+def render_new_review(form, request, f_id):
     instance = form.save(commit=False)
-    instance.name = FoodItem.objects.get(id=f_id)
-    instance.user = form.cleaned_data['user']
+    instance.foodItemName = FoodItem.objects.get(id=f_id)
+    instance.createdBy = form.cleaned_data['createdBy']
     instance.logo = form.cleaned_data['logo']
-    instance.title = instance.name.title
     instance.rating = form.cleaned_data['rating']
-    instance.type = instance.name.type
-    instance.date = datetime.datetime.now()
+    instance.createdOn = datetime.datetime.now()
     instance.save()
     return HttpResponseRedirect("")
-#def render_upload(form,request, r_id):
-#    instance = form.save(commit=False)
-#    instance.logo = Review.objects.get(id=r_id)
-#    instance
 
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
 def render_browse_top_menu(request):
     menus = Menu.objects.all()
-    top_menus = get_top_menus(menus)
+    sorted(menus,key=lambda x: (get_Average(None,x.id)))
     context = {'menus':menus}
     return render_to_response("menu.html",context)
+def render_browse_type_index(request):
+    foodType = FoodType.objects.all().order_by("type")
+    context = {'foodTypes':foodType}
+    return render_to_response("food.html",context)
 
 def render_browse_type_food(request,t_id):
     fetchFood = FoodItem.objects.filter(type__id=t_id)
-    context = {'food':fetchFood}
+    foodType = FoodType.objects.get(id=t_id)
+    context = {'foodsAsType':fetchFood,'foodType':foodType}
     return render_to_response("food.html",context)
-
-def render_browse_loc_menu(request):
-    context = {}
-    return render_to_response('index.html',context)
 
 """
 Not strictly View related functions / helpers / wrappers
 """
-# get average of all menus
-# define ranking system where Average * Number Rankings
-# return top list of 20 or so
-def get_top_menus(menus):
-    pass
 
 # Grab a list from food types most similar to food
 # Future would be to grab several types, lat / long, name
@@ -127,11 +130,13 @@ def render_search(request):
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
         mentry = get_query(query_string,['title'])
-        fentry = get_query(query_string,['name'])
+        tentry = get_query(query_string,['type'])
+        fentry = get_query(query_string,['dishName'])
         menu = Menu.objects.filter(mentry).order_by('-id')
         food = FoodItem.objects.filter(fentry).order_by('-id')
+        type = FoodType.objects.filter(tentry).order_by('-id')
 
-    context = {"GET":query_string,'menu':menu,'food':food}
+    context = {"GET":query_string,'menu':menu,'food':food,'type':type}
     return render_to_response("search.html",context)
 
 # Search function
@@ -201,7 +206,7 @@ def ajax_get_review_by_food(request):
         try:
             if 'fid' in request.GET:
                 fid = request.GET.get('fid')
-                fetchReview = Review.objects.filter(name__id=fid)
+                fetchReview = Review.objects.filter(FoodItemName__id=fid)
                 data = serializers.serialize('json',fetchReview)
                 return JsonResponse(data, safe=False)
             else:
