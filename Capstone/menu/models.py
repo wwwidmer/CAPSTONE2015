@@ -13,15 +13,25 @@ Review - Saved Information about Stock
 '''
 
 class AbstractMenuItem(models.Model):
-    # name
-    # createdOn
-    # createdBy
-    # isActive
-    # def __str__(self):
-    # return self.title
-    pass
+    createdOn = models.DateTimeField()
+    createdBy = models.CharField()
+    isActive = models.BooleanField()
+    readOnlyName = models.CharField()
+    description = models.CharField()
+    logo = models.ImageField()
 
-class Menu(models.Model):
+    def __str__(self):
+        return self.readOnlyName
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        pass
+    class Meta:
+        pass
+
+
+
+class Menu(AbstractMenuItem):
     title = models.CharField(max_length=30,default = None)
     logo = models.ImageField(upload_to='menu_logo',blank=True,editable=True,verbose_name='logo')
     def __str__(self):
@@ -40,7 +50,7 @@ class Menu(models.Model):
         logo.save(self.logo.path)
 
 # Will be replaced to become ManyToMany with FoodItem
-class FoodType(models.Model):
+class FoodType(AbstractMenuItem):
     type = models.CharField(max_length=30,default=None)
     def __str__(self):
         return self.type
@@ -48,7 +58,7 @@ class FoodType(models.Model):
         verbose_name = 'Category for Food Type'
         verbose_name_plural = 'Category for Food Type'
 
-class FoodItem(models.Model):
+class FoodItem(AbstractMenuItem):
     menuName = models.ForeignKey(Menu, default=None)
     logo = models.ImageField(upload_to='food_logo',blank=True,editable=True,verbose_name='logo')
     type = models.ForeignKey(FoodType,default=None)
@@ -75,7 +85,7 @@ class FoodItem(models.Model):
 # I've edited to conform to the above 6/29
 # - William
 '''
-class Review(models.Model):
+class Review(AbstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem,default=None, null=True)
     createdBy = models.CharField(max_length=30,default="No one")
     logo = models.ImageField(upload_to='review_logo',blank=True,editable=True,verbose_name='logo')
@@ -86,7 +96,6 @@ class Review(models.Model):
     def __str__(self):
         '{0}'.format(self.logo)
         return self.reviewComment
-
     def save(self):
         if not self.logo:
             self.logo='default.png'
