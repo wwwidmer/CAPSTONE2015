@@ -61,6 +61,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                #'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -110,9 +111,8 @@ if DEBUG:
     os.path.join(BASE_DIR, "static"),
     '/var/www/static',
     )
-
-    MEDIA_ROOT = 'static/'
-    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'Capstone/media/')
+    MEDIA_URL = 'http://localhost:8000/media/'
 else:
     # Different according to our deployment / production
     pass

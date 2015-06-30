@@ -23,7 +23,7 @@ class AbstractMenuItem(models.Model):
 
 class Menu(models.Model):
     title = models.CharField(max_length=30,default = None)
-    logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
+    logo = models.ImageField(upload_to='menu_logo',blank=True,editable=True,verbose_name='logo')
     def __str__(self):
         '{0}'.format(self.logo)
         return self.title
@@ -32,7 +32,7 @@ class Menu(models.Model):
         verbose_name_plural = 'Menu Management'
     def save(self,force_insert=False,force_update=False,using=None):
         if not self.logo: #check for an image else assign a default
-            self.logo = 'media/default.png'
+            self.logo = 'default.png'
         super(Menu, self).save()
         logo = Image.open(self.logo)
         size = ( 100, 100)
@@ -50,7 +50,7 @@ class FoodType(models.Model):
 
 class FoodItem(models.Model):
     menuName = models.ForeignKey(Menu, default=None)
-    logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
+    logo = models.ImageField(upload_to='food_logo',blank=True,editable=True,verbose_name='logo')
     type = models.ForeignKey(FoodType,default=None)
     dishName = models.CharField(max_length=30)
     average = models.IntegerField(default=0)
@@ -60,7 +60,7 @@ class FoodItem(models.Model):
         return self.dishName
     def save(self):
         if not self.logo:
-            self.logo='media/default.png'
+            self.logo='default.png'
 
         super(FoodItem, self).save()
         logo = Image.open(self.logo)
@@ -78,7 +78,7 @@ class FoodItem(models.Model):
 class Review(models.Model):
     foodItemName = models.ForeignKey(FoodItem,default=None, null=True)
     createdBy = models.CharField(max_length=30,default="No one")
-    logo = models.ImageField(upload_to='media',blank=True,editable=True,verbose_name='logo')
+    logo = models.ImageField(upload_to='review_logo',blank=True,editable=True,verbose_name='logo')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(5)])
     createdOn = models.DateField('Published on')
     reviewComment = models.TextField(max_length=200, default=None)
@@ -89,7 +89,7 @@ class Review(models.Model):
 
     def save(self):
         if not self.logo:
-            self.logo='media/default.png'
+            self.logo='default.png'
 
         super(Review, self).save()
         logo = Image.open(self.logo)
