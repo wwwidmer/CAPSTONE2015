@@ -3,9 +3,15 @@
  */
 
 $(document).ready(function(){
+    $("#searchWarning").hide();
     $("#getSearch").click(function(){
         var search = $("#search").val();
-        window.open("/search/results?search="+search);
+        if(search.length < 1) {
+            $("#searchWarning").show();
+            $("#searchWarning.alert.alert-danger").html("Please enter a search term.");
+        } else {
+            window.open("/search/results?search=" + search);
+        }
     });
 });
 
