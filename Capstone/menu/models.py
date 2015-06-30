@@ -104,7 +104,7 @@ def get_Average(food_id, menu_id):
             reviews = Review.objects.all().filter(foodItemName__id=food_id)
         else:
             # This gets more complicated without Review linked to Menu... Needs work
-            reviews = Review.objects.all().filter(foodItemName__id=menu_id)
+            reviews = Review.objects.all().filter(foodItemName__menuName=menu_id)
         total = 0
         for x in reviews:
             total = x.rating + total
