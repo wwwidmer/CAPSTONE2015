@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^menus/type/', 'menu.views.render_browse_type_index'),
     url(r'^menus', 'menu.views.render_browse_top_menu'),
     url(r'^search/results', 'menu.views.render_search'),
+    url(r'^search/', 'menu.views.render_search_index'),
 ]

@@ -12,9 +12,8 @@ class FoodAdmin(admin.StackedInline):
       model = FoodItem
       extra = 0
 
-class Reviews(admin.StackedInline):
-     model = Review
-     extra = 0
+class ReviewAdmin(admin.ModelAdmin):
+     ordering = ['id','foodItemName']
 
 class MenuAdmin(admin.ModelAdmin):
     ordering = ['title']
@@ -22,10 +21,9 @@ class MenuAdmin(admin.ModelAdmin):
         (None, {'fields':['title']}),
         (None, {'fields':['logo']}),
     ]
-    inlines = [FoodAdmin,Reviews]
+    inlines = [FoodAdmin]
 
-
-
+admin.site.register(Review,ReviewAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(FoodType, FoodTypeAdmin)
 

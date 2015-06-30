@@ -12,3 +12,6 @@ media
 media/*
 static/media
 static/assets/images
+elasticbeanstalk
+elasticbeanstalk/*
+.elasticbeanstalk

@@ -5,7 +5,7 @@
 $(document).ready(function(){
     $("#getSearch").click(function(){
         var search = $("#search").val();
-        window.open("search/results?search="+search);
+        window.open("/search/results?search="+search);
     });
 });
 
