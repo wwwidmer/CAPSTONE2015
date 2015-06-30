@@ -7,7 +7,7 @@
     {%  for m in menus %}
         <li class="col-md-4">
             <a href="/menus/{{ m.id }}">
-                <img src="/static/{{ m.logo }}"/>
+                <img src="/media/{{ m.logo }}"/>
                 {{ m.title }}
             </a>
         </li>
@@ -17,7 +17,7 @@
 
     {% if menu %}
 
-        <h3> {{ menu.title }}</h3><img src="/static/{{ menu.logo }}"><!-- We should expect an image for each menu-->
+        <h3> {{ menu.title }}</h3><img src="/media/{{ menu.logo }}"><!-- We should expect an image for each menu-->
         <p>Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
         <ul id="menu">
          {% if food %}
@@ -26,8 +26,8 @@
                         <p>{{f.type}}</p>
                         <a href="/menus/food/{{ f.id }}">
                             <p>{{ f.dishName }}</p>
-                            {% if f.logo != 'media/default.png' %} <!-- We don't want to display a blank image-->
-                                <img src="/static/{{ f.logo }}">
+                            {% if f.logo != '/media/default.png' %} <!-- We don't want to display a blank image-->
+                                <img src="/menu/{{ f.logo }}">
                             {% endif %}
                         </a>
                         <p> <img src="/static/assets/images/{{ f.average }}.png" alt="{{ rating }}"/></p>

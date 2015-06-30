@@ -3,29 +3,43 @@ from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
 
-#This model is utilized to setup a new menu name (eg restaurant name)
+'''
+Main Database tables
+AbstractMenuItem - All tables will inherit from this - defines basic non redundant information
+Menu - Table of inventory information (Where the food is)
+FoodType - Table of types (used for grouping FoodItems)
+FoodItem - Table of Stock (Food) Information
+Review - Saved Information about Stock
+'''
+
+class AbstractMenuItem(models.Model):
+    # name
+    # createdOn
+    # createdBy
+    # isActive
+    # def __str__(self):
+    # return self.title
+    pass
+
 class Menu(models.Model):
     title = models.CharField(max_length=30,default = None)
     logo = models.ImageField(upload_to='menu_logo',blank=True,editable=True,verbose_name='logo')
-    def __str__(self): #This returns the value of title in the admin view
-        '{0}'.format(self.logo) #String formating
+    def __str__(self):
+        '{0}'.format(self.logo)
         return self.title
-
-    class Meta: #defines menu admin default name
+    class Meta:
         verbose_name = 'Menu Management'
         verbose_name_plural = 'Menu Management'
-#:Image Resizer below for logo
-    def save(self):
+    def save(self,force_insert=False,force_update=False,using=None):
         if not self.logo: #check for an image else assign a default
             self.logo = 'default.png'
-
         super(Menu, self).save()
         logo = Image.open(self.logo)
         size = ( 100, 100)
         logo = logo.resize(size, Image.ANTIALIAS)
         logo.save(self.logo.path)
-#:End Image Resizer for logo
-#This model is utilized to organize different dish types on a menu
+
+# Will be replaced to become ManyToMany with FoodItem
 class FoodType(models.Model):
     type = models.CharField(max_length=30,default=None)
     def __str__(self):
@@ -34,18 +48,16 @@ class FoodType(models.Model):
         verbose_name = 'Category for Food Type'
         verbose_name_plural = 'Category for Food Type'
 
-#This model is setup with a many items to one menu and many items to one type organization
 class FoodItem(models.Model):
-    title = models.ForeignKey(Menu, default=None)
+    menuName = models.ForeignKey(Menu, default=None)
     logo = models.ImageField(upload_to='food_logo',blank=True,editable=True,verbose_name='logo')
-    type = models.ManyToManyField(FoodType,default=None)
-    name = models.CharField(max_length=30)
+    type = models.ForeignKey(FoodType,default=None)
+    dishName = models.CharField(max_length=30)
     average = models.IntegerField(default=0)
 
     def __str__(self):
         '{0}'.format(self.logo)
-        return self.name
-#:Image Resizer below for logo
+        return self.dishName
     def save(self):
         if not self.logo:
             self.logo='default.png'
@@ -55,27 +67,26 @@ class FoodItem(models.Model):
         size = (75, 75)
         logo = logo.resize(size, Image.ANTIALIAS)
         logo.save(self.logo.path)
-#:End Image Resizer for menu.logo
 
-
+'''
 # Upon further inspection the relationship to Menu from Review isn't really warranted but I remove it.
 # Since we need Reviews based on Food its not necessary to filter them through menu
 # We can just do MenuID->FoodID->Review.
+# I've edited to conform to the above 6/29
 # - William
+'''
 class Review(models.Model):
-    title = models.ForeignKey(Menu, default=None) #One menu points to many reviews
-    user = models.CharField(max_length=30,default=None)
+    foodItemName = models.ForeignKey(FoodItem,default=None, null=True)
+    createdBy = models.CharField(max_length=30,default="No one")
     logo = models.ImageField(upload_to='review_logo',blank=True,editable=True,verbose_name='logo')
-    type = models.ForeignKey(FoodType, default=None)#One dish_type points to many reviews
-    name = models.ForeignKey(FoodItem,default=None)#One dish points to many reviews
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(5)])
-    date = models.DateField('Published on')
-    review = models.TextField(max_length=200, default=None)
-    #average = models.IntegerField(default=0)
+    createdOn = models.DateField('Published on')
+    reviewComment = models.TextField(max_length=200, default=None)
+
     def __str__(self):
         '{0}'.format(self.logo)
-        return self.review
-#:Image Resizer below for logo
+        return self.reviewComment
+
     def save(self):
         if not self.logo:
             self.logo='default.png'
@@ -85,20 +96,18 @@ class Review(models.Model):
         size = ( 100, 100)
         logo = logo.resize(size, Image.ANTIALIAS)
         logo.save(self.logo.path)
-#:End Image Resizer for menu.logo
 
-
-# Get all reviews of food ratings and average, total average of menu
-def get_Average(food_id, menu_id): #(x,y) x = average for single food, y = average for all foods in a menu
+# Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
+def get_Average(food_id, menu_id):
     try:
-        if menu_id is None: #average for a single food item
-            reviews = Review.objects.all().filter(name_id=food_id)
-        else: #average for entire menu items
-            reviews = Review.objects.all().filter(title_id=menu_id)
+        if menu_id is None:
+            reviews = Review.objects.all().filter(foodItemName__id=food_id)
+        else:
+            # This gets more complicated without Review linked to Menu... Needs work
+            reviews = Review.objects.all().filter(foodItemName__menuName=menu_id)
         total = 0
         for x in reviews:
             total = x.rating + total
         return floor((total / reviews.count()))
-
     except ZeroDivisionError:
        return 0

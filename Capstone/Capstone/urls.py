@@ -16,8 +16,6 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls.static import static
-
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 from menu import views
@@ -33,8 +31,10 @@ urlpatterns = [
     url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
     url(r'^menus/food/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
     url(r'^menus/(?P<m_id>\d+)', 'menu.views.render_menu'),
+    url(r'^menus/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
+    url(r'^menus/type/', 'menu.views.render_browse_type_index'),
     url(r'^menus', 'menu.views.render_browse_top_menu'),
-    url(r'^local', 'menu.views.render_browse_loc_menu'),
     url(r'^search/results', 'menu.views.render_search'),
-    url(r'^media/(?P<path>.*)$','django.views.static.serve', {'document_root' : settings.MEDIA_ROOT,}),
+    url(r'^search/', 'menu.views.render_search_index'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ]
