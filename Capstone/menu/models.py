@@ -15,13 +15,13 @@ table in our database
 '''
 #Image resizing function allowing each class inheriting abstractMenuItem to define its own parameters during runtime
 def resizeLogo(instance, self, x, y):
-        if not self.logo:
-            self.logo='default.png'
-        super(instance, self).save()
-        logo = Image.open(self.logo)
-        size = (x, y)
-        logo = logo.resize(size, Image.ANTIALIAS)
-        logo.save(self.logo.path)
+    if not self.logo:
+        self.logo='default.png'
+    super(instance, self).save()
+    logo = Image.open(self.logo)
+    size = (x, y)
+    logo = logo.resize(size, Image.ANTIALIAS)
+    logo.save(self.logo.path)
 
 #Define upload path during runtime for each class inheriting abstractMenuItem
 def uploadPath(instance, filename):
