@@ -23,14 +23,16 @@
          {% if food %}
              {%  for f in food %}
                     <li class="col-md-4">
-                        <p>{{f.type}}</p>
+                        {% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+                            <p>{{types}}</p>
+                        {% endfor %}
                         <a href="/menus/food/{{ f.id }}">
                             <p>{{ f.dishName }}</p>
                             {% if f.logo != 'default.png' %} <!-- We don't want to display a blank image-->
                                 <img src="/media/{{ f.logo }}">
                             {% endif %}
                         </a>
-                        <p> <img src="/static/assets/images/{{ f.average }}.png" alt="{{ rating }}"/></p>
+                        <p> <img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/></p>
                     </li>
              {% endfor %}
          {% endif %}

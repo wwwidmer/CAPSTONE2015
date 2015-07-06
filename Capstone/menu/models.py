@@ -13,7 +13,7 @@ FoodItem - Table of Stock (Food) Information * FoodItem/MenuName share a 'name's
 Review - Saved Information about Stock * Reviewcomment is a text field, this should not be passed to each classes
 table in our database
 '''
-#Image resizing function allowing each class inheriting abstractMenuItem to define its own parameters during runtime
+#Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
 def resizeLogo(instance, self, x, y):
     if not self.logo:
         self.logo='default.png'

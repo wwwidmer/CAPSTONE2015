@@ -66,7 +66,7 @@ handle the form to add a new review object to the database
 def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
-        setattr(food,'average',get_Average(f_id,None))
+        setattr(food,'rating',get_Average(f_id,None))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
