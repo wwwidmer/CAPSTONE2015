@@ -71,7 +71,7 @@ class FoodItem(abstractMenuItem):
     menuName = models.ForeignKey(Menu, default=None)
     dishName = models.CharField(max_length=30,default='')
     type = models.ManyToManyField(FoodType, default=None)
-    uploadPath = 'foodLogo'
+    uploadPath = 'foodLogo/'
 
     def __str__(self):
         resizeLogo(FoodItem, self, 50, 50)
@@ -84,7 +84,7 @@ class FoodItem(abstractMenuItem):
 class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=200, default=None)
-    uploadPath = 'reviewLogo'
+    uploadPath = 'reviewLogo/'
 
     def __str__(self):
         resizeLogo(FoodItem, self, 50, 50)
