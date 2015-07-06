@@ -47,11 +47,11 @@ class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
     uploadPath = 'menuLogo/'
 
-    def __str__(self):
-        return self.menuName
-
     def save(self):
         resizeLogo(Menu, self, 50, 50)
+
+    def __str__(self):
+        return self.menuName
 
     class Meta:
         verbose_name = 'Menu Management'
@@ -75,11 +75,11 @@ class FoodItem(abstractMenuItem):
     type = models.ManyToManyField(FoodType, default=None)
     uploadPath = 'foodLogo/'
 
-    def __str__(self):
-        return self.dishName
-
     def save(self):
         resizeLogo(FoodItem, self, 50, 50)
+
+    def __str__(self):
+        return self.dishName
 
 '''Misc
 # Since we need Reviews based on Food its not necessary to filter them through menu
@@ -90,11 +90,11 @@ class Review(abstractMenuItem):
     reviewComment = models.TextField(max_length=200, default=None)
     uploadPath = 'reviewLogo/'
 
-    def __str__(self):
-        return self.reviewComment
-
     def save(self):
         resizeLogo(Review, self, 50, 50)
+
+    def __str__(self):
+        return self.reviewComment
 
 # Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
 def get_Average(food_id, menu_id):
