@@ -14,9 +14,10 @@ def test(request):
     return render_to_response('test.html')
 
 def index(request):
+
     try:
-        rand = randrange(0,Menu.objects.all().count())
-        menus = Menu.objects.all()[rand]
+        rand = randrange(0,Menu.objects.all().filter(isActive=True).count())
+        menus = Menu.objects.all().filter(isActive=True)[rand]
         frand = randrange(0,FoodItem.objects.all().filter(menuName__id=menus.id).count())
         foods = FoodItem.objects.all().filter(menuName__id=menus.id)[frand]
         rrand = randrange(0,Review.objects.all().filter(foodItemName__id=foods.id).count())

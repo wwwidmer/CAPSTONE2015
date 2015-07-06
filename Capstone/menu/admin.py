@@ -16,7 +16,8 @@ class FoodAdmin(admin.StackedInline):
         (None, {'fields':['logo']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
-        (None, {'fields':['rating']}),]
+        (None, {'fields':['rating']}),
+        (None, {'fields':['isActive']})]
       extra = 0
 
 class ReviewAdmin(admin.ModelAdmin):
@@ -25,7 +26,7 @@ class ReviewAdmin(admin.ModelAdmin):
         (None, {'fields':['createdBy']}),
         (None, {'fields':['reviewComment']}),
         (None, {'fields':['rating']}),
-        (None, {'fields':['logo']}),]
+        (None, {'fields':['logo']})]
     extra = 0
      #ordering = ['id','foodItemName']
 
@@ -35,7 +36,8 @@ class MenuAdmin(admin.ModelAdmin):
         (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),
         (None, {'fields':['createdOn']}),
-        (None, {'fields':['createdBy']}),]
+        (None, {'fields':['createdBy']}),
+        (None, {'fields':['isActive']})]
 
     inlines = [FoodAdmin]
 
