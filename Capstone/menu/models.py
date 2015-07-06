@@ -15,7 +15,6 @@ table in our database
 '''
 #Image resizing function allowing each class inheriting abstractMenuItem to define its own parameters during runtime
 def resizeLogo(instance, self, x, y):
-        '{0}'.format(self.logo)
         if not self.logo:
             self.logo='default.png'
         super(instance, self).save()
