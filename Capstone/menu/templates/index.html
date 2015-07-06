@@ -7,7 +7,7 @@
             <h3> Featured: </h3>
             {% if rand_menu %}
                 <p> {{ rand_menu.title }}</p>
-                <a href="/menus/{{ rand_menu.id }}"><img src="/static/{{ rand_menu.logo }}"></a>
+                <a href="/menus/{{ rand_menu.id }}"><img src="/media/{{rand_menu.logo}}"></a>
                 {% if rand_food %}
                 {% if rand_rev %}
                     <p> {{ rand_food.dishName }}</p>
