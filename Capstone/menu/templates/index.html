@@ -11,6 +11,7 @@
                 {% if rand_food %}
                 {% if rand_rev %}
                     <p> {{ rand_food.dishName }}</p>
+                    <p> <img src="/static/assets/images/{{ rand_food.rating }}.png" alt="{{ rating }}"/></p>
                     <p> {{ rand_rev.reviewComment }}</p>
                     {% endif %}
                 {% endif %}
