@@ -14,14 +14,23 @@ def test(request):
     return render_to_response('test.html')
 
 def index(request):
+
     try:
-        rand = randrange(0,Menu.objects.all().count())
-        menus = Menu.objects.all()[rand]
+        rand = randrange(0,Menu.objects.all().filter(isActive=True).count())
+        menus = Menu.objects.all().filter(isActive=True)[rand]
         frand = randrange(0,FoodItem.objects.all().filter(menuName__id=menus.id).count())
         foods = FoodItem.objects.all().filter(menuName__id=menus.id)[frand]
         rrand = randrange(0,Review.objects.all().filter(foodItemName__id=foods.id).count())
         revs = Review.objects.all().filter(foodItemName__id=foods.id)[rrand]
         avg = get_Average(None,menus.id)
+        '''
+        rrand = randrange(0,Review.objects.all().count())
+        revs = Review.objects.all()[rrand]
+        frand = randrange(0,FoodItem.objects.all().filter(foodItemName__id=id).count())
+        foods = FoodItem.objects.all().filter(foodItemName__id=id)[frand]
+        mrand = randrange(0,Menu.objects.all().filter(foods__menuName=id).count())
+        menus = Menu.objects.all().filter(foods_menuName=id)[mrand]
+        '''
     except ValueError:
         menus = None
         foods = None
@@ -58,7 +67,7 @@ handle the form to add a new review object to the database
 def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
-        setattr(food,'average',get_Average(f_id,None))
+        setattr(food,'rating',get_Average(f_id,None))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404

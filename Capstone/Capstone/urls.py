@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 from menu import views
@@ -35,4 +36,5 @@ urlpatterns = [
     url(r'^menus', 'menu.views.render_browse_top_menu'),
     url(r'^search/results', 'menu.views.render_search'),
     url(r'^search/', 'menu.views.render_search_index'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ]
