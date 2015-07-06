@@ -48,8 +48,10 @@ class Menu(abstractMenuItem):
     uploadPath = 'menuLogo/'
 
     def __str__(self):
-        resizeLogo(Menu, self, 100, 100)
         return self.menuName
+
+    def save(self):
+        resizeLogo(Menu, self, 50, 50)
 
     class Meta:
         verbose_name = 'Menu Management'
@@ -74,8 +76,10 @@ class FoodItem(abstractMenuItem):
     uploadPath = 'foodLogo/'
 
     def __str__(self):
-        resizeLogo(FoodItem, self, 50, 50)
         return self.dishName
+
+    def save(self):
+        resizeLogo(FoodItem, self, 50, 50)
 
 '''Misc
 # Since we need Reviews based on Food its not necessary to filter them through menu
@@ -87,8 +91,10 @@ class Review(abstractMenuItem):
     uploadPath = 'reviewLogo/'
 
     def __str__(self):
-        resizeLogo(Review, self, 50, 50)
         return self.reviewComment
+
+    def save(self):
+        resizeLogo(Review, self, 50, 50)
 
 # Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
 def get_Average(food_id, menu_id):
