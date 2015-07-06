@@ -48,7 +48,7 @@ class Menu(abstractMenuItem):
     uploadPath = 'menuLogo/'
 
     def __str__(self):
-        resizeLogo(Menu, self, 75, 75)
+        resizeLogo(Menu, self, 100, 100)
         return self.menuName
 
     class Meta:
@@ -87,7 +87,7 @@ class Review(abstractMenuItem):
     uploadPath = 'reviewLogo/'
 
     def __str__(self):
-        resizeLogo(FoodItem, self, 50, 50)
+        resizeLogo(Review, self, 50, 50)
         return self.reviewComment
 
 # Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
