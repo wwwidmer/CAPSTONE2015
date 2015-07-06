@@ -10,23 +10,35 @@ class FoodTypeAdmin(admin.ModelAdmin):
 
 class FoodAdmin(admin.StackedInline):
       model = FoodItem
+      fieldsets = [
+        (None, {'fields':['dishName']}),
+        (None, {'fields':['type']}),
+        (None, {'fields':['logo']}),
+        (None, {'fields':['createdOn']}),
+        (None, {'fields':['createdBy']}),
+        (None, {'fields':['rating']}),]
       extra = 0
 
-class Reviews(admin.StackedInline):
-     model = Review
-     extra = 0
+class ReviewAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields':['createdOn']}),
+        (None, {'fields':['createdBy']}),
+        (None, {'fields':['reviewComment']}),
+        (None, {'fields':['rating']}),
+        (None, {'fields':['logo']}),]
+    extra = 0
+     #ordering = ['id','foodItemName']
 
 class MenuAdmin(admin.ModelAdmin):
-    ordering = ['title']
+    ordering = ['menuName']
     fieldsets = [
-        (None, {'fields':['title']}),
+        (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),
-    ]
-    inlines = [FoodAdmin,Reviews]
+        (None, {'fields':['createdOn']}),
+        (None, {'fields':['createdBy']}),]
 
+    inlines = [FoodAdmin]
 
-
+admin.site.register(Review,ReviewAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(FoodType, FoodTypeAdmin)
-
-
