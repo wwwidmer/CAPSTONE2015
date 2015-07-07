@@ -37,7 +37,7 @@ class abstractMenuItem(models.Model):
     createdBy = models.CharField(max_length=30,default='', null=True, blank=True)#Remove blank/null for required
     logo = models.ImageField(upload_to=uploadPath, blank=True, editable=True, verbose_name='logo')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    isActive = models.BooleanField(default=False)
+    isActive = models.BooleanField(default=True)
 
     class Meta: #Abstract model, models that inherit this abstractClass do not share data on the same table
         abstract = True
