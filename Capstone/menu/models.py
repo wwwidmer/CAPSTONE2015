@@ -2,6 +2,8 @@ from django.db import models
 from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
+from django.core import signals
+
 
 '''
 Main Database tables
@@ -27,6 +29,7 @@ def resizeLogo(instance, self, x, y):
 def uploadPath(instance, filename):
     return ''.join([instance.uploadPath, filename])
 
+
 '''
 #abstract multiple table inheritance, models inherit these variables.
 #This is data that is shared and joined to each class that inherits this abstract class
@@ -42,12 +45,15 @@ class abstractMenuItem(models.Model):
     class Meta: #Abstract model, models that inherit this abstractClass do not share data on the same table
         abstract = True
 
+
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
     uploadPath = 'menuLogo/'
 
     def save(self):
         resizeLogo(Menu, self, 50, 50)
+        set_menu_isActive(self.id,self.isActive)
+
 
     def __str__(self):
         return self.menuName
@@ -76,14 +82,11 @@ class FoodItem(abstractMenuItem):
 
     def save(self):
         resizeLogo(FoodItem, self, 50, 50)
+        set_food_isActive(self.id,self.isActive)
 
     def __str__(self):
         return self.dishName
 
-'''Misc
-# Since we need Reviews based on Food its not necessary to filter them through menu
-# We can just do MenuID->FoodID->Review.
-'''
 class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=200, default=None)
@@ -109,3 +112,18 @@ def get_Average(food_id, menu_id):
         return floor((total / reviews.count()))
     except ZeroDivisionError:
         return 0
+
+
+# Get all items 'below' a certain model and set their state accordingly.
+def set_menu_isActive(menu_id, state):
+    food = FoodItem.objects.all().filter(menuName=menu_id)
+    reviews = Review.objects.all().filter(foodItemName__id=menu_id)
+    for item in list(food) + list(reviews):
+        item.isActive = state;
+        item.save()
+
+def set_food_isActive(food_id,state):
+    reviews = Review.objects.all().filter(foodItemName__id=food_id)
+    for item in list(reviews):
+        item.isActive = state;
+        item.save()
