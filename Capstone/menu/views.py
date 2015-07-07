@@ -14,14 +14,23 @@ def test(request):
     return render_to_response('test.html')
 
 def index(request):
+
     try:
-        rand = randrange(0,Menu.objects.all().count())
-        menus = Menu.objects.all()[rand]
+        rand = randrange(0,Menu.objects.all().filter(isActive=True).count())
+        menus = Menu.objects.all().filter(isActive=True)[rand]
         frand = randrange(0,FoodItem.objects.all().filter(menuName__id=menus.id).count())
         foods = FoodItem.objects.all().filter(menuName__id=menus.id)[frand]
         rrand = randrange(0,Review.objects.all().filter(foodItemName__id=foods.id).count())
         revs = Review.objects.all().filter(foodItemName__id=foods.id)[rrand]
         avg = get_Average(None,menus.id)
+        '''
+        rrand = randrange(0,Review.objects.all().count())
+        revs = Review.objects.all()[rrand]
+        frand = randrange(0,FoodItem.objects.all().filter(foodItemName__id=id).count())
+        foods = FoodItem.objects.all().filter(foodItemName__id=id)[frand]
+        mrand = randrange(0,Menu.objects.all().filter(foods__menuName=id).count())
+        menus = Menu.objects.all().filter(foods_menuName=id)[mrand]
+        '''
     except ValueError:
         menus = None
         foods = None
@@ -32,10 +41,10 @@ def index(request):
     return render_to_response("index.html",context)
 
 def render_search_index(request):
-    allTypes = FoodType.objects.all().order_by("type")
-    rand = sample(list(allTypes),8)
-    context = {'types':rand}
-    return render_to_response("search-index.html",context)
+    allTypes = FoodType.objects.all().order_by('type')
+    rand = sample(list(allTypes), FoodType.objects.all().count())
+    context = {'types': rand}
+    return render_to_response("search-index.html", context)
 '''
 Render menu - get menu by id
     Then get all relation on food items
@@ -58,7 +67,7 @@ handle the form to add a new review object to the database
 def render_food(request,f_id):
     try:
         food = FoodItem.objects.get(id=f_id)
-        setattr(food,'average',get_Average(f_id,None))
+        setattr(food,'rating',get_Average(f_id,None))
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
@@ -129,7 +138,7 @@ def render_search(request):
     found = None
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
-        mentry = get_query(query_string,['title'])
+        mentry = get_query(query_string,['menuName'])
         tentry = get_query(query_string,['type'])
         fentry = get_query(query_string,['dishName'])
         menu = Menu.objects.filter(mentry).order_by('-id')
@@ -221,7 +230,7 @@ def ajax_get_food_by_menu_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchFood = FoodItem.objects.filter(title__id=mid)
+                fetchFood = FoodItem.objects.filter(menuName__id=mid)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:

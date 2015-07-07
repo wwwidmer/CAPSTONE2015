@@ -8,7 +8,7 @@
         {% if menu %}
             <h3> Menus </h3>
             {% for m in menu %}
-                <a href="/menus/{{ m.id }}">{{ m.title }}</a>
+                <a href="/menus/{{ m.id }}">{{ m.menuName }}</a>
             {% endfor %}
         {% endif %}
         {% if food %}
