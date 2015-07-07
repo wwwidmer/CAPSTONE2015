@@ -1,14 +1,4 @@
-<head>
-    <style type="text/css">
-        #map-canvas {
-        height:500px;
-        }
-    </style>
-
-
-      <script type="text/javascript">
-
-          var map;
+           var map;
           var service;
 
           function initialise(location){
@@ -17,7 +7,7 @@
 
               var mapOption= {
                   center: currentLocation,
-                  zoom:15,
+                  zoom:11,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
               };
 
@@ -77,11 +67,4 @@
           }
 
           navigator.geolocation.getCurrentPosition(initialise);
-
-      </script>
-      </head>
-
-  <body>
-  <div id="map-canvas"></div>
-  </body>
 

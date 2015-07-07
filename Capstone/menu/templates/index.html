@@ -3,7 +3,7 @@
 {% block page %}
 
     <div class ="row">
-        <div class="col-lg-3" id="featured">
+        <div class="col-lg-3" id="featured" style="border: 2px solid black">
             <h3> Featured: </h3>
             {% if rand_menu %}
                 <p> {{ rand_menu.title }}</p>
@@ -27,10 +27,42 @@
             <input type="text" id ="search" size="35"> </input> <button id="getSearch"> Search </button>
             <p></p>
             <p> Or take a look at whats near you.</p>
-            <h1> Google maps</h1>
+
         </div>
+
+
+
+
+
+
+
+
     </div>
 
 
 
 {% endblock %}
+
+{% block map %}
+
+            <div class="maps">
+              <div id="map-canvas"></div>
+
+
+        </div>
+<body>
+    <!-- Map container -->
+    <div id="map_canvas"></div>
+</body>
+
+
+<div>
+<style type="text/css">
+        #map-canvas {
+        height:500px;
+        }
+    </style>
+    </div>
+
+{% endblock %}
+

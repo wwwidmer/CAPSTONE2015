@@ -91,3 +91,13 @@ label{
 #fiveStar li:hover, input[type='radio']:checked + label{
     background: url('/static/assets/images/star.png') no-repeat;
 }
+
+ #map-canvas {
+    width: 50%;
+    height: 50%;
+    margin: 0;
+    padding: 0;
+}
+#map-canvas {
+    position: relative;
+}

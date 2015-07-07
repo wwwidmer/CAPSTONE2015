@@ -45,6 +45,9 @@
   <div class="container page">
       {% block page %}
       {% endblock %}
+            {% block map %}
+            {% endblock %}
+
       <hr>
 
       <!-- Footer -->
@@ -52,16 +55,25 @@
           <div class="row">
               <div class="col-lg-2">
                   <p>Copyright &copy; </p>
+                    <li><a href="/contact/">contact</a></li>
+                  <li><a href="/about/">about</a></li>
+                  <li><a href="/add your restaurant/">add</a></li>
               </div>
           </div>
       </footer>
   </div>
+
+
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
   <script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
+  <script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
+
+
+
   </body>
 </html>
 
