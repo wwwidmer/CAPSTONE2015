@@ -41,10 +41,10 @@ def index(request):
     return render_to_response("index.html",context)
 
 def render_search_index(request):
-    allTypes = FoodType.objects.all().order_by("type")
-    rand = sample(list(allTypes),8)
-    context = {'types':rand}
-    return render_to_response("search-index.html",context)
+    allTypes = FoodType.objects.all().order_by('type')
+    rand = sample(list(allTypes), FoodType.objects.all().count())
+    context = {'types': rand}
+    return render_to_response("search-index.html", context)
 '''
 Render menu - get menu by id
     Then get all relation on food items
