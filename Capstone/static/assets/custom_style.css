@@ -1,0 +1,93 @@
+*{
+    text-decoration: none;
+    list-style-type: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.container.page{
+    margin-top:50px;
+    padding-top:25px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.c{
+    float:left;
+    width:80%;
+}
+footer{
+    clear:both;
+    margin-top:25px;
+}
+
+ul.errorlist{
+    border-color: indianred;
+    border-style: solid;
+    border-width: 1px;
+    font-weight:700;
+}
+.header h1{
+    font-weight:800;
+    font-size: 40px;
+    text-decoration: underline;
+}
+
+#mast{
+    display:block;
+    clear:both;
+    margin:20px;
+    width:100%;
+    margin-right: auto;
+}
+
+ul#nav li a{
+    color:black;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+}
+
+.page, #mast{
+    margin-left:20%;
+}
+.page *{
+    display: block;
+}
+
+.page ul{
+    width:75%;
+}
+
+ul#menu li{
+    margin: auto;
+    border:none;
+}
+ul#menu li:nth-child(odd){
+    background-color: #f5f5f5;
+}
+
+ul#fiveStar li{
+    float:left;
+    height:25px;
+}
+
+textarea#id_review{
+    clear:both;
+}
+
+label{
+    clear:both;
+}
+#fiveStar input[type='radio']{
+    opacity: 0;
+    width:20px;
+    cursor:pointer;
+}
+#fiveStar li, input[type='radio'] + label {
+    margin:0;
+    clear:none;
+    cursor:pointer;
+    background: url('/static/assets/images/no-star.png') no-repeat;
+}
+
+#fiveStar li:hover, input[type='radio']:checked + label{
+    background: url('/static/assets/images/star.png') no-repeat;
+}

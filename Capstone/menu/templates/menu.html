@@ -3,6 +3,37 @@
 {% block page %}
 
 {% if menus %}
+<div class="row-fluid">
+	<div class="span12" align="center">
+		<div id="slider1_container" style="position: relative; width: 600px; height: 100%; background-color: #000; overflow: hidden; ">
+
+			<!-- Loading Screen -->
+			<div u="loading" style="position: absolute; top: 0px; left: 0px;">
+				<div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+				background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;"></div>
+				<div style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;
+				top: 0px; left: 0px;width: 100%;height:100%;"></div>
+			</div>
+
+			<!-- Slides Container -->
+			<div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 100%;
+			overflow: hidden;">
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/01.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/02.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/03.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/04.jpg" /></a>
+				</div>
+			</div>
+		</div>
+		</div>
+</div>
     <ul id="menu">
     {%  for m in menus %}
         <li class="col-md-4">
