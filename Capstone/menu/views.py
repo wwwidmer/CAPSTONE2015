@@ -138,7 +138,7 @@ def render_search(request):
     found = None
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
-        mentry = get_query(query_string,['title'])
+        mentry = get_query(query_string,['menuName'])
         tentry = get_query(query_string,['type'])
         fentry = get_query(query_string,['dishName'])
         menu = Menu.objects.filter(mentry).order_by('-id')
@@ -230,7 +230,7 @@ def ajax_get_food_by_menu_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchFood = FoodItem.objects.filter(title__id=mid)
+                fetchFood = FoodItem.objects.filter(menuName__id=mid)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:

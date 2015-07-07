@@ -6,7 +6,7 @@
         <div class="col-lg-3" id="featured">
             <h3> Featured: </h3>
             {% if rand_menu %}
-                <p> {{ rand_menu.title }}</p>
+                <p> {{ rand_menu.menuName }}</p>
                 <a href="/menus/{{ rand_menu.id }}"><img src="/media/{{rand_menu.logo}}"></a>
                 {% if rand_food %}
                 {% if rand_rev %}

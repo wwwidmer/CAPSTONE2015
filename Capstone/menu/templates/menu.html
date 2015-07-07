@@ -17,7 +17,7 @@
 
     {% if menu %}
 
-        <h3> {{ menu.title }}</h3><img src="/media/{{ menu.logo }}"><!-- We should expect an image for each menu-->
+        <h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.logo }}"><!-- We should expect an image for each menu-->
         <p>Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
         <ul id="menu">
          {% if food %}
