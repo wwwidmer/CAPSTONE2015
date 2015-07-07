@@ -16,21 +16,13 @@ def test(request):
 def index(request):
 
     try:
-        rand = randrange(0,Menu.objects.all().filter(isActive=True).count())
-        menus = Menu.objects.all().filter(isActive=True)[rand]
-        frand = randrange(0,FoodItem.objects.all().filter(menuName__id=menus.id).count())
-        foods = FoodItem.objects.all().filter(menuName__id=menus.id)[frand]
-        rrand = randrange(0,Review.objects.all().filter(foodItemName__id=foods.id).count())
-        revs = Review.objects.all().filter(foodItemName__id=foods.id)[rrand]
-        avg = get_Average(None,menus.id)
-        '''
         rrand = randrange(0,Review.objects.all().count())
         revs = Review.objects.all()[rrand]
-        frand = randrange(0,FoodItem.objects.all().filter(foodItemName__id=id).count())
-        foods = FoodItem.objects.all().filter(foodItemName__id=id)[frand]
-        mrand = randrange(0,Menu.objects.all().filter(foods__menuName=id).count())
-        menus = Menu.objects.all().filter(foods_menuName=id)[mrand]
-        '''
+        frand = randrange(0,FoodItem.objects.all().filter(id=revs.foodItemName.id).count())
+        foods = FoodItem.objects.all().filter(id=revs.foodItemName.id)[frand]
+        mrand = randrange(0,Menu.objects.all().filter(id=foods.id).count())
+        menus = Menu.objects.all().filter(id=foods.id)[mrand]
+        avg = get_Average(foods.id,None)
     except ValueError:
         menus = None
         foods = None
@@ -42,7 +34,10 @@ def index(request):
 
 def render_search_index(request):
     allTypes = FoodType.objects.all().order_by('type')
-    rand = sample(list(allTypes), FoodType.objects.all().count())
+    try:
+        rand = sample(list(allTypes), 8)
+    except:
+        rand = None
     context = {'types': rand}
     return render_to_response("search-index.html", context)
 '''
