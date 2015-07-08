@@ -2,68 +2,66 @@
 {% load staticfiles %}
 {% block page %}
 
-    <div class ="row">
-        <div class="col-lg-3" id="featured" style="border: 2px solid black">
-            <h3> Featured: </h3>
-            {% if rand_menu %}
-                <p> {{ rand_menu.menuName }}</p>
-                <a href="/menus/{{ rand_menu.id }}"><img src="/media/{{rand_menu.logo}}"></a>
-                {% if rand_food %}
-                {% if rand_rev %}
-                    <p> {{ rand_food.dishName }}</p>
-                    <p> <img src="/static/assets/images/{{ rand_food.rating }}.png" alt="{{ rating }}"/></p>
-                    <p> {{ rand_rev.reviewComment }}</p>
-                    {% endif %}
-                {% endif %}
-            {% else %}
-                <p> We feature a random Food from a Random Restaurant - Reload the page for a new random food!</p>
-            {% endif %}
-        </div>
-        <div class="col-lg-3">
-            <p>Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.</p>
-            <p>Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.</p>
-        </div>
-        <div class="col-lg-3">
-            <p> Search for a keyword (Steak, Starbucks, or Beer!)</p>
-            <input type="text" id ="search" size="35"> </input> <button id="getSearch"> Search </button>
-            <p class="alert alert-danger" id="searchWarning"></p>
-            <p> Or take a look at whats near you.</p>
+<div class ="row">
+	<div class="col-lg-3" id="featured" style="border: 2px solid black">
+		<h3> Featured: </h3>
+		{% if rand_menu %}
+		<p>
+			{{ rand_menu.menuName }}
+		</p>
+		<a href="/menus/{{ rand_menu.id }}"><img src="/media/{{rand_menu.logo}}"></a>
+		{% if rand_food %}
+		{% if rand_rev %}
+		<p>
+			{{ rand_food.dishName }}
+		</p>
+		<p>
+			<img src="/static/assets/images/{{ rand_food.rating }}.png" alt="{{ rating }}"/>
+		</p>
+		<p>
+			{{ rand_rev.reviewComment }}
+		</p>
+		{% endif %}
+		{% endif %}
+		{% else %}
+		<p>
+			We feature a random Food from a Random Restaurant - Reload the page for a new random food!
+		</p>
+		{% endif %}
+	</div>
+	<div class="col-lg-3">
+		<p>
+			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+		</p>
+		<p>
+			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+		</p>
+	</div>
+	<div class="col-lg-3">
+		<p>
+			Search for a keyword (Steak, Starbucks, or Beer!)
+		</p>
+		<input type="text" id ="search" size="35">
+		</input>
+		<button id="getSearch">
+			Search
+		</button>
+		<p class="alert alert-danger" id="searchWarning"></p>
+		<p>
+			Or take a look at whats near you.
+		</p>
 
-        </div>
-
-
-
-
-
-
-
-
-    </div>
-
-
+	</div>
+</div>
 
 {% endblock %}
 
 {% block map %}
 
-            <div class="maps">
-              <div id="map-canvas"></div>
+<div class="maps">
+	<div id="map-canvas"></div>
 
-
-        </div>
-<body>
-    <!-- Map container -->
-    <div id="map_canvas"></div>
-</body>
-
-
-<div>
-<style type="text/css">
-        #map-canvas {
-        height:500px;
-        }
-    </style>
-    </div>
+</div>
 
 {% endblock %}
 

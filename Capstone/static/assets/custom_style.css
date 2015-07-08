@@ -92,12 +92,12 @@ label{
     background: url('/static/assets/images/star.png') no-repeat;
 }
 
- #map-canvas {
-    width: 50%;
-    height: 50%;
+
+.map,  #map-canvas {
+    width: 500px;
+    height: 400px;
     margin: 0;
     padding: 0;
-}
-#map-canvas {
     position: relative;
 }
+
