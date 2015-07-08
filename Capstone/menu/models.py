@@ -48,6 +48,7 @@ class abstractMenuItem(models.Model):
 
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
+    gid = models.IntegerField(default=0)
     uploadPath = 'menuLogo/'
 
     def save(self):
