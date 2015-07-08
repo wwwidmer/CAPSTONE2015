@@ -15,7 +15,7 @@
 }
 footer{
     clear:both;
-    margin-top:25px;
+    padding-top:25px;
 }
 
 ul.errorlist{
@@ -91,3 +91,13 @@ label{
 #fiveStar li:hover, input[type='radio']:checked + label{
     background: url('/static/assets/images/star.png') no-repeat;
 }
+
+
+.map, #map-canvas {
+    width: 500px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+

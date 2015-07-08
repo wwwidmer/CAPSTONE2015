@@ -3,11 +3,11 @@
 {% block page %}
 
 <div class ="row">
-	<div class="col-lg-3" id="featured">
+	<div class="col-lg-3" id="featured" style="border: 2px solid black">
 		<h3> Featured: </h3>
 		{% if rand_menu %}
 		<p>
-			{{ rand_menu.title }}
+			{{ rand_menu.menuName }}
 		</p>
 		<a href="/menus/{{ rand_menu.id }}"><img src="/media/{{rand_menu.logo}}"></a>
 		{% if rand_food %}
@@ -29,7 +29,15 @@
 		</p>
 		{% endif %}
 	</div>
-	<div class="col-lg-5">
+	<div class="col-lg-3">
+		<p>
+			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+		</p>
+		<p>
+			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+		</p>
+	</div>
+	<div class="col-lg-3">
 		<p>
 			Search for a keyword (Steak, Starbucks, or Beer!)
 		</p>
@@ -42,36 +50,18 @@
 		<p>
 			Or take a look at whats near you.
 		</p>
-		<iframe src="/static/assets/google.html" width="400" height="300" frameborder="0" scrolling="no"></iframe>
-		<p></p>
+
 	</div>
-	<div class="col-lg-3">
-		<div id="slider1_container" style="position: relative; width: 600px; height: 500px; background-color: #000; overflow: hidden; ">
+</div>
 
-			<!-- Loading Screen -->
-			<div u="loading" style="position: absolute; top: 0px; left: 0px;">
-				<div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
-				background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;"></div>
-				<div style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;
-				top: 0px; left: 0px;width: 100%;height:100%;"></div>
-			</div>
+{% endblock %}
 
-			<!-- Slides Container -->
-			<div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 500px;
-			overflow: hidden;">
-				<div>
-					<a u=image href="#"><img src="/media/{{rand_menu.logo}}" /></a>
-				</div>
-				<div>
-					<a u=image href="#"><img src="/media/{{rand_menu.logo}}" /></a>
-				</div>
-				<div>
-					<a u=image href="#"><img src="/media/{{rand_menu.logo}}" /></a>
-				</div>
-				<div>
-					<a u=image href="#"><img src="/media/{{rand_menu.logo}}" /></a>
-				</div>
-			</div>
-		</div>
+{% block map %}
 
-			{% endblock %}
+<div class="maps">
+	<div id="map-canvas"></div>
+
+</div>
+
+{% endblock %}
+

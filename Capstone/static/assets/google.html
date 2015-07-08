@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-  <head>
+<head>
     <style type="text/css">
         #map-canvas {
-        height: 500px;
+        height:500px;
         }
     </style>
-      <title></title>
 
-     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
       <script type="text/javascript">
 
           var map;
           var service;
-
 
           function initialise(location){
               console.log("location:"+location);
@@ -52,16 +48,14 @@
                   var marker = new google.maps.Marker({
                       map: map,
                       position: place.geometry.location
-                  });ti
+                  });
 
 
                   var infowindow = new google.maps.InfoWindow({
-
                     content:('<div><strong>' + place.name + '</strong><br>' +
                                             'Place id: ' + place.place_id + '<br>' +
                      place.vicinity)
                     });
-
 
                 google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map,marker);
@@ -80,24 +74,14 @@
                   service.nearbySearch(request,callback);
               }
 
-
-
-
-
-}
-
-
-
-
-
+          }
 
           navigator.geolocation.getCurrentPosition(initialise);
 
-
       </script>
       </head>
+
   <body>
   <div id="map-canvas"></div>
   </body>
-  </html>
 
