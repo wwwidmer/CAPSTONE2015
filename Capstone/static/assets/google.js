@@ -62,13 +62,25 @@ function initialise(location) {
 
 	}
 
-	function performSearch() {
-		var request = {
-			bounds : map.getBounds(),
-			name : "starbucks"
-		}
-		service.nearbySearch(request, callback);
-	}
+	<input id="user_input" type="text"/>
+
+	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+  var input = document.getElementById('user_input');
+  var query = input.value != '' ? input.value : 'starbucks';
+
+  performSearch(query);
+});
+
+
+
+	function performSearch(query){
+  var request ={
+      bounds: map.getBounds(),
+      name: query
+  }
+
+  service.nearbySearch(request,callback);
+}
 
 }
 
