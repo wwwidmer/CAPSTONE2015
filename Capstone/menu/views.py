@@ -230,4 +230,19 @@ def ajax_get_food_by_menu_id(request):
         return HttpResponse("You do not have permission to access this webpage")
 
 def ajax_add_menu_by_gid(request):
-    pass
+    if request.is_ajax():
+        if 'gid' in request.GET:
+            ngid = request.GET.get('gid')
+        else:
+            return HttpResponse("Error")
+        if Menu.objects.get(gid=ngid):
+            return HttpResponse("Already Exists, why are you here?")
+        else:
+            menuName = "newmenu"
+            createdOn = datetime.now()
+            isActive = True
+            createdBy = "auto"
+            newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+            return HttpResponse("Item: "+gid+":"+menuName+" added to database.")
+    else:
+        return HttpResponse("You do not have permission to access this webpage")
