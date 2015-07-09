@@ -68,11 +68,9 @@ function initialise(location) {
 
 	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
 	    var input = $("#search").val();
-        console.log(input);
         var query = (input != '' )? input : "starbucks";
-        console.log(query);
         performSearch(query);
-              });
+        });
 
 
 
