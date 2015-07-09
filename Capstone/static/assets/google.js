@@ -18,6 +18,8 @@ function initialise(location) {
 		map : map
 	});
 
+
+
 	service = new google.maps.places.PlacesService(map);
 	google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
 
@@ -53,6 +55,7 @@ function initialise(location) {
                      place.vicinity + content)
                     });
 
+
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.open(map, marker);
 			var latitude = this.position.lat();
@@ -62,27 +65,43 @@ function initialise(location) {
 
 	}
 
-	<input id="user_input" type="text"/>
+            $( "#getSearch" ).click(function() {
 
+                });
 	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
-  var input = document.getElementById('user_input');
-  var query = input.value != '' ? input.value : 'starbucks';
+	    var input = $("#search").val
+          var input = document.getElementById('user_input');
+          var query = input.value != '' ? input.value : position;
 
-  performSearch(query);
-});
+                performSearch(query);
+              });
 
 
 
 	function performSearch(query){
-  var request ={
-      bounds: map.getBounds(),
-      name: query
-  }
+        var request ={
+        bounds: map.getBounds(),
+        name: query
+    }
 
   service.nearbySearch(request,callback);
 }
 
 }
 
-navigator.geolocation.getCurrentPosition(initialise);
+function initializer() {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    zoom: 3,
+    center: {lat: 38., lng: -99.644}
+  });
+}
 
+google.maps.event.addDomListener(window, 'load', initializer);
+
+
+        $( "#getSearch" ).click(function() {
+
+            navigator.geolocation.getCurrentPosition(initialise);
+
+
+                });
