@@ -50,6 +50,15 @@ def render_menu(request,m_id):
     food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
+def render_menu_by_gid(request,g_id,name="menu"):
+    try:
+        menu = Menu.objects.get(gid=g_id)
+    except Menu.DoesNotExist:
+        menu = create_menu_by_gid(g_id,name)
+    m_id = menu.id
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    return render_to_response("menu.html",context)
 '''
 Request method for comment form.
 if POST (ie we've submitted a form from this page)
@@ -63,14 +72,14 @@ def render_food(request,f_id):
     except FoodItem.DoesNotExist:
         raise Http404
     review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
-
+    similar = get_similar(f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
@@ -114,9 +123,14 @@ Not strictly View related functions / helpers / wrappers
 """
 
 # Grab a list from food types most similar to food
-# Future would be to grab several types, lat / long, name
-def get_similar(food_type_id):
-    pass
+# Future would be to grab several types, lat / long, name, etc
+def get_similar(food_id):
+    similar = []
+    food = FoodItem.objects.get(id=food_id)
+    for x in food.type.all():
+        similar.append(x.id)
+    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct()
+    return similarFood
 
 """
 Search Handlers
@@ -158,6 +172,18 @@ def get_query(query_string, search_fields):
 		else:
 			query = query & or_query
 	return query
+
+# Created a new menu if gid does not exist
+def create_menu_by_gid(g_id,menuName):
+    try:
+        Menu.objects.get(gid=g_id)
+        return HttpResponse("Already Exists, why are you here?")
+    except Menu.DoesNotExist:
+        createdOn = datetime.datetime.now()
+        isActive = True
+        createdBy = "auto"
+        newMenu = Menu.objects.create(menuName=menuName,gid=g_id,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+        return newMenu
 
 """
 Ajax handlers
@@ -230,4 +256,19 @@ def ajax_get_food_by_menu_id(request):
         return HttpResponse("You do not have permission to access this webpage")
 
 def ajax_add_menu_by_gid(request):
-    pass
+    if request.is_ajax():
+        if 'gid' in request.GET:
+            ngid = request.GET.get('gid')
+        else:
+            return HttpResponse("Error")
+        if Menu.objects.get(gid=ngid):
+            return HttpResponse("Already Exists, why are you here?")
+        else:
+            menuName = "newmenu"
+            createdOn = datetime.datetime.now()
+            isActive = True
+            createdBy = "auto"
+            newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+            return HttpResponse("Item: "+gid+":"+menuName+" added to database.")
+    else:
+        return HttpResponse("You do not have permission to access this webpage")

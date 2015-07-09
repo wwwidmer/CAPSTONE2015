@@ -16,9 +16,11 @@
 
 - Check github Issue tracker
 
-- Create Frontend Templates
+- Google Maps GID => Menu Unique
 
-- Edit Views
+- Ajax request to create menu for above
 
-- Google Maps integration
+- Stronger search ?
+
+- get Similar
 

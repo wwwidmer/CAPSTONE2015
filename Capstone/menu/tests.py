@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.http import request
-from menu.models import *
+from menu.models import Menu, Review, FoodType, FoodItem, get_Average
 from menu.views import ajax_get_menu_by_id, ajax_get_food_by_menu_id, ajax_get_review_by_food
 
 class MenuTestCase(TestCase):

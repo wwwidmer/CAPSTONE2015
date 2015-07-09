@@ -13,7 +13,6 @@ def get_Average(food_id, menu_id):
         if menu_id is None:
             reviews = Review.objects.all().filter(foodItemName__id=food_id)
         else:
-            # This gets more complicated without Review linked to Menu... Needs work
             reviews = Review.objects.all().filter(foodItemName__menuName=menu_id)
         total = 0
         for x in reviews:
@@ -79,7 +78,7 @@ class abstractMenuItem(models.Model):
 
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
-    gid = models.IntegerField(default=0,blank=True)
+    gid = models.CharField(max_length=100,default='')
     uploadPath = 'menuLogo/'
     def save(self,force_insert=False,using=None):
         resizeLogo(Menu, self, 50, 50)
@@ -103,7 +102,7 @@ class FoodItem(abstractMenuItem):
 
 class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
-    reviewComment = models.TextField(max_length=200, default=None)
+    reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self,force_insert=False,using=None):
         resizeLogo(Review, self, 50, 50)
