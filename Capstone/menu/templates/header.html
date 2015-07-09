@@ -31,16 +31,13 @@
 					<a class="navbar-brand" href="/">Menu</a>
 				</div>
 				<div class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-<<<<<<< HEAD
-						<input type="text" class="form-control" placeholder="Search" id="search">
-=======
-						<input type="text" class="form-control" placeholder="Search" id="search-menu">
->>>>>>> afab22f1c83601297311cf127058e3137e538977
-					</div>
-					<button class="btn btn-default getSearch-menu">
-						Submit
-					</button>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search for..." id="search-menu">
+						<span class="input-group-btn">
+							<button class="btn btn-default getSearch-menu" type="button">
+								Search!
+							</button> </span>
+					</div><!-- /input-group -->
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -68,39 +65,39 @@
 			{% block map %}
 			{% endblock %}
 
-			<hr>
 			<!-- Footer -->
-			<!-- Footer -->
-			<nav class="navbar navbar-default navbar-static-bottom">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
+			<footer>
+				<nav class="navbar navbar-default navbar-static-bottom">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="collapse navbar-collapse">
+							<ul class="nav navbar-nav navbar-left">
+								<li>
+									<p class="navbar-text">
+										Copyright &copy;
+									</p>
+								</li>
+								<li>
+									<a href="/contact/">contact</a>
+								</li>
+								<li>
+									<a href="/about/">about</a>
+								</li>
+								<li>
+									<a href="/add your restaurant/">add</a>
+								</li>
+								<!-- <li><a class="btn btn-large btn-success signup" href="#sign">Sign in</a>-->
+							</ul>
+						</div><!--/.nav-collapse -->
 					</div>
-					<div class="collapse navbar-collapse">
-						<ul class="nav navbar-nav navbar-left">
-							<li>
-								<p class="navbar-text">
-									Copyright &copy;
-								</p>
-							</li>
-							<li>
-								<a href="/contact/">contact</a>
-							</li>
-							<li>
-								<a href="/about/">about</a>
-							</li>
-							<li>
-								<a href="/add your restaurant/">add</a>
-							</li>
-							<!-- <li><a class="btn btn-large btn-success signup" href="#sign">Sign in</a>-->
-						</ul>
-					</div><!--/.nav-collapse -->
-				</div>
-		</div>
+				</nav>
+			</footer>
 		</div>
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -109,6 +106,7 @@
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 		<script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
 		<script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/JssorSlider/jssor.slider.mini.js' %}"></script>
 
 	</body>
 </html>
