@@ -65,15 +65,13 @@ function initialise(location) {
 
 	}
 
-            $( "#getSearch" ).click(function() {
 
-                });
 	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
-	    var input = $("#search").val
-          var input = document.getElementById('user_input');
-          var query = input.value != '' ? input.value : position;
-
-                performSearch(query);
+	    var input = $("#search").val();
+        console.log(input);
+        var query = (input != '' )? input : "starbucks";
+        console.log(query);
+        performSearch(query);
               });
 
 
@@ -98,10 +96,9 @@ function initializer() {
 
 google.maps.event.addDomListener(window, 'load', initializer);
 
+$(document).ready(function() {
+	$(".getSearch").click(function () {
+		navigator.geolocation.getCurrentPosition(initialise);
 
-        $( "#getSearch" ).click(function() {
-
-            navigator.geolocation.getCurrentPosition(initialise);
-
-
-                });
+	});
+});
