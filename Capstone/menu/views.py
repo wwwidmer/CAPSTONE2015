@@ -63,14 +63,14 @@ def render_food(request,f_id):
     except FoodItem.DoesNotExist:
         raise Http404
     review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
-
+    similar = get_similar(f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
@@ -114,9 +114,14 @@ Not strictly View related functions / helpers / wrappers
 """
 
 # Grab a list from food types most similar to food
-# Future would be to grab several types, lat / long, name
-def get_similar(food_type_id):
-    pass
+# Future would be to grab several types, lat / long, name, etc
+def get_similar(food_id):
+    similar = []
+    food = FoodItem.objects.get(id=food_id)
+    for x in food.type.all():
+        similar.append(x.id)
+    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct()
+    return similarFood
 
 """
 Search Handlers
@@ -133,7 +138,7 @@ def render_search(request):
         fentry = get_query(query_string,['dishName'])
         menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
         food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
-        type = FoodType.objects.filter(tentry,isActive=True).order_by('-id')
+        type = FoodType.objects.filter(tentry).order_by('-id')
 
     context = {"GET":query_string,'menu':menu,'food':food,'type':type}
     return render_to_response("search.html",context)
@@ -229,3 +234,20 @@ def ajax_get_food_by_menu_id(request):
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
+def ajax_add_menu_by_gid(request):
+    if request.is_ajax():
+        if 'gid' in request.GET:
+            ngid = request.GET.get('gid')
+        else:
+            return HttpResponse("Error")
+        if Menu.objects.get(gid=ngid):
+            return HttpResponse("Already Exists, why are you here?")
+        else:
+            menuName = "newmenu"
+            createdOn = datetime.now()
+            isActive = True
+            createdBy = "auto"
+            newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+            return HttpResponse("Item: "+gid+":"+menuName+" added to database.")
+    else:
+        return HttpResponse("You do not have permission to access this webpage")

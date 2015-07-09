@@ -1,103 +1,106 @@
-*{
-    text-decoration: none;
-    list-style-type: none;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+* {
+	text-decoration: none;
+	list-style-type: none;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.container.page{
-    margin-top:50px;
-    padding-top:25px;
-    margin-left:auto;
-    margin-right:auto;
+.container.page {
+	margin-top: 50px;
+	padding-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
 }
-.c{
-    float:left;
-    width:80%;
-}
-footer{
-    clear:both;
-    margin-top:25px;
+.c {
+	float: left;
+	width: 80%;
 }
 
-ul.errorlist{
-    border-color: indianred;
-    border-style: solid;
-    border-width: 1px;
-    font-weight:700;
-}
-.header h1{
-    font-weight:800;
-    font-size: 40px;
-    text-decoration: underline;
+footer {
+	clear: both;
+	margin-top: 70px;
 }
 
-#mast{
-    display:block;
-    clear:both;
-    margin:20px;
-    width:100%;
-    margin-right: auto;
+ul.errorlist {
+	border-color: indianred;
+	border-style: solid;
+	border-width: 1px;
+	font-weight: 700;
+}
+.header h1 {
+	font-weight: 800;
+	font-size: 40px;
+	text-decoration: underline;
 }
 
-ul#nav li a{
-    color:black;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #000000;
+#mast {
+	display: block;
+	clear: both;
+	margin: 20px;
+	width: 100%;
+	margin-right: auto;
 }
 
-.page, #mast{
-    margin-left:20%;
-}
-.page *{
-    display: block;
-}
-
-.page ul{
-    width:75%;
+ul#nav li a {
+	color: black;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #000000;
 }
 
-ul#menu li{
-    margin: auto;
-    border:none;
+.page, #mast {
+	margin-left: 20%;
 }
-ul#menu li:nth-child(odd){
-    background-color: #f5f5f5;
-}
-
-ul#fiveStar li{
-    float:left;
-    height:25px;
+.page * {
+	display: block;
 }
 
-textarea#id_review{
-    clear:both;
+.page ul {
+	width: 75%;
 }
 
-label{
-    clear:both;
+ul#menu li {
+	margin: auto;
+	border: none;
 }
-#fiveStar input[type='radio']{
-    opacity: 0;
-    width:20px;
-    cursor:pointer;
+ul#menu li:nth-child(odd) {
+	background-color: #f5f5f5;
+}
+
+ul#fiveStar li {
+	float: left;
+	height: 25px;
+}
+
+textarea#id_review {
+	clear: both;
+}
+
+label {
+	clear: both;
+}
+#fiveStar input[type='radio'] {
+	opacity: 0;
+	width: 20px;
+	cursor: pointer;
 }
 #fiveStar li, input[type='radio'] + label {
-    margin:0;
-    clear:none;
-    cursor:pointer;
-    background: url('/static/assets/images/no-star.png') no-repeat;
+	margin: 0;
+	clear: none;
+	cursor: pointer;
+	background: url('/static/assets/images/no-star.png') no-repeat;
 }
 
-#fiveStar li:hover, input[type='radio']:checked + label{
-    background: url('/static/assets/images/star.png') no-repeat;
+#fiveStar li:hover, input[type='radio']:checked + label {
+	background: url('/static/assets/images/star.png') no-repeat;
 }
 
-
-.map,  #map-canvas {
-    width: 500px;
-    height: 400px;
-    margin: 0;
-    padding: 0;
-    position: relative;
+.map, #map-canvas {
+	width: 500px;
+	height: 400px;
+	margin: 0;
+	padding: 0;
+	position: relative;
 }
 
+body {
+	padding-top: 70px;
+}
