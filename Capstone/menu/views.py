@@ -133,7 +133,7 @@ def render_search(request):
         fentry = get_query(query_string,['dishName'])
         menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
         food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
-        type = FoodType.objects.filter(tentry,isActive=True).order_by('-id')
+        type = FoodType.objects.filter(tentry).order_by('-id')
 
     context = {"GET":query_string,'menu':menu,'food':food,'type':type}
     return render_to_response("search.html",context)
@@ -229,3 +229,5 @@ def ajax_get_food_by_menu_id(request):
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
+def ajax_add_menu_by_gid(request):
+    pass
