@@ -40,9 +40,18 @@ function initialise(location) {
 			position : place.geometry.location
 		});
 
-		var infowindow = new google.maps.InfoWindow({
-			content : ('<div><strong>' + place.name + '</strong><br>' + 'Place ID: ' + place.place_id + '<br>' + place.vicinity)
-		});
+		var content =
+                   '<p><a href="http://www.starbucks.com/">See Review for this branch</a></p>'
+
+
+
+
+
+                  var infowindow = new google.maps.InfoWindow({
+                    content:('<div><strong>' + place.name + '</strong><br>' +
+                                            'Place ID: ' + place.place_id + '<br>' +
+                     place.vicinity + content)
+                    });
 
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.open(map, marker);
