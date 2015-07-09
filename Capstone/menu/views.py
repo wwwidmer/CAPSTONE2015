@@ -63,14 +63,14 @@ def render_food(request,f_id):
     except FoodItem.DoesNotExist:
         raise Http404
     review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
-
+    similar = get_similar(f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
@@ -114,9 +114,14 @@ Not strictly View related functions / helpers / wrappers
 """
 
 # Grab a list from food types most similar to food
-# Future would be to grab several types, lat / long, name
-def get_similar(food_type_id):
-    pass
+# Future would be to grab several types, lat / long, name, etc
+def get_similar(food_id):
+    similar = []
+    food = FoodItem.objects.get(id=food_id)
+    for x in food.type.all():
+        similar.append(x.id)
+    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct()
+    return similarFood
 
 """
 Search Handlers
