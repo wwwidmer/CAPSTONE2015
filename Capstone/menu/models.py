@@ -103,7 +103,7 @@ class FoodItem(abstractMenuItem):
 
 class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
-    reviewComment = models.TextField(max_length=200, default=None)
+    reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self,force_insert=False,using=None):
         resizeLogo(Review, self, 50, 50)
