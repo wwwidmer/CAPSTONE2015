@@ -79,7 +79,7 @@ class abstractMenuItem(models.Model):
 
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
-    gid = models.IntegerField(default=0,blank=True)
+    gid = models.CharField(max_length=100,default='')
     uploadPath = 'menuLogo/'
     def save(self,force_insert=False,using=None):
         resizeLogo(Menu, self, 50, 50)

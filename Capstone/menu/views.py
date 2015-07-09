@@ -50,6 +50,15 @@ def render_menu(request,m_id):
     food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
+def render_menu_by_gid(request,g_id,name="menu"):
+    try:
+        menu = Menu.objects.get(gid=g_id)
+    except Menu.DoesNotExist:
+        menu = create_menu_by_gid(g_id,name)
+    m_id = menu.id
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    return render_to_response("menu.html",context)
 '''
 Request method for comment form.
 if POST (ie we've submitted a form from this page)
@@ -164,6 +173,18 @@ def get_query(query_string, search_fields):
 			query = query & or_query
 	return query
 
+# Created a new menu if gid does not exist
+def create_menu_by_gid(g_id,menuName):
+    try:
+        Menu.objects.get(gid=g_id)
+        return HttpResponse("Already Exists, why are you here?")
+    except Menu.DoesNotExist:
+        createdOn = datetime.datetime.now()
+        isActive = True
+        createdBy = "auto"
+        newMenu = Menu.objects.create(menuName=menuName,gid=g_id,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+        return newMenu
+
 """
 Ajax handlers
 Grab information from the database without reloading webpage
@@ -244,7 +265,7 @@ def ajax_add_menu_by_gid(request):
             return HttpResponse("Already Exists, why are you here?")
         else:
             menuName = "newmenu"
-            createdOn = datetime.now()
+            createdOn = datetime.datetime.now()
             isActive = True
             createdBy = "auto"
             newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
