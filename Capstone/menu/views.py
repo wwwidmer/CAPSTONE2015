@@ -10,18 +10,14 @@ import json
 from random import randrange, sample
 import re, datetime
 
-def test(request):
-    return render_to_response('test.html')
-
 def index(request):
-
     try:
-        rrand = randrange(0,Review.objects.all().count())
-        revs = Review.objects.all()[rrand]
-        frand = randrange(0,FoodItem.objects.all().filter(id=revs.foodItemName.id).count())
-        foods = FoodItem.objects.all().filter(id=revs.foodItemName.id)[frand]
-        mrand = randrange(0,Menu.objects.all().filter(id=foods.id).count())
-        menus = Menu.objects.all().filter(id=foods.id)[mrand]
+        rrand = randrange(0,Review.objects.all().filter(isActive=True).count())
+        revs = Review.objects.all().filter(isActive=True)[rrand]
+        frand = randrange(0,FoodItem.objects.all().filter(id=revs.foodItemName.id,isActive=True).count())
+        foods = FoodItem.objects.all().filter(id=revs.foodItemName.id,isActive=True)[frand]
+        mrand = randrange(0,Menu.objects.all().filter(id=foods.id,isActive=True).count())
+        menus = Menu.objects.all().filter(id=foods.id,isActive=True)[mrand]
         avg = get_Average(foods.id,None)
     except ValueError:
         menus = None
@@ -51,7 +47,7 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
-    food = FoodItem.objects.all().filter(menuName__id=m_id)
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
 '''
@@ -66,7 +62,7 @@ def render_food(request,f_id):
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
-    review = Review.objects.all().filter(foodItemName__id=f_id)
+    review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
 
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
@@ -76,7 +72,6 @@ def render_food(request,f_id):
         form = ReviewForm()
     context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
-
 
 '''
 render new review
@@ -92,6 +87,7 @@ def render_new_review(form, request, f_id):
     instance.createdBy = form.cleaned_data['createdBy']
     instance.logo = form.cleaned_data['logo']
     instance.rating = form.cleaned_data['rating']
+    instance.isActive = True
     instance.createdOn = datetime.datetime.now()
     instance.save()
     return HttpResponseRedirect("")
@@ -99,7 +95,7 @@ def render_new_review(form, request, f_id):
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
 def render_browse_top_menu(request):
-    menus = Menu.objects.all()
+    menus = Menu.objects.all().filter(isActive=True)
     sorted(menus,key=lambda x: (get_Average(None,x.id)))
     context = {'menus':menus}
     return render_to_response("menu.html",context)
@@ -107,9 +103,8 @@ def render_browse_type_index(request):
     foodType = FoodType.objects.all().order_by("type")
     context = {'foodTypes':foodType}
     return render_to_response("food.html",context)
-
 def render_browse_type_food(request,t_id):
-    fetchFood = FoodItem.objects.filter(type__id=t_id)
+    fetchFood = FoodItem.objects.filter(type__id=t_id,isActive=True)
     foodType = FoodType.objects.get(id=t_id)
     context = {'foodsAsType':fetchFood,'foodType':foodType}
     return render_to_response("food.html",context)
@@ -136,9 +131,9 @@ def render_search(request):
         mentry = get_query(query_string,['menuName'])
         tentry = get_query(query_string,['type'])
         fentry = get_query(query_string,['dishName'])
-        menu = Menu.objects.filter(mentry).order_by('-id')
-        food = FoodItem.objects.filter(fentry).order_by('-id')
-        type = FoodType.objects.filter(tentry).order_by('-id')
+        menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
+        food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
+        type = FoodType.objects.filter(tentry,isActive=True).order_by('-id')
 
     context = {"GET":query_string,'menu':menu,'food':food,'type':type}
     return render_to_response("search.html",context)
@@ -164,7 +159,6 @@ def get_query(query_string, search_fields):
 			query = query & or_query
 	return query
 
-
 """
 Ajax handlers
 Grab information from the database without reloading webpage
@@ -178,7 +172,7 @@ def ajax_get_food_by_id(request):
         try:
             if 'fid' in request.GET:
                 fid = request.GET.get('fid')
-                fetchFood = FoodItem.objects.filter(id=fid)
+                fetchFood = FoodItem.objects.filter(id=fid,isActive=True)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
@@ -194,7 +188,7 @@ def ajax_get_menu_by_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchMenu = Menu.objects.filter(id=mid)
+                fetchMenu = Menu.objects.filter(id=mid,isActive=True)
                 data = serializers.serialize('json',fetchMenu)
                 return JsonResponse(data,safe=False)
             else:
@@ -210,7 +204,7 @@ def ajax_get_review_by_food(request):
         try:
             if 'fid' in request.GET:
                 fid = request.GET.get('fid')
-                fetchReview = Review.objects.filter(FoodItemName__id=fid)
+                fetchReview = Review.objects.filter(FoodItemName__id=fid,isActive=True)
                 data = serializers.serialize('json',fetchReview)
                 return JsonResponse(data, safe=False)
             else:
@@ -225,7 +219,7 @@ def ajax_get_food_by_menu_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchFood = FoodItem.objects.filter(menuName__id=mid)
+                fetchFood = FoodItem.objects.filter(menuName__id=mid,isActive=True)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
