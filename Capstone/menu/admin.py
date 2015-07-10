@@ -32,7 +32,8 @@ class ReviewAdmin(admin.ModelAdmin):
      #ordering = ['id','foodItemName']
 
 class MenuAdmin(admin.ModelAdmin):
-    ordering = ['menuName']
+    ordering = ['id','menuName','gid']
+    list_display = ['id','menuName','gid']
     fieldsets = [
         (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),

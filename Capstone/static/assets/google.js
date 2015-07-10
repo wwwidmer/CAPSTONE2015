@@ -43,7 +43,7 @@ function initialise(location) {
 		});
 
 		var content =
-                   '<p><a href="menus/gid/'+place.place_id+'/'+place.name+'">See this menu</a></p>'
+                   '<p><a href="/menus/gid/'+place.place_id+'/'+place.name+'">See this menu</a></p>'
 
                   var infowindow = new google.maps.InfoWindow({
                     content:('<div><strong>' + place.name + '</strong><br>' +
