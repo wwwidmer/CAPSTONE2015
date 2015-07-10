@@ -18,6 +18,8 @@ function initialise(location) {
 		map : map
 	});
 
+
+
 	service = new google.maps.places.PlacesService(map);
 	google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
 
@@ -41,17 +43,14 @@ function initialise(location) {
 		});
 
 		var content =
-                   '<p><a href="http://www.starbucks.com/">See Review for this branch</a></p>'
-
-
-
-
+                   '<p><a href="/menus/gid/'+place.place_id+'/'+place.name+'">See this menu</a></p>'
 
                   var infowindow = new google.maps.InfoWindow({
                     content:('<div><strong>' + place.name + '</strong><br>' +
                                             'Place ID: ' + place.place_id + '<br>' +
                      place.vicinity + content)
                     });
+
 
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.open(map, marker);
@@ -62,15 +61,38 @@ function initialise(location) {
 
 	}
 
-	function performSearch() {
-		var request = {
-			bounds : map.getBounds(),
-			name : "starbucks"
-		}
-		service.nearbySearch(request, callback);
-	}
+
+	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+	    var input = $("#search").val();
+        var query = (input != '' )? input : "starbucks";
+        performSearch(query);
+        });
+
+
+
+	function performSearch(query){
+        var request ={
+        bounds: map.getBounds(),
+        name: query
+    }
+
+  service.nearbySearch(request,callback);
+}
 
 }
 
-navigator.geolocation.getCurrentPosition(initialise);
+function initializer() {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    zoom: 3,
+    center: {lat: 38., lng: -99.644}
+  });
+}
 
+google.maps.event.addDomListener(window, 'load', initializer);
+
+$(document).ready(function() {
+	$(".getSearch").click(function () {
+		navigator.geolocation.getCurrentPosition(initialise);
+
+	});
+});

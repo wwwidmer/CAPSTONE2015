@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, HttpResponseRedirect, HttpRespo
 from django.core.urlresolvers import reverse
 from django.http import Http404, JsonResponse
 from django.template import RequestContext
-from menu.models import Menu, FoodItem, Review, FoodType, get_Average
+from menu.models import Menu, FoodItem, Review, FoodType, get_Average, GID
 from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
@@ -10,18 +10,14 @@ import json
 from random import randrange, sample
 import re, datetime
 
-def test(request):
-    return render_to_response('test.html')
-
 def index(request):
-
     try:
-        rrand = randrange(0,Review.objects.all().count())
-        revs = Review.objects.all()[rrand]
-        frand = randrange(0,FoodItem.objects.all().filter(id=revs.foodItemName.id).count())
-        foods = FoodItem.objects.all().filter(id=revs.foodItemName.id)[frand]
-        mrand = randrange(0,Menu.objects.all().filter(id=foods.id).count())
-        menus = Menu.objects.all().filter(id=foods.id)[mrand]
+        rrand = randrange(0,Review.objects.all().filter(isActive=True).count())
+        revs = Review.objects.all().filter(isActive=True)[rrand]
+        frand = randrange(0,FoodItem.objects.all().filter(id=revs.foodItemName.id,isActive=True).count())
+        foods = FoodItem.objects.all().filter(id=revs.foodItemName.id,isActive=True)[frand]
+        mrand = randrange(0,Menu.objects.all().filter(id=foods.id,isActive=True).count())
+        menus = Menu.objects.all().filter(id=foods.id,isActive=True)[mrand]
         avg = get_Average(foods.id,None)
     except ValueError:
         menus = None
@@ -51,7 +47,21 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
-    food = FoodItem.objects.all().filter(menuName__id=m_id)
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    return render_to_response("menu.html",context)
+
+def render_menu_by_gid(request,g_id,name="menu"):
+    try:
+        menu = Menu.objects.get(menuName=name)#checking for existing menu
+        try:
+            GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+        except GID.DoesNotExist:
+            menu = add_menu_gid(g_id, menu) #adding this GID to this menu (passes the menu, modifies it and returns)
+    except Menu.DoesNotExist:
+        menu = create_menu_by_gid(g_id, name)#create new menu, add gid and return this menu
+    m_id = menu.id
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
 '''
@@ -66,17 +76,16 @@ def render_food(request,f_id):
         food.save()
     except FoodItem.DoesNotExist:
         raise Http404
-    review = Review.objects.all().filter(foodItemName__id=f_id)
-
+    review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
+    similar = get_similar(f_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None)}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
-
 
 '''
 render new review
@@ -92,6 +101,7 @@ def render_new_review(form, request, f_id):
     instance.createdBy = form.cleaned_data['createdBy']
     instance.logo = form.cleaned_data['logo']
     instance.rating = form.cleaned_data['rating']
+    instance.isActive = True
     instance.createdOn = datetime.datetime.now()
     instance.save()
     return HttpResponseRedirect("")
@@ -99,7 +109,7 @@ def render_new_review(form, request, f_id):
 # In the future this will grab the top 20 or so 'Best Rated' items.
 # Best rated = function of how many ratings and average rating
 def render_browse_top_menu(request):
-    menus = Menu.objects.all()
+    menus = Menu.objects.all().filter(isActive=True)
     sorted(menus,key=lambda x: (get_Average(None,x.id)))
     context = {'menus':menus}
     return render_to_response("menu.html",context)
@@ -107,9 +117,8 @@ def render_browse_type_index(request):
     foodType = FoodType.objects.all().order_by("type")
     context = {'foodTypes':foodType}
     return render_to_response("food.html",context)
-
 def render_browse_type_food(request,t_id):
-    fetchFood = FoodItem.objects.filter(type__id=t_id)
+    fetchFood = FoodItem.objects.filter(type__id=t_id,isActive=True)
     foodType = FoodType.objects.get(id=t_id)
     context = {'foodsAsType':fetchFood,'foodType':foodType}
     return render_to_response("food.html",context)
@@ -119,9 +128,14 @@ Not strictly View related functions / helpers / wrappers
 """
 
 # Grab a list from food types most similar to food
-# Future would be to grab several types, lat / long, name
-def get_similar(food_type_id):
-    pass
+# Future would be to grab several types, lat / long, name, etc
+def get_similar(food_id):
+    similar = []
+    food = FoodItem.objects.get(id=food_id)
+    for x in food.type.all():
+        similar.append(x.id)
+    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct()
+    return similarFood
 
 """
 Search Handlers
@@ -136,8 +150,8 @@ def render_search(request):
         mentry = get_query(query_string,['menuName'])
         tentry = get_query(query_string,['type'])
         fentry = get_query(query_string,['dishName'])
-        menu = Menu.objects.filter(mentry).order_by('-id')
-        food = FoodItem.objects.filter(fentry).order_by('-id')
+        menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
+        food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
         type = FoodType.objects.filter(tentry).order_by('-id')
 
     context = {"GET":query_string,'menu':menu,'food':food,'type':type}
@@ -148,22 +162,35 @@ def normalize_query(query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').finda
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
 
 def get_query(query_string, search_fields):
-	query = None
-	terms = normalize_query(query_string)
-	for t in terms:
-		or_query = None
-		for field_name in search_fields:
-			q = Q(**{"%s__icontains" % field_name : t})
-			if or_query is None:
-				or_query = q
-			else:
-				or_query = or_query | q
-		if query is None:
-			query = or_query
-		else:
-			query = query & or_query
-	return query
+    query = None
+    terms = normalize_query(query_string)
+    for t in terms:
+        or_query = None
+        for field_name in search_fields:
+            q = Q(**{"%s__icontains" % field_name : t})
+            if or_query is None:
+                or_query = q
+            else:
+                or_query = or_query | q
+        if query is None:
+            query = or_query
+        else:
+            query = query & or_query
+    return query
 
+# Created a new menu if gid does not exist
+def create_menu_by_gid(g_id, menuName):
+    createdOn = datetime.datetime.now()
+    isActive = True
+    createdBy = "auto"
+    newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+    menuGID = GID.objects.create(gid=g_id)
+    newMenu.gid.add(menuGID)
+    return newMenu
+def add_menu_gid(g_id, menu):
+        menuGID = GID.objects.create(gid=g_id)
+        menu.gid.add(menuGID)
+        return menu
 
 """
 Ajax handlers
@@ -178,7 +205,7 @@ def ajax_get_food_by_id(request):
         try:
             if 'fid' in request.GET:
                 fid = request.GET.get('fid')
-                fetchFood = FoodItem.objects.filter(id=fid)
+                fetchFood = FoodItem.objects.filter(id=fid,isActive=True)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
@@ -194,7 +221,7 @@ def ajax_get_menu_by_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchMenu = Menu.objects.filter(id=mid)
+                fetchMenu = Menu.objects.filter(id=mid,isActive=True)
                 data = serializers.serialize('json',fetchMenu)
                 return JsonResponse(data,safe=False)
             else:
@@ -210,7 +237,7 @@ def ajax_get_review_by_food(request):
         try:
             if 'fid' in request.GET:
                 fid = request.GET.get('fid')
-                fetchReview = Review.objects.filter(FoodItemName__id=fid)
+                fetchReview = Review.objects.filter(FoodItemName__id=fid,isActive=True)
                 data = serializers.serialize('json',fetchReview)
                 return JsonResponse(data, safe=False)
             else:
@@ -225,7 +252,7 @@ def ajax_get_food_by_menu_id(request):
         try:
             if 'mid' in request.GET:
                 mid = request.GET.get('mid')
-                fetchFood = FoodItem.objects.filter(menuName__id=mid)
+                fetchFood = FoodItem.objects.filter(menuName__id=mid,isActive=True)
                 data = serializers.serialize('json',fetchFood)
                 return JsonResponse(data,safe=False)
             else:
@@ -235,3 +262,20 @@ def ajax_get_food_by_menu_id(request):
     else:
         return HttpResponse("You do not have permission to access this webpage")
 
+def ajax_add_menu_by_gid(request):
+    if request.is_ajax():
+        if 'gid' in request.GET:
+            ngid = request.GET.get('gid')
+        else:
+            return HttpResponse("Error")
+        if Menu.objects.get(gid=ngid):
+            return HttpResponse("Already Exists, why are you here?")
+        else:
+            menuName = "newmenu"
+            createdOn = datetime.datetime.now()
+            isActive = True
+            createdBy = "auto"
+            newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+            return HttpResponse("Item: "+gid+":"+menuName+" added to database.")
+    else:
+        return HttpResponse("You do not have permission to access this webpage")

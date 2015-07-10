@@ -4,8 +4,18 @@
 
 $(document).ready(function(){
     $("#searchWarning").hide();
-    $("#getSearch").click(function(){
+
+   /* $(".getSearch").click(function(){
         var search = $("#search").val();
+        if(search.length < 1) {
+            $("#searchWarning").show();
+            $("#searchWarning.alert.alert-danger").html("Please enter a search term.");
+        } else {
+            window.open("/search/results?search=" + search);
+        }
+    });*/
+    $(".getSearch-menu").click(function(){
+        var search = $("#search-menu").val();
         if(search.length < 1) {
             $("#searchWarning").show();
             $("#searchWarning.alert.alert-danger").html("Please enter a search term.");
