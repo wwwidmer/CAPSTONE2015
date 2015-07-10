@@ -83,10 +83,11 @@ class abstractMenuItem(models.Model):
         abstract = True
 
 class Menu(abstractMenuItem):
-    id = models.UUIDField(primary_key=True,auto_created=True,editable=False)
+    #id = models.UUIDField(primary_key=True,unique=True,auto_created=True,editable=False)
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
+
     def save(self,force_insert=False,using=None):
         resizeLogo(Menu, self, 50, 50)
         set_menu_isActive(self.id,self.isActive)
