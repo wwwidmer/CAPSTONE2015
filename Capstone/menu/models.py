@@ -2,6 +2,7 @@ from django.db import models
 from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
+import uuid
 from django.core import signals
 
 '''
@@ -82,6 +83,7 @@ class abstractMenuItem(models.Model):
         abstract = True
 
 class Menu(abstractMenuItem):
+    id = models.UUIDField(primary_key=True,auto_created=True,editable=False)
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
