@@ -1,5 +1,5 @@
 from django.contrib import admin
-from menu.models import Menu, FoodItem, FoodType, Review  # , organizedMenu
+from menu.models import Menu, GID, FoodItem, FoodType, Review  # , organizedMenu
 
 # Register Models are will be edited in the Admin screen
 # This may not include all models
@@ -7,7 +7,8 @@ from menu.models import Menu, FoodItem, FoodType, Review  # , organizedMenu
 class FoodTypeAdmin(admin.ModelAdmin):
     # list_display = ('FType')
     ordering = ['type']
-
+class GIDAdmin(admin.ModelAdmin):
+    ordering = ['gid']
 class FoodAdmin(admin.StackedInline):
       model = FoodItem
       fieldsets = [
@@ -37,6 +38,7 @@ class MenuAdmin(admin.ModelAdmin):
         (None, {'fields':['logo']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
+        (None, {'fields':['gid']}),
         (None, {'fields':['isActive']})]
 
     inlines = [FoodAdmin]
@@ -44,3 +46,4 @@ class MenuAdmin(admin.ModelAdmin):
 admin.site.register(Review,ReviewAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(FoodType, FoodTypeAdmin)
+admin.site.register(GID,GIDAdmin)

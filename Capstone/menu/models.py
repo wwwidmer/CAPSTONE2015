@@ -58,6 +58,11 @@ FoodItem - Table of Stock (Food) Information
 Review - Saved Information about Stock
 table in our database
 '''
+class GID(models.Model):
+     gid = models.CharField(max_length=100,default='',blank=True)
+
+     def __str__(self):
+         return self.gid
 
 class FoodType(models.Model):
     type = models.CharField(max_length=30, default='')
@@ -78,7 +83,7 @@ class abstractMenuItem(models.Model):
 
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
-    gid = models.CharField(max_length=100,default='')
+    gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
     def save(self,force_insert=False,using=None):
         resizeLogo(Menu, self, 50, 50)
