@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, HttpResponseRedirect, HttpRespo
 from django.core.urlresolvers import reverse
 from django.http import Http404, JsonResponse
 from django.template import RequestContext
-from menu.models import Menu, FoodItem, Review, FoodType, get_Average
+from menu.models import Menu, FoodItem, Review, FoodType, get_Average, GID
 from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
@@ -47,6 +47,20 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
+    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    return render_to_response("menu.html",context)
+
+def render_menu_by_gid(request,g_id,name="menu"):
+    try:
+        menu = Menu.objects.get(menuName=name)#checking for existing menu
+        try:
+            GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+        except GID.DoesNotExist:
+            menu = add_menu_gid(g_id, menu) #adding this GID to this menu (passes the menu, modifies it and returns)
+    except Menu.DoesNotExist:
+        menu = create_menu_by_gid(g_id, name)#create new menu, add gid and return this menu
+    m_id = menu.id
     food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
     return render_to_response("menu.html",context)
@@ -148,21 +162,35 @@ def normalize_query(query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').finda
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
 
 def get_query(query_string, search_fields):
-	query = None
-	terms = normalize_query(query_string)
-	for t in terms:
-		or_query = None
-		for field_name in search_fields:
-			q = Q(**{"%s__icontains" % field_name : t})
-			if or_query is None:
-				or_query = q
-			else:
-				or_query = or_query | q
-		if query is None:
-			query = or_query
-		else:
-			query = query & or_query
-	return query
+    query = None
+    terms = normalize_query(query_string)
+    for t in terms:
+        or_query = None
+        for field_name in search_fields:
+            q = Q(**{"%s__icontains" % field_name : t})
+            if or_query is None:
+                or_query = q
+            else:
+                or_query = or_query | q
+        if query is None:
+            query = or_query
+        else:
+            query = query & or_query
+    return query
+
+# Created a new menu if gid does not exist
+def create_menu_by_gid(g_id, menuName):
+    createdOn = datetime.datetime.now()
+    isActive = True
+    createdBy = "auto"
+    newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+    menuGID = GID.objects.create(gid=g_id)
+    newMenu.gid.add(menuGID)
+    return newMenu
+def add_menu_gid(g_id, menu):
+        menuGID = GID.objects.create(gid=g_id)
+        menu.gid.add(menuGID)
+        return menu
 
 """
 Ajax handlers
@@ -244,7 +272,7 @@ def ajax_add_menu_by_gid(request):
             return HttpResponse("Already Exists, why are you here?")
         else:
             menuName = "newmenu"
-            createdOn = datetime.now()
+            createdOn = datetime.datetime.now()
             isActive = True
             createdBy = "auto"
             newMenu = Menu.objects.create(menuName=menuName,gid=ngid,createdOn=createdOn,isActive=isActive,createdBy=createdBy)

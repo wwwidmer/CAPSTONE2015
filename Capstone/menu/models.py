@@ -2,6 +2,7 @@ from django.db import models
 from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
+import uuid
 from django.core import signals
 
 '''
@@ -13,7 +14,6 @@ def get_Average(food_id, menu_id):
         if menu_id is None:
             reviews = Review.objects.all().filter(foodItemName__id=food_id)
         else:
-            # This gets more complicated without Review linked to Menu... Needs work
             reviews = Review.objects.all().filter(foodItemName__menuName=menu_id)
         total = 0
         for x in reviews:
@@ -59,6 +59,11 @@ FoodItem - Table of Stock (Food) Information
 Review - Saved Information about Stock
 table in our database
 '''
+class GID(models.Model):
+     gid = models.CharField(max_length=100,default='',blank=True)
+
+     def __str__(self):
+         return self.gid
 
 class FoodType(models.Model):
     type = models.CharField(max_length=30, default='')
@@ -78,9 +83,11 @@ class abstractMenuItem(models.Model):
         abstract = True
 
 class Menu(abstractMenuItem):
+    #id = models.UUIDField(primary_key=True,unique=True,auto_created=True,editable=False)
     menuName = models.CharField(max_length=30, default='')
-    gid = models.IntegerField(default=0,blank=True)
+    gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
+
     def save(self,force_insert=False,using=None):
         resizeLogo(Menu, self, 50, 50)
         set_menu_isActive(self.id,self.isActive)

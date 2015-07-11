@@ -37,7 +37,7 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<li class="col-md-4">
-		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.logo }}"/> {{ m.title }} </a>
+		<a href="/menus/{{ m.id }}/{{m.menuName}}/"> <img src="/media/{{ m.logo }}"/> {{ m.title }} </a>
 	</li>
 	{% endfor %}
 </ul>
