@@ -5,10 +5,21 @@ function initialise(location) {
 	console.log("location:" + location);
 	var currentLocation = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
 
+    var myStyles =[
+       {
+             featureType: "poi",
+             elementType: "labels",
+             stylers:[
+                 { visibility:"off" }
+
+            ]
+         }
+    ];
 	var mapOption = {
 		center : currentLocation,
 		zoom : 11,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
+	    mapTypeId : google.maps.MapTypeId.ROADMAP,
+		styles: myStyles
 	};
 
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOption);
@@ -68,7 +79,7 @@ function initialise(location) {
 
 	google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
 	    var input = $("#search").val();
-        var query = (input != '' )? input : "starbucks";
+        var query = (input != ' ' )? input : "starbucks";
         performSearch(query);
         });
 
@@ -80,17 +91,17 @@ function initialise(location) {
         name: query
     }
 
-  service.nearbySearch(request,callback);
-}
+    service.nearbySearch(request,callback);
+    }
 
-}
+    }
 
-function initializer() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 3,
-    center: {lat: 38., lng: -99.644}
-  });
-}
+    function initializer() {
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+        zoom: 3,
+        center: {lat: 38., lng: -99.644}
+     });
+    }
 
 google.maps.event.addDomListener(window, 'load', initializer);
 
