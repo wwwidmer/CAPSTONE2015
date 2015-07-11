@@ -4,9 +4,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Menu Rating</title>
+		<title>Menu App</title>
 		{% load staticfiles %}
 		<!-- Import styles and scripts-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="{%  static 'assets/bootstrap/css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="{%  static 'assets/custom_style.css' %}">
 		<!-- Bootstrap -->
@@ -23,24 +26,22 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="/">Menu</a>
 				</div>
-
 				<div class="navbar-form navbar-left" role="search">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search for..." id="search-menu">
-						<span class="input-group-btn">
-							<button class="btn btn-default getSearch-menu" type="button">
-								Search
-							</button> </span>
-					</div><!-- /input-group -->
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" id="search-menu">
+					</div>
+					<button class="btn btn-default getSearch-menu">
+						Submit
+					</button>
 				</div>
-				<div class="collapse navbar-collapse">
+				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="/"> Home </a>
@@ -66,39 +67,39 @@
 			{% block map %}
 			{% endblock %}
 
-			<hr>
-			<!-- Footer
+			<!-- Footer -->
+			<footer>
 			<nav class="navbar navbar-default navbar-static-bottom">
-			<div class="container">
-			<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			</button>
-			</div>
-			<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-left">
-			<li>
-			<p class="navbar-text">
-			Copyright &copy;
-			</p>
-			</li>
-			<li>
-			<a href="/contact/">contact</a>
-			</li>
-			<li>
-			<a href="/about/">about</a>
-			</li>
-			<li>
-			<a href="/add your restaurant/">add</a>
-			</li>
-			<!-- <li><a class="btn btn-large btn-success signup" href="#sign">Sign in</a>-->
-			</ul>
-		</div><!--/.nav-collapse
-		</div>
-		</nav> -->
-		</div>
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-left">
+							<li>
+								<p class="navbar-text">
+									Copyright &copy;
+								</p>
+							</li>
+							<li>
+								<a href="/contact/">contact</a>
+							</li>
+							<li>
+								<a href="/about/">about</a>
+							</li>
+							<li>
+								<a href="/add your restaurant/">add</a>
+							</li>
+							<!-- <li><a class="btn btn-large btn-success signup" href="#sign">Sign in</a>-->
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
+			</footer>
 		</div>
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
