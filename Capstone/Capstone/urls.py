@@ -31,9 +31,9 @@ urlpatterns = [
     url(r'^menus/food/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
     url(r'^menus/gid/(?P<g_id>[^/]+)/(?P<name>\w+)', 'menu.views.render_menu_by_gid'),
     url(r'^menus/gid/(?P<g_id>[^/]+)', 'menu.views.render_menu_by_gid'),
-    url(r'^menus/(?P<m_id>[^/]+)/(?P<menuName>\d+)', 'menu.views.render_menu'),
     url(r'^menus/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'), #(?P<m_id>\d+)
     url(r'^menus/type/', 'menu.views.render_browse_type_index'),
+    url(r'^menus/(?P<m_id>[^/]+)', 'menu.views.render_menu'),
     url(r'^menus', 'menu.views.render_browse_top_menu'),
     url(r'^search/results', 'menu.views.render_search'),
     url(r'^search/', 'menu.views.render_search_index'),

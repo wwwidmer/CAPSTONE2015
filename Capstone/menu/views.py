@@ -184,6 +184,10 @@ def create_menu_by_gid(g_id, menuName):
     isActive = True
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+    try:
+            isGid= GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+    except GID.DoesNotExist:
+            menu = add_menu_gid(g_id, newMenu) #adding this GID to this menu (passes the menu, modifies it and returns)
     menuGID = GID.objects.create(gid=g_id)
     newMenu.gid.add(menuGID)
     return newMenu

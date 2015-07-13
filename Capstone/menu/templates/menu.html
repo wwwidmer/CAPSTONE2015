@@ -37,7 +37,7 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<li class="col-md-4">
-		<a href="/menus/{{ m.id }}/{{m.menuName}}/"> <img src="/media/{{ m.logo }}"/> {{ m.title }} </a>
+		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.logo }}"/> {{ m.menuName }} </a>
 	</li>
 	{% endfor %}
 </ul>
@@ -53,11 +53,11 @@
 	{% if food %}
 	{%  for f in food %}
 	<li class="col-md-4">
-		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 		<p>
+		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}}
-		</p>
 		{% endfor %}
+        </p>
 		<a href="/menus/food/{{ f.id }}">
 		<p>
 			{{ f.dishName }}
