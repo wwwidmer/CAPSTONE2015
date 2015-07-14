@@ -27,9 +27,10 @@ class ReviewAdmin(admin.ModelAdmin):
         (None, {'fields':['createdBy']}),
         (None, {'fields':['reviewComment']}),
         (None, {'fields':['rating']}),
-        (None, {'fields':['logo']})]
+        (None, {'fields':['logo']}),
+        (None, {'fields':['isActive']})]
     extra = 0
-     #ordering = ['id','foodItemName']
+        #ordering = ['id','foodItemName']
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['menuName','id']
