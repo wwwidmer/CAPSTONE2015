@@ -16,4 +16,27 @@
 
 - Check github Issue tracker
 
+- URLS to catch groups of words and replace spaces with '-' vice versa
+
+- AJAX to call create_menu_by_gid instead of plain request
+
+- resize images
+
+- filter google maps
+
+- filter menus by type
+
+- food types -> menu relationship
+
+- map on menus 
+
+- css enlarged images
+
+- faceless 
+
+- search bar make shorter
+
+- search also shows from db on search page 
+
+- marker for your position
 
