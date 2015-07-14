@@ -20,6 +20,7 @@
     {% elif food %}
         <div class="row">
         <h3> {{ food.dishName }}</h3>
+        <img src="/media/{{ food.logo }}"/>
         <div id="fid" class="hidden hdn"> {{ food.id }}</div>
         <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
         {% if reviews %}
