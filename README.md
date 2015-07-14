@@ -16,11 +16,4 @@
 
 - Check github Issue tracker
 
-- Google Maps GID => Menu Unique
-
-- Ajax request to create menu for above
-
-- Stronger search ?
-
-- get Similar
 
