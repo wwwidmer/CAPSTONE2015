@@ -57,14 +57,14 @@
 		<a href="/menus/food/{{ f.id }}">
 		<p>
 			{{ f.dishName }}
-		</p>
+		</p> </a>
 				<p>
 		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}}
 		{% endfor %}
-        </p>
+        </p><a href="/menus/food/{{ f.id }}">
 			{% if f.logo != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.logo }}"> {% endif %} </a>
-
+		</a>
 		<p>
 			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
 		</p>
