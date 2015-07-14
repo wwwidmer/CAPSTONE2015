@@ -60,13 +60,13 @@ Review - Saved Information about Stock
 table in our database
 '''
 class GID(models.Model):
-     gid = models.CharField(max_length=100,default='',blank=True)
+     gid = models.CharField(max_length=100,default='',blank=True, unique=True)
 
      def __str__(self):
          return self.gid
 
 class FoodType(models.Model):
-    type = models.CharField(max_length=30, default='')
+    type = models.CharField(max_length=30, default='', unique=True)
     def __str__(self):
         return self.type
     class Meta:

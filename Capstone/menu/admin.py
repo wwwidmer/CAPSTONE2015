@@ -1,7 +1,6 @@
 from django.contrib import admin
 from menu.models import Menu, GID, FoodItem, FoodType, Review  # , organizedMenu
-
-# Register Models are will be edited in the Admin screen
+# Register Models will be edited in the Admin screen
 # This may not include all models
 
 class FoodTypeAdmin(admin.ModelAdmin):
@@ -11,13 +10,14 @@ class GIDAdmin(admin.ModelAdmin):
     ordering = ['gid']
 class FoodAdmin(admin.StackedInline):
       model = FoodItem
+      filter_horizontal= ('type',)
       fieldsets = [
         (None, {'fields':['dishName']}),
-        (None, {'fields':['type']}),
         (None, {'fields':['logo']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
         (None, {'fields':['rating']}),
+        (None, {'fields':['type']}),
         (None, {'fields':['isActive']})]
       extra = 0
 
@@ -34,7 +34,7 @@ class ReviewAdmin(admin.ModelAdmin):
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['menuName','id']
     list_filter = ['createdOn','createdBy']
-
+    '''filter_horizontal= ('gid',) -Optional'''
     fieldsets = [
         (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),
