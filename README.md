@@ -22,8 +22,6 @@
 
 - resize images
 
-- filter google maps
-
 - filter menus by type
 
 - food types -> menu relationship
@@ -38,5 +36,4 @@
 
 - search also shows from db on search page 
 
-- marker for your position
 
