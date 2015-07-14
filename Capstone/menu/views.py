@@ -15,7 +15,7 @@ def index(request):
         rrand = randrange(0,Review.objects.all().filter(isActive=True).count())
         revs = Review.objects.all().filter(isActive=True)[rrand]
         foods = FoodItem.objects.get(id=revs.foodItemName.id)
-        menus = Menu.objects.get(id=foods.id)
+        menus = Menu.objects.get(id=foods.menuName.id)
         avg = get_Average(foods.id,None)
     except ValueError:
         menus = None

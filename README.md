@@ -16,11 +16,27 @@
 
 - Check github Issue tracker
 
-- Google Maps GID => Menu Unique
+- URLS to catch groups of words and replace spaces with '-' vice versa
 
-- Ajax request to create menu for above
+- AJAX to call create_menu_by_gid instead of plain request
 
-- Stronger search ?
+- resize images
 
-- get Similar
+- filter google maps
+
+- filter menus by type
+
+- food types -> menu relationship
+
+- map on menus 
+
+- css enlarged images
+
+- faceless 
+
+- search bar make shorter
+
+- search also shows from db on search page 
+
+- marker for your position
 

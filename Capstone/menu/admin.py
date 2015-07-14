@@ -22,6 +22,8 @@ class FoodAdmin(admin.StackedInline):
       extra = 0
 
 class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['createdOn','id','reviewComment']
+    ordering = ['isActive']
     fieldsets = [
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
