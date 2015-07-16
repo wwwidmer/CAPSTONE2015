@@ -22,17 +22,14 @@ class FoodAdmin(admin.StackedInline):
       extra = 0
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['createdOn','id','reviewComment']
-    ordering = ['isActive']
     fieldsets = [
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
         (None, {'fields':['reviewComment']}),
         (None, {'fields':['rating']}),
-        (None, {'fields':['logo']}),
-        (None, {'fields':['isActive']})]
+        (None, {'fields':['logo']})]
     extra = 0
-        #ordering = ['id','foodItemName']
+     #ordering = ['id','foodItemName']
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['menuName','id']

@@ -20,7 +20,6 @@
     {% elif food %}
         <div class="row">
         <h3> {{ food.dishName }}</h3>
-        <img src="/media/{{ food.logo }}"/>
         <div id="fid" class="hidden hdn"> {{ food.id }}</div>
         <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
         {% if reviews %}
@@ -31,6 +30,7 @@
                         <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
                         <p>Author: {{ r.createdBy }}</p>
                         {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
+                        	<!--<div id="bigimage"></div>-->
                             <img src="/media/{{ r.logo }}"/>
                         {% endif %}
                         <p>{{ r.reviewComment }}</p>
