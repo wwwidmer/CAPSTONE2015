@@ -54,18 +54,30 @@ too wide - or blurb - about schema - tiles?
   menu
 map
 all images larger
+
 format the types better
+
 tabbed filters
+
 filter food by - types - 
   review
 link back to menu
+
 random list of foods on same menu
+
 similar foods
+
 format the review submission
+
 borders
+
   food-type
+  
 less space
+
 tabbed order by number of
+
   food-type-list
+  
 menu logo + dish name 
 
