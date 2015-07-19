@@ -93,16 +93,17 @@ label {
 }
 
 .map, #map-canvas {
-	width: 500px;
+	width: 750px;
 	height: 400px;
-	margin: 0;
-	padding: 0;
+	margin: 21px;
+	padding: 30px;
 	position: relative;
 }
 
 body {
 	padding-top: 70px;
 }
+
 
 /* image enlarger */
 #bigimage {
@@ -118,3 +119,4 @@ body {
 	background: #fff;
 	border: 1px solid #e3e3e3;
 }
+
