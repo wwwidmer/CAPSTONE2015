@@ -60,7 +60,7 @@ format the types better
 tabbed filters
 
 filter food by - types - 
-  review
+  -review
 link back to menu
 
 random list of foods on same menu
@@ -71,13 +71,13 @@ format the review submission
 
 borders
 
-  food-type
+ - food-type
   
 less space
 
 tabbed order by number of
 
-  food-type-list
+  -food-type-list
   
 menu logo + dish name 
 
