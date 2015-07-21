@@ -37,35 +37,41 @@
 - search also shows from db on search page 
 
   index
-latin text
-centering
-map wider, more centered
-remove footer links, (keep footer)
+Xlatin text
+Xcentering
+Xmap wider, more centered
+Xremove footer links, (keep footer)
+
   search
-map wider, more centered
-remove google maps text
+Xmap wider, more centered
+Xremove google maps text
 shifted search button same row as input
+
   search-results
-display menu logo
-display food logo?
+Xdisplay menu logo
+Xdisplay food logo?
 
   menu index
 too wide - or blurb - about schema - tiles?
+
   menu
 map
 all images larger
 format the types better
 tabbed filters
 filter food by - types - 
+
   review
-link back to menu
+Xlink back to menu 
 random list of foods on same menu
-similar foods
+Xsimilar foods
 format the review submission
 borders
+
   food-type
 less space
 tabbed order by number of
+
   food-type-list
 menu logo + dish name 
 

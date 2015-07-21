@@ -8,19 +8,23 @@
         {% if menu %}
             <h3> Menus </h3>
             {% for m in menu %}
-                <a href="/menus/{{ m.id }}">{{ m.menuName }}</a>
+                <a href="/menus/{{ m.id }}">{{ m.menuName }}
+                 <img src="/media/{{ m.logo }}"> </a>
             {% endfor %}
         {% endif %}
         {% if food %}
             <h3> Food </h3>
             {% for k in food %}
+
                 <a href="/menus/food/{{ k.id }}"> {{ k.dishName }}</a>
+                <img src=""/>
             {% endfor %}
         {% endif %}
         {% if type %}
             <h3> Types </h3>
             {% for t in type %}
-                <a href="/menus/type/{{ t.id }}">{{ t.type }}</a>
+                <a href="/menus/type/{{ t.id }}">{{ t.type }}
+                <img src="/media/{{ t.logo }}"> </a>
             {% endfor %}
         {% endif %}
     {% else %}
