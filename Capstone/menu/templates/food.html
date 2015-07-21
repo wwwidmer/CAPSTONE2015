@@ -3,7 +3,7 @@
 {% block page %}
     {% if foodTypes %}
         {% for f in foodTypes %}
-            <div class="col-sm-5">
+            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
                 <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
             </div>
         {% endfor %}
@@ -12,7 +12,7 @@
         </br>
         <!-- links to these in their menus -->
         {% for f in foodsAsType %}
-             <div class="col-sm-5">
+             <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
                 <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
             </div>
             <br/>
@@ -25,13 +25,17 @@
         {% if reviews %}
             <ul>
                 {% for r in reviews %}
-                    <li class="col-lg-6">
+                    <li class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
                         <p>{{ r.createdOn }}</p>
                         <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
                         <p>Author: {{ r.createdBy }}</p>
                         {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
                         	<!--<div id="bigimage"></div>-->
+<<<<<<< HEAD
                             <img src="/media/{{ r.logo }}"/>
+=======
+                            <img src="/media/{{ r.logo }}"id="bigimage"/>
+>>>>>>> e53893471973f48fea54d783b0aee9a2363ab702
                         {% endif %}
                         <p>{{ r.reviewComment }}</p>
                     </li>
