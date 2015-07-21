@@ -183,16 +183,15 @@ def create_menu_by_gid(g_id, menuName):
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
     try:
-            isGid= GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+            menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
-            menu = add_menu_gid(g_id, newMenu) #adding this GID to this menu (passes the menu, modifies it and returns)
-    menuGID = GID.objects.create(gid=g_id)
+            menuGID = add_menu_gid(g_id, newMenu)
     newMenu.gid.add(menuGID)
     return newMenu
 def add_menu_gid(g_id, menu):
         menuGID = GID.objects.create(gid=g_id)
         menu.gid.add(menuGID)
-        return menu
+        return menuGID
 
 """
 Ajax handlers
