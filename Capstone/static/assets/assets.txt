@@ -1,8 +1,0 @@
-# Assets.txt
-
-An asset is an image, file, or code that is static and used in a view.
-These are images that are uploaded by Programmers ONLY. User uploaded files and images will be served from Media.
-
-An example of an asset is a Javascript file, the base CSS file, or a background image or icon.
-
-If a file is not user uploaded and is not an asset then upload to /static/ (one directory up).
