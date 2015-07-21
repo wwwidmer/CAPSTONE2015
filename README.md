@@ -31,9 +31,6 @@ resize images
 ========
 W
 
-  review
-random list of foods on same menu
-
 search also shows from db on search page 
 
 AJAX to call create_menu_by_gid instead of plain request
