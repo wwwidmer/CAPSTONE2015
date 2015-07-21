@@ -32,7 +32,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control search-query" placeholder="Search for..." id="search-menu">
 						<span class="input-group-btn">
-							<button class="btn btn-default getSearch-menu" type="button">
+							<button class="btn btn-info getSearch-menu" type="button">
 								Search
 							</button> </span>
 					</div><!-- /input-group -->
@@ -55,7 +55,7 @@
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-		<div class="container page">
+		<div class="container-fluid">
 			{% block page %}
 			{% endblock %}
 			{% block map %}
@@ -66,26 +66,8 @@
 			<nav class="navbar navbar-default navbar-inner navbar-static-bottom" role="navigation2">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
 						<a class="navbar-brand" href="/">Copyright &copy;</a>
 					</div>
-					<div class="collapse navbar-collapse" id="footer">
-						<ul class="nav navbar-nav">
-							<li>
-								<a href="/contact/">contact</a>
-							</li>
-							<li>
-								<a href="/about/">about</a>
-							</li>
-							<li>
-								<a href="/add your restaurant/">add</a>
-							</li>
-						</ul>
-					</div><!--/.nav-collapse -->
 				</div>
 			</nav>
 		</footer>

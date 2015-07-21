@@ -3,10 +3,12 @@
 	list-style-type: none;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.container.page {
-	padding-top: 25px;
-	margin-left: auto;
+.container-fluid{
+	padding-top: auto;
+	margin-top: auto;
 	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;	
 }
 .c {
 	float: left;
@@ -101,9 +103,8 @@ label {
 }
 
 body {
-	padding-top: 70px;
+	padding-top: 125px;
 }
-
 
 /* image enlarger */
 #bigimage {
