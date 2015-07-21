@@ -26,7 +26,9 @@
 TODO-per
 ========
 Q
+
 URLS to catch groups of words and replace spaces with '-' vice versa
+
 resize images
 
 ========
@@ -46,22 +48,22 @@ R
 image enlarge
 
 format the types better
+
 tabbed filters
 
-  review
 format the review submission
+
 borders style
 
 ========
 ========
 S
 map on menus
- 
-   search
+
 shifted search button same row as input
   
-  menu index
 too wide - or blurb - about schema - tiles?
+
 make search bar shorted
 
 ========
