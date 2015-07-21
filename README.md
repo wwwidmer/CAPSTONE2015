@@ -16,6 +16,10 @@
 
 - Check github Issue tracker
 
+- Add restaurant examples
+- Add food to restaurant examples
+- Add reviews to foods in restaurant examples 
+
 ========
 TODO-per
 ========
