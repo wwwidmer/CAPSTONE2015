@@ -31,11 +31,8 @@
                         <p>Author: {{ r.createdBy }}</p>
                         {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
                         	<!--<div id="bigimage"></div>-->
-<<<<<<< HEAD
                             <img src="/media/{{ r.logo }}"/>
-=======
                             <img src="/media/{{ r.logo }}"id="bigimage"/>
->>>>>>> e53893471973f48fea54d783b0aee9a2363ab702
                         {% endif %}
                         <p>{{ r.reviewComment }}</p>
                     </li>
