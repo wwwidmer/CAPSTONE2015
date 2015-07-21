@@ -1,0 +1,46 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+{% block page %}
+
+{% if menus %}
+<ul id="menu">
+	{%  for m in menus %}
+	<li class="col-md-4">
+		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/> {{ m.menuName }} </a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if menu %}
+
+<h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+<p>
+	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
+</p><!--Total Average Menu Rating-->
+<ul id="menu">
+	{% if food %}
+	{%  for f in food %}
+	<li class="col-md-4">
+
+		<a href="/menus/food/{{ f.id }}">
+		<p>
+			{{ f.dishName }}
+		</p> </a>
+				<p>
+		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+			{{types}}
+		{% endfor %}
+        </p><a href="/menus/food/{{ f.id }}">
+			{% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+		</a>
+		<p>
+			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
+		</p>
+	</li>
+	{% endfor %}
+	{% endif %}
+</ul>
+{% endif %}
+
+{% endblock %}
