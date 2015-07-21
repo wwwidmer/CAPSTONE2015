@@ -30,6 +30,7 @@
                         <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
                         <p>Author: {{ r.createdBy }}</p>
                         {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
+                        	<!--<div id="bigimage"></div>-->
                             <img src="/media/{{ r.logo }}"/>
                         {% endif %}
                         <p>{{ r.reviewComment }}</p>

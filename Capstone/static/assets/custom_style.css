@@ -103,3 +103,18 @@ label {
 body {
 	padding-top: 70px;
 }
+
+/* image enlarger */
+#bigimage {
+	position: absolute;
+	display: none;
+}
+
+/* image enlarger */
+#bigimage img {
+	width: 300px;
+	height: 300px;
+	padding: 5px;
+	background: #fff;
+	border: 1px solid #e3e3e3;
+}
