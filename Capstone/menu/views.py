@@ -7,6 +7,7 @@ from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
 import json
+import math
 from random import randrange, sample
 import re, datetime
 
@@ -76,13 +77,14 @@ def render_food(request,f_id):
         raise Http404
     review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
     similar = get_similar(f_id)
+    menuFood = get_menu_food_random(food.menuName)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar,'menuFood':menuFood}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
@@ -183,16 +185,19 @@ def create_menu_by_gid(g_id, menuName):
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
     try:
-            isGid= GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+            menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
-            menu = add_menu_gid(g_id, newMenu) #adding this GID to this menu (passes the menu, modifies it and returns)
-    menuGID = GID.objects.create(gid=g_id)
+            menuGID = add_menu_gid(g_id, newMenu)
     newMenu.gid.add(menuGID)
     return newMenu
 def add_menu_gid(g_id, menu):
         menuGID = GID.objects.create(gid=g_id)
         menu.gid.add(menuGID)
-        return menu
+        return menuGID
+def get_menu_food_random(menuId):
+    food = list(FoodItem.objects.filter(menuName=menuId))
+    foodSample = sample(food,math.ceil(len(food)/4))
+    return foodSample
 
 """
 Ajax handlers

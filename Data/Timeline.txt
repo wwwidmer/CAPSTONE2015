@@ -10,23 +10,23 @@ Dates are Tuesday/Thursday
 6/18 - Classes and Methods detailed    x
 
 6/23 - Browse                          x
-6/25 - Search                          /
+6/25 - Search                          x
 
 6/30 - Rating System                   x
 7/2 - Reviews                          x
 
-7/7 - Code review / Documentation      /
---------------------------------------
-7/14 - Review Deployment System        /
+7/7 - Code review / Documentation      x
 
-7/21 - Google Maps API                 /
+7/14 - Review Deployment System        x
+
+7/21 - Google Maps API                 x
 7/23 - Web Service Deployment          x
-
+--------------------------------------
 7/28 - GUI Revamp                      /
-7/30 - Responsive design for phone     *
+7/30 - Responsive design for phone     /
 
 8/4 - Login                            *
 8/6 - Facebook / G+ login              *
  =====================================
-8/11 - Cleanup
-8/13 - 
+8/11 - Cleanup / Present
+8/13 - Present

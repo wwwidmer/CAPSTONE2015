@@ -10,84 +10,66 @@
   
   richard77927@hotmail.com Frontend / developer
 
-# TODO
+# TODO-all 
 
 - Weekly Progress Report
 
 - Check github Issue tracker
 
-- URLS to catch groups of words and replace spaces with '-' vice versa
+- Add restaurant examples
 
-- AJAX to call create_menu_by_gid instead of plain request
+- Add food to restaurant examples
 
-- resize images
+- Add reviews to foods in restaurant examples 
 
-- filter menus by type
+========
+TODO-per
+========
+Q
+URLS to catch groups of words and replace spaces with '-' vice versa
+resize images
 
-- food types -> menu relationship
+========
+========
+W
 
-- map on menus 
+search also shows from db on search page 
 
-- css enlarged images
+AJAX to call create_menu_by_gid instead of plain request
 
-- faceless 
+filter menus by type
 
-- search bar make shorter
+========
+========
+R
 
-- search also shows from db on search page 
-
-  index
-Xlatin text
-Xcentering
-Xmap wider, more centered
-Xremove footer links, (keep footer)
-
-  search
-Xmap wider, more centered
-Xremove google maps text
-shifted search button same row as input
-
-  search-results
-Xdisplay menu logo
-Xdisplay food logo?
-
-  menu index
-too wide - or blurb - about schema - tiles?
-
-  menu
-map
-all images larger
+image enlarge
 
 format the types better
-
 tabbed filters
 
-
-
   review
-Xlink back to menu 
-random list of foods on same menu
-Xsimilar foods
-
-  -review
-link back to menu
-
-random list of foods on same menu
-
-similar foods
-
 format the review submission
+borders style
 
-borders
-
-
- - food-type
+========
+========
+S
+map on menus
+ 
+   search
+shifted search button same row as input
   
-less space
+  menu index
+too wide - or blurb - about schema - tiles?
+make search bar shorted
 
-tabbed order by number of
-  food-type-list
-  -food-type-list
+========
+
+
+
+
+
   
-menu logo + dish name 
+
 
