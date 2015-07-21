@@ -30,8 +30,6 @@ resize images
 ========
 ========
 W
-  index
-latin text replaced with some english about the project
 
   review
 random list of foods on same menu
@@ -45,6 +43,8 @@ filter menus by type
 ========
 ========
 R
+
+image enlarge
 
 format the types better
 tabbed filters

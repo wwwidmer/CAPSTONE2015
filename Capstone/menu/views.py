@@ -7,6 +7,7 @@ from menu.forms import ReviewForm
 from django.db.models import Q
 from django.core import serializers
 import json
+import math
 from random import randrange, sample
 import re, datetime
 
@@ -76,13 +77,14 @@ def render_food(request,f_id):
         raise Http404
     review = Review.objects.all().filter(foodItemName__id=f_id,isActive=True)
     similar = get_similar(f_id)
+    menuFood = get_menu_food_random(food.menuName)
     if request.method == 'POST':
         form = ReviewForm(request.POST,request.FILES)
         if form.is_valid():
             return render_new_review(form,request,f_id)
     else:
         form = ReviewForm()
-    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar}
+    context = {'food':food, 'reviews':review,'form':form, 'avg':get_Average(f_id,None),'similar':similar,'menuFood':menuFood}
     return render_to_response("food.html",context,context_instance=RequestContext(request))
 
 '''
@@ -192,6 +194,10 @@ def add_menu_gid(g_id, menu):
         menuGID = GID.objects.create(gid=g_id)
         menu.gid.add(menuGID)
         return menuGID
+def get_menu_food_random(menuId):
+    food = list(FoodItem.objects.filter(menuName=menuId))
+    foodSample = sample(food,math.ceil(len(food)/4))
+    return foodSample
 
 """
 Ajax handlers
