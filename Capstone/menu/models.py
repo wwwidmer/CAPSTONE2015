@@ -2,8 +2,10 @@ from django.db import models
 from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
 from math import floor
-import uuid
-from django.core import signals
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import SimpleUploadedFile
+import os
 
 '''
 Helper Methods
@@ -36,19 +38,36 @@ def set_food_isActive(food_id,state):
         item.isActive = state;
         item.save()
 
-#Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
+# Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
 def resizeLogo(instance, self, x, y):
     if not self.logo:
-        self.logo='default.png'
-    super(instance, self).save()
-    logo = Image.open(self.logo)
-    size = (x, y)
-    logo = logo.resize(size, Image.ANTIALIAS)
-    logo.save(self.logo.path)
+        self.logo = 'default.png'
+        self.thumbnail = 'default.png'
+        return
+    if self.logo is 'default.png':
+        return
 
-#Define upload path during runtime for each class inheriting abstractMenuItem
+    size = (x, y)
+    FILE_EXT = 'png'
+
+    logo = Image.open(BytesIO(self.logo.read()))  # Open bytes of image into stream
+    logo.thumbnail(size, Image.ANTIALIAS)  # Converts var to our thumbnail but, there is no physical image yet
+
+    # Save the thumbnail
+    file_stream = BytesIO()  # Open our file stream in file stream
+    logo.save(file_stream, FILE_EXT)  # save the file stream with extension
+    file_stream.seek(0)
+
+    # SimpleUploadedFile Allows our image to be saved/uploaded to our image field
+    suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], file_stream.read(), content_type=FILE_EXT)
+    # Save our SUF upload file now as if user uploaded it
+    self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
+    super(instance, self).save()
+
+# Define upload path during runtime for each class inheriting abstractMenuItem
 def uploadPath(instance, filename):
     return ''.join([instance.uploadPath, filename])
+
 
 '''
 Main Database tables
@@ -59,6 +78,7 @@ FoodItem - Table of Stock (Food) Information
 Review - Saved Information about Stock
 table in our database
 '''
+
 class GID(models.Model):
      gid = models.CharField(max_length=100,default='',blank=True, unique=True)
 
@@ -77,10 +97,12 @@ class abstractMenuItem(models.Model):
     createdOn = models.DateField('Published On', null=True, blank=True)
     createdBy = models.CharField(max_length=30,default='', null=True, blank=True)
     logo = models.ImageField(upload_to=uploadPath, blank=True, editable=True, verbose_name='logo')
+    thumbnail = models.ImageField(upload_to=uploadPath, blank=True, editable=True, verbose_name='thumbnail')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     isActive = models.BooleanField(default=True)
     class Meta: #Abstract model, models that inherit this abstractClass do not share data on the same table
         abstract = True
+
 
 class Menu(abstractMenuItem):
     #id = models.UUIDField(primary_key=True,unique=True,auto_created=True,editable=False)
@@ -88,8 +110,8 @@ class Menu(abstractMenuItem):
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
 
-    def save(self,force_insert=False,using=None):
-        resizeLogo(Menu, self, 50, 50)
+    def save(self, *args, **kwargs):
+        resizeLogo(Menu, self, 200, 200)
         set_menu_isActive(self.id,self.isActive)
     def __str__(self):
         return self.menuName
@@ -103,7 +125,7 @@ class FoodItem(abstractMenuItem):
     type = models.ManyToManyField(FoodType, default=None)
     uploadPath = 'foodLogo/'
     def save(self,force_insert=False,using=None):
-        resizeLogo(FoodItem, self, 50, 50)
+        resizeLogo(FoodItem, self, 100, 100)
         set_food_isActive(self.id,self.isActive)
     def __str__(self):
         return self.dishName
@@ -113,6 +135,6 @@ class Review(abstractMenuItem):
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self,force_insert=False,using=None):
-        resizeLogo(Review, self, 50, 50)
+        resizeLogo(Review, self, 100, 100)
     def __str__(self):
         return self.reviewComment
