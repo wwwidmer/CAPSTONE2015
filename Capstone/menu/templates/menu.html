@@ -1,0 +1,77 @@
+{% extends 'header.html' %}
+{% load staticfiles %}
+{% block page %}
+
+{% if menus %}
+<div class="row-fluid">
+	<div class="span12" align="center">
+		<div id="slider1_container" style="position: relative; width: 600px; height: 100%; background-color: #000; overflow: hidden; ">
+
+			<!-- Loading Screen -->
+			<div u="loading" style="position: absolute; top: 0px; left: 0px;">
+				<div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+				background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;"></div>
+				<div style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;
+				top: 0px; left: 0px;width: 100%;height:100%;"></div>
+			</div>
+
+			<!-- Slides Container -->
+			<div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 100%;
+			overflow: hidden;">
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/01.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/02.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/03.jpg" /></a>
+				</div>
+				<div>
+					<a u=image href="#"><img src="/static/media/img/home/04.jpg" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ul id="menu">
+	{%  for m in menus %}
+	<li class="col-md-4">
+		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.logo }}"/> {{ m.menuName }} </a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% if menu %}
+
+<h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.logo }}"><!-- We should expect an image for each menu-->
+<p>
+	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
+</p><!--Total Average Menu Rating-->
+<ul id="menu">
+	{% if food %}
+	{%  for f in food %}
+	<li class="col-md-4">
+
+		<a href="/menus/food/{{ f.id }}">
+		<p>
+			{{ f.dishName }}
+		</p> </a>
+				<p>
+		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+			{{types}}
+		{% endfor %}
+        </p><a href="/menus/food/{{ f.id }}">
+			{% if f.logo != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.logo }}"> {% endif %} </a>
+		</a>
+		<p>
+			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
+		</p>
+	</li>
+	{% endfor %}
+	{% endif %}
+</ul>
+{% endif %}
+
+{% endblock %}
