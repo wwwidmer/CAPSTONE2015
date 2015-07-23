@@ -9,21 +9,20 @@
         {% endfor %}
     {% elif foodsAsType %}
         <h1> {{ foodType }} </h1>
-        </br>
         <!-- links to these in their menus -->
         {% for f in foodsAsType %}
-            <div class="col-sm-5">
+            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
                 <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
             </div>
-            <br/>
         {% endfor %}
     {% elif food %}
         <div class="row">
             <h3> {{ food.dishName }}</h3>
-            <img src="/media/{{ food.logo }}"/>
+			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
             <div id="fid" class="hidden hdn"> {{ food.id }}</div>
             <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
             <a href="/menus/ {{ food.menuName.id }}">Back</a>
+<<<<<<< HEAD
             {%  if menuFood %}
                 {% for s in menuFood %}
                     {{ s }}
@@ -52,6 +51,27 @@
         </div>
     {% endif %}
     <div class="row">
+=======
+            {% if reviews %}
+                <ul>
+                    {% for r in reviews %}
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+                            <p>{{ r.createdOn }}</p>
+                            <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+                            <p>Author: {{ r.createdBy }}</p>
+                            {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
+                                 <!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
+                                 <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}">
+	<img src="/media/{{ r.thumbnail }}" alt="" />
+</a>
+                            {% endif %}
+                            <p>{{ r.reviewComment }}</p>
+                        </div>
+                    {% endfor %}
+                </ul>
+        </div>
+        {% endif %}
+>>>>>>> remotes/origin/Richard
         {% if form %}
             <h3>Write a review:</h3>
             <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
@@ -66,8 +86,13 @@
         <ul>
             {% for s in similar %}
                 <li class="col-sm-3">
+<<<<<<< HEAD
                     <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
                     <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ food.logo }}"/></a>
+=======
+                <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
+                <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
+>>>>>>> remotes/origin/Richard
                 </li>
             {% endfor %}
         </ul>
