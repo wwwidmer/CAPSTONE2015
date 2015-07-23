@@ -188,7 +188,7 @@ def create_menu_by_gid(g_id, menuName):
             menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
             menuGID = add_menu_gid(g_id, newMenu)
-    newMenu.gid.add(menuGID)
+    newMenu.save()
     return newMenu
 def add_menu_gid(g_id, menu):
         menuGID = GID.objects.create(gid=g_id)
