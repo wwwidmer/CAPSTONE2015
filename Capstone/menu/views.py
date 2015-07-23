@@ -184,14 +184,15 @@ def create_menu_by_gid(g_id, menuName):
     isActive = True
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+    newMenu.save()
     try:
             menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
             menuGID = add_menu_gid(g_id, newMenu)
-    newMenu.save()
     return newMenu
 def add_menu_gid(g_id, menu):
         menuGID = GID.objects.create(gid=g_id)
+        menuGID.save()
         menu.gid.add(menuGID)
         return menuGID
 def get_menu_food_random(menuId):
