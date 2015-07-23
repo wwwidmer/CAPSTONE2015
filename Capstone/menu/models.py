@@ -105,7 +105,6 @@ class abstractMenuItem(models.Model):
 
 
 class Menu(abstractMenuItem):
-    #id = models.UUIDField(primary_key=True,unique=True,auto_created=True,editable=False)
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
