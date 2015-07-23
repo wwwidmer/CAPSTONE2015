@@ -206,6 +206,26 @@ Each Method expects certain URL parameters and throws error if they don't exist
 Generally return JSON response
 """
 
+def ajax_get_search(request):
+    if request.is_ajax():
+        try:
+            query_string=""
+            if 'search' in request.GET:
+                query_string = request.GET.get('search')
+                mentry = get_query(query_string,['menuName'])
+                fentry = get_query(query_string,['dishName'])
+                menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
+                food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
+                data = serializers.serialize('json',list(menu)+list(food))
+                return JsonResponse(data,safe=False)
+            else:
+                return HttpResponse("Error using AJAX (check params)")
+        except Exception as e:
+            return HttpResponse(e)
+    else:
+        return HttpResponse("You do not have permission to access this webpage")
+
+
 # get food by id
 def ajax_get_food_by_id(request):
     if request.is_ajax():
