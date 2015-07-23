@@ -18,7 +18,7 @@
     {% elif food %}
         <div class="row">
             <h3> {{ food.dishName }}</h3>
-            <img src="/media/{{ food.logo }}"/>
+			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
             <div id="fid" class="hidden hdn"> {{ food.id }}</div>
             <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
             <a href="/menus/ {{ food.menuName.id }}">Back</a>
@@ -32,7 +32,7 @@
                             {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
                                  <!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
                                  <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}">
-	<img src="/media/{{ r.logo }}" alt="" />
+	<img src="/media/{{ r.thumbnail }}" alt="" />
 </a>
                             {% endif %}
                             <p>{{ r.reviewComment }}</p>
@@ -55,7 +55,7 @@
             {% for s in similar %}
                 <li class="col-sm-3">
                 <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-                <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ food.logo }}"/></a>
+                <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
                 </li>
             {% endfor %}
             </ul>
