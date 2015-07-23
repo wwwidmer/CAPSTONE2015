@@ -22,7 +22,7 @@
             <div id="fid" class="hidden hdn"> {{ food.id }}</div>
             <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
             <a href="/menus/ {{ food.menuName.id }}">Back</a>
-<<<<<<< HEAD
+
             {%  if menuFood %}
                 {% for s in menuFood %}
                     {{ s }}
@@ -51,7 +51,7 @@
         </div>
     {% endif %}
     <div class="row">
-=======
+
             {% if reviews %}
                 <ul>
                     {% for r in reviews %}
@@ -71,7 +71,7 @@
                 </ul>
         </div>
         {% endif %}
->>>>>>> remotes/origin/Richard
+
         {% if form %}
             <h3>Write a review:</h3>
             <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
@@ -86,13 +86,13 @@
         <ul>
             {% for s in similar %}
                 <li class="col-sm-3">
-<<<<<<< HEAD
+
                     <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
                     <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ food.logo }}"/></a>
-=======
+
                 <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
                 <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
->>>>>>> remotes/origin/Richard
+
                 </li>
             {% endfor %}
         </ul>
