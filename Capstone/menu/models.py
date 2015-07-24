@@ -13,11 +13,19 @@ import os
 '''
     Helper Methods
 '''
+def cleanup(this, self):
+    if 'default.png' not in this.logo.name:
+        if this.logo != self.logo:
+            os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
+            os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
+
+
 class OverwriteStorage(FileSystemStorage):
     def get_available_name(self, name):
-        if self.exists(name):
-            os.remove(os.path.join(settings.MEDIA_ROOT,name))
-        return name
+        if 'default.png' not in name:
+            if self.exists(name):
+                os.remove(os.path.join(settings.MEDIA_ROOT,name))
+            return name
 '''
     Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
 '''
@@ -110,13 +118,18 @@ class abstractMenuItem(models.Model):
     class Meta:
         abstract = True
 
-
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
 
     def save(self, *args, **kwargs):
+        try:
+            this = Menu.objects.get(id=self.id)
+        except Menu.DoesNotExist:
+            this = None
+        if this is not None:
+            cleanup(this, self)
         resizeLogo(Menu, self, 200, 200)
         set_menu_isActive(self.id,self.isActive)
     def __str__(self):
@@ -131,6 +144,12 @@ class FoodItem(abstractMenuItem):
     type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
     def save(self):
+        try:
+            this = FoodItem.objects.get(id=self.id)
+        except FoodItem.DoesNotExist:
+            this = None
+        if this is not None:
+            cleanup(this, self)
         resizeLogo(FoodItem, self, 100, 100)
         set_food_isActive(self.id,self.isActive)
     def __str__(self):
@@ -141,6 +160,12 @@ class Review(abstractMenuItem):
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self):
+        try:
+            this = Review.objects.get(id=self.id)
+        except Review.DoesNotExist:
+            this = None
+        if this is not None:
+            cleanup(this, self)
         resizeLogo(Review, self, 100, 100)
     def __str__(self):
         return self.reviewComment
