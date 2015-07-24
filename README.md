@@ -35,7 +35,8 @@ resize images
 ========
 W
 
-search also shows from db on search page 
+  search also shows from db on search page 
+  ^ AJAX request for this is up but does not display yet
 
 AJAX to call create_menu_by_gid instead of plain request
 
@@ -58,6 +59,7 @@ borders style
 ========
 ========
 S
+
 map on menus
 
 shifted search button same row as input

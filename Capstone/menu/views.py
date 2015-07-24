@@ -189,12 +189,17 @@ def create_menu_by_gid(g_id, menuName):
             GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
             add_menu_gid(g_id, newMenu)
+            menuGID= GID.objects.get(gid=g_id)
+    except GID.DoesNotExist:
+            menuGID = add_menu_gid(g_id, newMenu)
+    newMenu.gid.add(menuGID)
     return newMenu
-def add_menu_gid(g_id, menu):
+
+def add_menu_gid(g_id, newMenu):
         menuGID = GID.objects.create(gid=g_id)
         menuGID.save()
-        menu.gid.add(menuGID)
-
+        newMenu.gid.add(menuGID)
+        return newMenu
 def get_menu_food_random(menuId):
     food = list(FoodItem.objects.filter(menuName=menuId))
     foodSample = sample(food,math.ceil(len(food)/4))

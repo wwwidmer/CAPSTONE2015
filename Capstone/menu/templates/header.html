@@ -8,9 +8,9 @@
 		{% load staticfiles %}
 		<!-- Import styles and scripts-->
 		<link rel="stylesheet" href="{%  static 'assets/bootstrap/css/bootstrap.min.css' %}">
-		<link rel="stylesheet" href="{%  static 'assets//fancybox/source/jquery.fancybox.css' %}" />
-		<link rel="stylesheet" href="{%  static 'assets/fancybox/source/helpers/jquery.fancybox-buttons.css' %}" />
-		<link rel="stylesheet" href="{%  static 'assets/fancybox/source/helpers/jquery.fancybox-thumbs.css' %}" />
+		<link rel="stylesheet" href="{%  static 'assets//fancyBox/source/jquery.fancybox.css' %}" />
+		<link rel="stylesheet" href="{%  static 'assets/fancyBox/source/helpers/jquery.fancybox-buttons.css' %}" />
+		<link rel="stylesheet" href="{%  static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.css' %}" />
 		<link rel="stylesheet" href="{%  static 'assets/custom_style.css' %}">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -70,43 +70,26 @@
 			<nav class="navbar navbar-default navbar-inner navbar-static-bottom" role="navigation2">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>-->
-						<a class="navbar-brand" href="/">Copyright &copy;</a>
+                        <a class="navbar-brand" href="/">Copyright &copy;</a>
 					</div>
-					<div class="collapse navbar-collapse" id="footer">
-						<ul class="nav navbar-nav">
-						<!--	<li>
-								<a href="/contact/">contact</a>
-							</li>
-							<li>
-								<a href="/about/">about</a>
-							</li>
-							<li>
-								<a href="/add your restaurant/">add</a>
-							</li>-->
-						</ul>
-					</div><!--/.nav-collapse -->
+
 				</div>
 			</nav>
 		</footer>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
 		<script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancybox/lib/jquery.mousewheel-3.0.6.pack.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancybox/source/jquery.fancybox.pack.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancybox/source/helpers/jquery.fancybox-buttons.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancybox/source/helpers/jquery.fancybox-media.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancybox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/fancyBox/source/jquery.fancybox.pack.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-buttons.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-media.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 		<script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
 		<script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
 		<script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
 
 	</body>
 </html>
