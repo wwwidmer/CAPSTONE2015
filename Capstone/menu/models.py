@@ -13,11 +13,16 @@ import os
 '''
     Helper Methods
 '''
-def cleanup(this, self):
-    if 'default.png' not in this.logo.name:
-        if this.logo != self.logo:
-            os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
-            os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
+def cleanup(instance, self):
+        try:
+            this = instance.objects.get(id=self.id)
+        except instance.DoesNotExist:
+            this = None
+        if this is not None:
+            if 'default.png' not in this.logo.name:
+                if this.logo != self.logo:
+                    os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
+                    os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
 
 
 class OverwriteStorage(FileSystemStorage):
@@ -124,12 +129,7 @@ class Menu(abstractMenuItem):
     uploadPath = 'menuLogo/'
 
     def save(self, *args, **kwargs):
-        try:
-            this = Menu.objects.get(id=self.id)
-        except Menu.DoesNotExist:
-            this = None
-        if this is not None:
-            cleanup(this, self)
+        cleanup(Menu, self)
         resizeLogo(Menu, self, 200, 200)
         set_menu_isActive(self.id,self.isActive)
     def __str__(self):
@@ -144,12 +144,7 @@ class FoodItem(abstractMenuItem):
     type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
     def save(self):
-        try:
-            this = FoodItem.objects.get(id=self.id)
-        except FoodItem.DoesNotExist:
-            this = None
-        if this is not None:
-            cleanup(this, self)
+        cleanup(FoodItem, self)
         resizeLogo(FoodItem, self, 100, 100)
         set_food_isActive(self.id,self.isActive)
     def __str__(self):
@@ -160,12 +155,7 @@ class Review(abstractMenuItem):
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self):
-        try:
-            this = Review.objects.get(id=self.id)
-        except Review.DoesNotExist:
-            this = None
-        if this is not None:
-            cleanup(this, self)
+        cleanup(Review, self)
         resizeLogo(Review, self, 100, 100)
     def __str__(self):
         return self.reviewComment
