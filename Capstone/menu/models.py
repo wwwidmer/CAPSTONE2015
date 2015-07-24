@@ -1,6 +1,8 @@
 from django.db import models
 from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 from math import floor
 from PIL import Image
 from io import BytesIO
@@ -11,6 +13,11 @@ import os
 '''
     Helper Methods
 '''
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name):
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT,name))
+        return name
 '''
     Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
 '''
@@ -45,7 +52,7 @@ def set_food_isActive(food_id,state):
     Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
 '''
 def resizeLogo(instance, self, x, y):
-    if self.logo is 'default.png':
+    if 'default.png' in self.logo:
         return
 
     size = (x, y)
@@ -93,10 +100,13 @@ class FoodType(models.Model):
 class abstractMenuItem(models.Model):
     createdOn = models.DateField('Published On', null=True, blank=True)
     createdBy = models.CharField(max_length=30,default='', null=True, blank=True)
-    logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo')
-    thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail')
+    logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo',
+                             storage=OverwriteStorage())
+    thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail',
+                                  storage=OverwriteStorage())
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     isActive = models.BooleanField(default=True)
+
     class Meta:
         abstract = True
 
