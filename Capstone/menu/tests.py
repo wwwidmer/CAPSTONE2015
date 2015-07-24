@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.http import request
+'''
 from menu.models import Menu, Review, FoodType, FoodItem, get_Average
 from menu.views import ajax_get_menu_by_id, ajax_get_food_by_menu_id, ajax_get_review_by_food
 
@@ -54,9 +55,12 @@ class SearchTestCase(TestCase):
         menu2 = Menu.objects.create(menuName="T1")
         menu3 = Menu.objects.create(menuName="T1")
         menu4 = Menu.objects.create(menuName="T1")
-        '''food1 = FoodItem.objects.create()
+
+
+food1 = FoodItem.objects.create()
         food2 = FoodItem.objects.create()
         food3 = FoodItem.objects.create()
-        food4 = FoodItem.objects.create()'''
+        food4 = FoodItem.objects.create()
     def test_search_by_keyword(self):
         pass
+'''
