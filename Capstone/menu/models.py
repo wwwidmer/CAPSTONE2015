@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.files.storage import default_storage
+from django.db.models.signals import pre_delete
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from math import floor
@@ -16,7 +18,10 @@ import os
     Image resizing function that generates a thumbnail
 '''
 def resizeLogo(instance, self, x, y):
-    if 'default.png' in self.logo:
+    if self.logo.name is not None:
+        if 'default.png' in self.logo.name:
+            return
+    else:
         return
 
     size = (x, y)
@@ -32,24 +37,41 @@ def resizeLogo(instance, self, x, y):
 
     suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
     self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
-    try:
-        super(instance, self).save()
-    except instance.DoesNotExist:
-        return
+    super(instance, self).save()
+
+
 '''
     Clean up and resize images if a change is detected, ignore default image
 '''
 def cleanup(instance, self, x, y):
-        try:
-            this = instance.objects.get(id=self.id)
-        except instance.DoesNotExist:
-            this = None
-        if this is not None:
-            if this.logo != self.logo:
+    try:
+        this = instance.objects.get(id=self.id)
+    except instance.DoesNotExist:
+        this = None
+    if this is not None:
+        if this.logo != self.logo:
+            if default_storage.exists(os.path.join(settings.MEDIA_ROOT,this.logo.name)):
                 if 'default.png' not in this.logo.name:
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
+            if default_storage.exists(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name)):
+                if 'default.png' not in this.thumbnail.name:
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
-                resizeLogo(instance, self, x, y)
+            resizeLogo(instance, self, x, y)
+        return
+    resizeLogo(instance, self, x, y)
+    return
+
+
+
+def deletion(self):
+    if default_storage.exists(os.path.join(settings.MEDIA_ROOT,self.logo.name)):
+        if 'default.png' not in self.logo.name:
+            os.remove(os.path.join(settings.MEDIA_ROOT,self.logo.name))
+    if default_storage.exists(os.path.join(settings.MEDIA_ROOT,self.thumbnail.name)):
+        if 'default.png' not in self.thumbnail.name:
+            os.remove(os.path.join(settings.MEDIA_ROOT,self.thumbnail.name))
+    return
+
 '''
     Define upload path during runtime && generate unique filename
 '''
@@ -138,6 +160,10 @@ class Menu(abstractMenuItem):
         cleanup(Menu, self,200,200)
         set_menu_isActive(self)
         super(Menu, self).save()
+    def delete(self):
+        deletion(self)
+        RTM = Menu.objects.filter(id=self.id)
+        RTM.delete()
 
     def __str__(self):
         return self.menuName
@@ -150,10 +176,16 @@ class FoodItem(abstractMenuItem):
     dishName = models.CharField(max_length=30,default='')
     type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
+
+
     def save(self, *args, **kwargs):
         cleanup(FoodItem, self,100,100)
         set_food_isActive(self)
         super(FoodItem, self).save()
+    def delete(self):
+        deletion(self)
+        RTM = FoodItem.objects.filter(id=self.id)
+        RTM.delete()
     def __str__(self):
         return self.dishName
 
@@ -161,8 +193,13 @@ class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
-    def save(self,*args, **kwargs):
-        cleanup(Review, self,100,100)
+
+    def save(self, *args, **kwargs):
+        cleanup(Review, self, 100, 100)
         super(Review, self).save()
+    def delete(self):
+        deletion(self)
+        RTM = Review.objects.filter(id=self.id)
+        RTM.delete()
     def __str__(self):
         return self.reviewComment
