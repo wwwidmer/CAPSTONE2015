@@ -1,11 +1,9 @@
 from django.db import models
-from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from math import floor
 from PIL import Image
-from io import BytesIO
+from uuid import uuid4
 import io
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
@@ -13,24 +11,18 @@ import os
 '''
     Helper Methods
 '''
-def cleanup(instance, self):
+def cleanup(instance, self, x, y):
         try:
             this = instance.objects.get(id=self.id)
         except instance.DoesNotExist:
             this = None
         if this is not None:
-            if 'default.png' not in this.logo.name:
-                if this.logo != self.logo:
+            if this.logo != self.logo:
+                if 'default.png' not in this.logo.name:
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
+                resizeLogo(instance, self, x, y)
 
-
-class OverwriteStorage(FileSystemStorage):
-    def get_available_name(self, name):
-        if 'default.png' not in name:
-            if self.exists(name):
-                os.remove(os.path.join(settings.MEDIA_ROOT,name))
-            return name
 '''
     Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
 '''
@@ -49,18 +41,24 @@ def get_Average(food_id, menu_id):
 '''
     Get all items 'below' a certain model and set their state accordingly.
 '''
-def set_menu_isActive(menu_id, state):
-    food = FoodItem.objects.all().filter(menuName=menu_id)
-    reviews = Review.objects.all().filter(foodItemName__id=menu_id)
-    for item in list(food) + list(reviews):
-        item.isActive = state;
-        item.save()
+def set_menu_isActive(self):
+    try:
+        food = FoodItem.objects.all().filter(menuName=self.id)
+        reviews = Review.objects.all().filter(foodItemName__id=self.id)
+        for item in list(food) + list(reviews):
+            item.isActive = self.isActive;
+            item.save()
+    except self.DoesNotExist:
+        return
 
-def set_food_isActive(food_id,state):
-    reviews = Review.objects.all().filter(foodItemName__id=food_id)
-    for item in list(reviews):
-        item.isActive = state;
-        item.save()
+def set_food_isActive(self):
+    try:
+        reviews = Review.objects.all().filter(foodItemName__id=self.id)
+        for item in list(reviews):
+            item.isActive = self.isActive;
+            item.save()
+    except self.DoesNotExist:
+        return
 '''
     Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
 '''
@@ -71,19 +69,28 @@ def resizeLogo(instance, self, x, y):
     size = (x, y)
     FILE_EXT = 'png'
     logoIO = io.BytesIO()
-    logo = Image.open(self.logo)
+    try:
+        logo = Image.open(self.logo)
+    except self.DoesNotExist:
+        return
     logo.thumbnail(size, Image.ANTIALIAS)
     logo.save(logoIO, FILE_EXT)
     logoIO.seek(0)
 
     suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
     self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
-    super(instance, self).save()
+    try:
+        super(instance, self).save()
+    except instance.DoesNotExist:
+        return
 '''
     Define upload path during runtime for each class inheriting abstractMenuItem
 '''
 def uploadPath(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = '{}{}'.format(uuid4().hex,ext)
     return ''.join([instance.uploadPath, filename])
+
 
 
 '''
@@ -97,9 +104,8 @@ table in our database
 '''
 
 class GID(models.Model):
-     gid = models.CharField(max_length=100,default='',blank=True, unique=True)
-
-     def __str__(self):
+    gid = models.CharField(max_length=100,default='',blank=True, unique=True)
+    def __str__(self):
          return self.gid
 
 class FoodType(models.Model):
@@ -113,10 +119,8 @@ class FoodType(models.Model):
 class abstractMenuItem(models.Model):
     createdOn = models.DateField('Published On', null=True, blank=True)
     createdBy = models.CharField(max_length=30,default='', null=True, blank=True)
-    logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo',
-                             storage=OverwriteStorage())
-    thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail',
-                                  storage=OverwriteStorage())
+    logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo')
+    thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     isActive = models.BooleanField(default=True)
 
@@ -129,9 +133,10 @@ class Menu(abstractMenuItem):
     uploadPath = 'menuLogo/'
 
     def save(self, *args, **kwargs):
-        cleanup(Menu, self)
-        resizeLogo(Menu, self, 200, 200)
-        set_menu_isActive(self.id,self.isActive)
+        cleanup(Menu, self,200,200)
+        set_menu_isActive(self)
+        super(Menu, self).save()
+
     def __str__(self):
         return self.menuName
     class Meta:
@@ -144,9 +149,9 @@ class FoodItem(abstractMenuItem):
     type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
     def save(self):
-        cleanup(FoodItem, self)
-        resizeLogo(FoodItem, self, 100, 100)
-        set_food_isActive(self.id,self.isActive)
+        cleanup(FoodItem, self,100,100)
+        set_food_isActive(self)
+        super(FoodItem, self).save()
     def __str__(self):
         return self.dishName
 
@@ -155,7 +160,7 @@ class Review(abstractMenuItem):
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
     def save(self):
-        cleanup(Review, self)
-        resizeLogo(Review, self, 100, 100)
+        cleanup(Review, self,100,100)
+        super(Review, self).save()
     def __str__(self):
         return self.reviewComment
