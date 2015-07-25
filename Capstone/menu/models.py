@@ -11,6 +11,34 @@ import os
 '''
     Helper Methods
 '''
+
+'''
+    Image resizing function that generates a thumbnail
+'''
+def resizeLogo(instance, self, x, y):
+    if 'default.png' in self.logo:
+        return
+
+    size = (x, y)
+    FILE_EXT = 'png'
+    logoIO = io.BytesIO()
+    try:
+        logo = Image.open(self.logo)
+    except self.DoesNotExist:
+        return
+    logo.thumbnail(size, Image.ANTIALIAS)
+    logo.save(logoIO, FILE_EXT)
+    logoIO.seek(0)
+
+    suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
+    self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
+    try:
+        super(instance, self).save()
+    except instance.DoesNotExist:
+        return
+'''
+    Clean up and resize images if a change is detected, ignore default image
+'''
 def cleanup(instance, self, x, y):
         try:
             this = instance.objects.get(id=self.id)
@@ -22,6 +50,13 @@ def cleanup(instance, self, x, y):
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
                     os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
                 resizeLogo(instance, self, x, y)
+'''
+    Define upload path during runtime && generate unique filename
+'''
+def uploadPath(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = '{}{}'.format(uuid4().hex,ext)
+    return ''.join([instance.uploadPath, filename])
 
 '''
     Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
@@ -59,39 +94,6 @@ def set_food_isActive(self):
             item.save()
     except self.DoesNotExist:
         return
-'''
-    Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
-'''
-def resizeLogo(instance, self, x, y):
-    if 'default.png' in self.logo:
-        return
-
-    size = (x, y)
-    FILE_EXT = 'png'
-    logoIO = io.BytesIO()
-    try:
-        logo = Image.open(self.logo)
-    except self.DoesNotExist:
-        return
-    logo.thumbnail(size, Image.ANTIALIAS)
-    logo.save(logoIO, FILE_EXT)
-    logoIO.seek(0)
-
-    suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
-    self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
-    try:
-        super(instance, self).save()
-    except instance.DoesNotExist:
-        return
-'''
-    Define upload path during runtime for each class inheriting abstractMenuItem
-'''
-def uploadPath(instance, filename):
-    ext = os.path.splitext(filename)[1]
-    filename = '{}{}'.format(uuid4().hex,ext)
-    return ''.join([instance.uploadPath, filename])
-
-
 
 '''
 Main Database tables
