@@ -30,22 +30,23 @@
 		{% endif %}
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" style="border: 2px solid black">
-		<p>
-			Search for a keyword (Steak, Starbucks...etc)
-			or take a look at whats near you.
-		</p>
-		<form class="navbar-form navbar-left navbar-search" role="search">
-			<div class="input-group">
-				<input type="text" class="form-control search-query input-lg" placeholder="Search for..." id ="search">
-				<span class="input-group-btn">
-					<button class="btn btn-info btn-lg getSearch" type="button">
-						Search
-					</button> </span>
-			</div><!-- /input-group -->
-	<div id="map-canvas"></div>
-			<p class="alert alert-danger" id="searchWarning"></p>
-		</form>
-			
+		<div class="container">
+			<p>
+				Search for a keyword (Steak, Starbucks...etc)
+				or take a look at whats near you.
+			</p>
+			<form class="navbar-form navbar-left navbar-search" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control input-lg" placeholder="Search for..." id ="search">
+					<span class="input-group-btn">
+						<button class="btn btn-info btn-lg getSearch" type="button">
+							Search
+						</button> </span>
+				</div><!-- /input-group -->
+				<div id="map-canvas"></div>
+				<p class="alert alert-danger" id="searchWarning"></p>
+			</form>
+		</div>
 	</div>
 	<!--<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
 	<div class="maps">
@@ -54,12 +55,12 @@
 	</div>-->
 
 	<!--<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-		<p>
-			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
-		</p>
-		<p>
-			Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
-		</p>
+	<p>
+	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+	</p>
+	<p>
+	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+	</p>
 	</div>-->
 
 </div>
@@ -69,7 +70,7 @@
 {% block map %}
 
 <div class="maps">
-	<div id="map-canvas"></div>
+<div id="map-canvas"></div>
 </div>
 
 {% endblock %}
