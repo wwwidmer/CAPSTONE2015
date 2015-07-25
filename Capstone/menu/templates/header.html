@@ -8,7 +8,7 @@
 		{% load staticfiles %}
 		<!-- Import styles and scripts-->
 		<link rel="stylesheet" href="{%  static 'assets/bootstrap/css/bootstrap.min.css' %}">
-		<link rel="stylesheet" href="{%  static 'assets//fancyBox/source/jquery.fancybox.css' %}" />
+		<link rel="stylesheet" href="{%  static 'assets/fancyBox/source/jquery.fancybox.css' %}" />
 		<link rel="stylesheet" href="{%  static 'assets/fancyBox/source/helpers/jquery.fancybox-buttons.css' %}" />
 		<link rel="stylesheet" href="{%  static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.css' %}" />
 		<link rel="stylesheet" href="{%  static 'assets/custom_style.css' %}">
@@ -21,7 +21,7 @@
 		<![endif]-->
 	</head>
 	<body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation1">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation1">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header">
@@ -58,21 +58,18 @@
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-		<div class="container-fluid">
+		<div class="container">
 			{% block page %}
 			{% endblock %}
-			{% block map %}
-			{% endblock %}
+			<!--{% block map %}
+			{% endblock %}-->
 		</div>
 		<!-- Footer -->
 
 		<footer>
 			<nav class="navbar navbar-default navbar-inner navbar-static-bottom" role="navigation2">
 				<div class="container-fluid">
-					<div class="navbar-header">
-                        <a class="navbar-brand" href="/">Copyright &copy;</a>
-					</div>
-
+					<a class="navbar-brand" href="/">Copyright &copy;</a>
 				</div>
 			</nav>
 		</footer>
@@ -85,11 +82,11 @@
 		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-media.js' %}"></script>
 		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+		<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 		<script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
 		<script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
 		<script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
 
 	</body>
 </html>

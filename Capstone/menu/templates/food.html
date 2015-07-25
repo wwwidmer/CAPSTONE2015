@@ -22,36 +22,6 @@
             <div id="fid" class="hidden hdn"> {{ food.id }}</div>
             <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
             <a href="/menus/ {{ food.menuName.id }}">Back</a>
-
-            {%  if menuFood %}
-                {% for s in menuFood %}
-                    {{ s }}
-                {% endfor %}
-            {%  endif %}
-        </div>
-    {% else %}
-        <p> There doesn't appear to be anything here. </p>
-    {% endif %}
-
-    {% if reviews %}
-        <div class="row">
-            <ul>
-                {% for r in reviews %}
-                    <li class="col-lg-6">
-                        <p>{{ r.createdOn }}</p>
-                        <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
-                        <p>Author: {{ r.createdBy }}</p>
-                        {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
-                            <img src="/media/{{ r.logo }}"/>
-                        {% endif %}
-                        <p>{{ r.reviewComment }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-    <div class="row">
-
             {% if reviews %}
                 <ul>
                     {% for r in reviews %}
@@ -71,7 +41,6 @@
                 </ul>
         </div>
         {% endif %}
-
         {% if form %}
             <h3>Write a review:</h3>
             <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
@@ -80,22 +49,18 @@
                 <input type="submit" value="Submit"/>
             </form>
         {% endif %}
-    </div>
-    {% if similar %}
-    <div class="row">
-        <ul>
+        {%  if similar %}
+            <p> Related Food:</p>
+            <ul>
             {% for s in similar %}
                 <li class="col-sm-3">
-
-                    <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-                    <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ food.logo }}"/></a>
-
                 <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
                 <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-
                 </li>
             {% endfor %}
-        </ul>
-    </div>
+            </ul>
+        {% endif %}
+    {% else %}
+        <p> There doesn't appear to be anything here. </p>
     {% endif %}
 {% endblock %}
