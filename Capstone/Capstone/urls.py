@@ -40,3 +40,6 @@ urlpatterns = [
     url(r'^search/', 'menu.views.render_search_index'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ]
+admin.site.site_header = 'Rate This Menu : Administration'
+admin.site.index_title = ' RTM: Site Administration'
+admin.site.site_title = 'Rate This Menu'
