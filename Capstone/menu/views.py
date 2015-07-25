@@ -51,6 +51,7 @@ def render_menu(request,m_id):
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
+    name = name.replace('-', ' ')  # deslug
     try:
         menu = Menu.objects.get(menuName=name)#checking for existing menu
         try:
@@ -192,7 +193,7 @@ def create_menu_by_gid(g_id, menuName):
             menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
             menuGID = add_menu_gid(g_id, newMenu)
-    newMenu.gid.add(menuGID)
+            newMenu.gid.add(menuGID)
     return newMenu
 
 def add_menu_gid(g_id, newMenu):

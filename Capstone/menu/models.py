@@ -106,7 +106,7 @@ table in our database
 '''
 
 class GID(models.Model):
-    gid = models.CharField(max_length=100,default='',blank=True, unique=True)
+    gid = models.CharField(max_length=100,default='', blank=True, unique=True)
     def __str__(self):
          return self.gid
 

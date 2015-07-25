@@ -41,7 +41,8 @@ $(document).ready(function() {
                 position : place.geometry.location
             });
 
-            var content = '<p><a href="/menus/gid/'+place.place_id+'/'+place.name+'">See this menu</a></p>'
+            SLUG = place.name.replace(/\s+/g,'-')
+            var content = '<p><a href="/menus/gid/'+place.place_id+'/'+SLUG+'">See this menu</a></p>'
 
             var infowindow = new google.maps.InfoWindow({
                 content:('<div><strong>' + place.name + '</strong><br>' +
