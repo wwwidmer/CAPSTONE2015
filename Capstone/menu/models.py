@@ -1,16 +1,66 @@
 from django.db import models
-from PIL import Image
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.conf import settings
 from math import floor
 from PIL import Image
-from io import BytesIO
+from uuid import uuid4
+import io
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 
 '''
-Helper Methods
+    Helper Methods
 '''
-# Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
+
+'''
+    Image resizing function that generates a thumbnail
+'''
+def resizeLogo(instance, self, x, y):
+    if 'default.png' in self.logo:
+        return
+
+    size = (x, y)
+    FILE_EXT = 'png'
+    logoIO = io.BytesIO()
+    try:
+        logo = Image.open(self.logo)
+    except self.DoesNotExist:
+        return
+    logo.thumbnail(size, Image.ANTIALIAS)
+    logo.save(logoIO, FILE_EXT)
+    logoIO.seek(0)
+
+    suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
+    self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
+    try:
+        super(instance, self).save()
+    except instance.DoesNotExist:
+        return
+'''
+    Clean up and resize images if a change is detected, ignore default image
+'''
+def cleanup(instance, self, x, y):
+        try:
+            this = instance.objects.get(id=self.id)
+        except instance.DoesNotExist:
+            this = None
+        if this is not None:
+            if this.logo != self.logo:
+                if 'default.png' not in this.logo.name:
+                    os.remove(os.path.join(settings.MEDIA_ROOT,this.logo.name))
+                    os.remove(os.path.join(settings.MEDIA_ROOT,this.thumbnail.name))
+                resizeLogo(instance, self, x, y)
+'''
+    Define upload path during runtime && generate unique filename
+'''
+def uploadPath(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = '{}{}'.format(uuid4().hex,ext)
+    return ''.join([instance.uploadPath, filename])
+
+'''
+    Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
+'''
 def get_Average(food_id, menu_id):
     try:
         if menu_id is None:
@@ -23,51 +73,27 @@ def get_Average(food_id, menu_id):
         return floor((total / reviews.count()))
     except ZeroDivisionError:
         return 0
-
-# Get all items 'below' a certain model and set their state accordingly.
-def set_menu_isActive(menu_id, state):
-    food = FoodItem.objects.all().filter(menuName=menu_id)
-    reviews = Review.objects.all().filter(foodItemName__id=menu_id)
-    for item in list(food) + list(reviews):
-        item.isActive = state;
-        item.save()
-
-def set_food_isActive(food_id,state):
-    reviews = Review.objects.all().filter(foodItemName__id=food_id)
-    for item in list(reviews):
-        item.isActive = state;
-        item.save()
-
-# Image resizing function allowing each class inheriting abstract MenuItem to define its own parameters during runtime
-def resizeLogo(instance, self, x, y):
-    if not self.logo:
-        self.logo = 'default.png'
-        self.thumbnail = 'default.png'
-        return
-    if self.logo is 'default.png':
+'''
+    Get all items 'below' a certain model and set their state accordingly.
+'''
+def set_menu_isActive(self):
+    try:
+        food = FoodItem.objects.all().filter(menuName=self.id)
+        reviews = Review.objects.all().filter(foodItemName__id=self.id)
+        for item in list(food) + list(reviews):
+            item.isActive = self.isActive;
+            item.save()
+    except self.DoesNotExist:
         return
 
-    size = (x, y)
-    FILE_EXT = 'png'
-
-    logo = Image.open(BytesIO(self.logo.read()))  # Open bytes of image into stream
-    logo.thumbnail(size, Image.ANTIALIAS)  # Converts var to our thumbnail but, there is no physical image yet
-
-    # Save the thumbnail
-    file_stream = BytesIO()  # Open our file stream in file stream
-    logo.save(file_stream, FILE_EXT)  # save the file stream with extension
-    file_stream.seek(0)
-
-    # SimpleUploadedFile Allows our image to be saved/uploaded to our image field
-    suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], file_stream.read(), content_type=FILE_EXT)
-    # Save our SUF upload file now as if user uploaded it
-    self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
-    super(instance, self).save()
-
-# Define upload path during runtime for each class inheriting abstractMenuItem
-def uploadPath(instance, filename):
-    return ''.join([instance.uploadPath, filename])
-
+def set_food_isActive(self):
+    try:
+        reviews = Review.objects.all().filter(foodItemName__id=self.id)
+        for item in list(reviews):
+            item.isActive = self.isActive;
+            item.save()
+    except self.DoesNotExist:
+        return
 
 '''
 Main Database tables
@@ -80,9 +106,8 @@ table in our database
 '''
 
 class GID(models.Model):
-     gid = models.CharField(max_length=100,default='',blank=True, unique=True)
-
-     def __str__(self):
+    gid = models.CharField(max_length=100,default='', blank=True, unique=True)
+    def __str__(self):
          return self.gid
 
 class FoodType(models.Model):
@@ -96,23 +121,24 @@ class FoodType(models.Model):
 class abstractMenuItem(models.Model):
     createdOn = models.DateField('Published On', null=True, blank=True)
     createdBy = models.CharField(max_length=30,default='', null=True, blank=True)
-    logo = models.ImageField(upload_to=uploadPath, blank=True, editable=True, verbose_name='logo')
-    thumbnail = models.ImageField(upload_to=uploadPath, blank=True, editable=True, verbose_name='thumbnail')
+    logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo')
+    thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     isActive = models.BooleanField(default=True)
-    class Meta: #Abstract model, models that inherit this abstractClass do not share data on the same table
+
+    class Meta:
         abstract = True
 
-
 class Menu(abstractMenuItem):
-    #id = models.UUIDField(primary_key=True,unique=True,auto_created=True,editable=False)
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
     uploadPath = 'menuLogo/'
 
     def save(self, *args, **kwargs):
-        resizeLogo(Menu, self, 200, 200)
-        set_menu_isActive(self.id,self.isActive)
+        cleanup(Menu, self,200,200)
+        set_menu_isActive(self)
+        super(Menu, self).save()
+
     def __str__(self):
         return self.menuName
     class Meta:
@@ -122,11 +148,12 @@ class Menu(abstractMenuItem):
 class FoodItem(abstractMenuItem):
     menuName = models.ForeignKey(Menu, default=None)
     dishName = models.CharField(max_length=30,default='')
-    type = models.ManyToManyField(FoodType, default=None)
+    type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
-    def save(self,force_insert=False,using=None):
-        resizeLogo(FoodItem, self, 100, 100)
-        set_food_isActive(self.id,self.isActive)
+    def save(self, *args, **kwargs):
+        cleanup(FoodItem, self,100,100)
+        set_food_isActive(self)
+        super(FoodItem, self).save()
     def __str__(self):
         return self.dishName
 
@@ -134,7 +161,8 @@ class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
-    def save(self,force_insert=False,using=None):
-        resizeLogo(Review, self, 100, 100)
+    def save(self,*args, **kwargs):
+        cleanup(Review, self,100,100)
+        super(Review, self).save()
     def __str__(self):
         return self.reviewComment
