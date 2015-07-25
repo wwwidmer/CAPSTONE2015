@@ -148,7 +148,7 @@ class FoodItem(abstractMenuItem):
     dishName = models.CharField(max_length=30,default='')
     type = models.ManyToManyField(FoodType, default='')
     uploadPath = 'foodLogo/'
-    def save(self):
+    def save(self, *args, **kwargs):
         cleanup(FoodItem, self,100,100)
         set_food_isActive(self)
         super(FoodItem, self).save()
@@ -159,7 +159,7 @@ class Review(abstractMenuItem):
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=500, default=None)
     uploadPath = 'reviewLogo/'
-    def save(self):
+    def save(self,*args, **kwargs):
         cleanup(Review, self,100,100)
         super(Review, self).save()
     def __str__(self):
