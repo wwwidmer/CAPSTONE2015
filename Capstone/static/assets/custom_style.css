@@ -93,10 +93,9 @@ label {
 }
 
 .map, #map-canvas {
-	width: 750px;
+	width: 500px;
 	height: 400px;
-	margin: 21px;
-	padding: 30px;
+	margin: 1%;
 	position: relative;
 }
 
