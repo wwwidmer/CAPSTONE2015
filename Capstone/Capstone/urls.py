@@ -23,13 +23,14 @@ from menu import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'menu.views.index'),
+    url(r'^ajax/search/','menu.views.ajax_get_search'),
     url(r'^ajax/food/','menu.views.ajax_get_food_by_id'),
     url(r'^ajax/menu/','menu.views.ajax_get_menu_by_id'),
     url(r'^ajax/menu/food/','menu.views.ajax_get_food_by_menu_id'),
     url(r'^ajax/review/','menu.views.ajax_get_review_by_food'),
     url(r'^menus/food/(?P<f_id>\d+)', 'menu.views.render_food'),
     url(r'^menus/food/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'),
-    url(r'^menus/gid/(?P<g_id>[^/]+)/(?P<name>[\w\ ]+)', 'menu.views.render_menu_by_gid'),
+    url(r'^menus/gid/(?P<g_id>[^/]+)/(?P<name>[^/]+)', 'menu.views.render_menu_by_gid'),
     url(r'^menus/gid/(?P<g_id>[^/]+)', 'menu.views.render_menu_by_gid'),
     url(r'^menus/type/(?P<t_id>\d+)', 'menu.views.render_browse_type_food'), 
     url(r'^menus/type/', 'menu.views.render_browse_type_index'),
@@ -39,3 +40,6 @@ urlpatterns = [
     url(r'^search/', 'menu.views.render_search_index'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ]
+admin.site.site_header = 'Rate This Menu : Administration'
+admin.site.index_title = ' RTM: Site Administration'
+admin.site.site_title = 'Rate This Menu'
