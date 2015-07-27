@@ -1,13 +1,13 @@
 from django.db import models
 from django.core.files.storage import default_storage
-from django.db.models.signals import pre_delete
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 from math import floor
 from PIL import Image
 from uuid import uuid4
+import shutil
 import io
-from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 
 '''
@@ -38,7 +38,15 @@ def resizeLogo(instance, self, x, y):
     suf = SimpleUploadedFile(os.path.split(self.logo.name)[-1], logoIO.read(), content_type=FILE_EXT)
     self.thumbnail.save('%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXT), suf, save=False)
     super(instance, self).save()
-
+'''
+    Define upload path during runtime && generate unique filename
+'''
+def uploadPath(instance,filename):
+    ext = os.path.splitext(filename)[1]
+    filename = '{}{}'.format(uuid4().hex,ext)
+    return ''.join([instance.uploadPath(), filename])
+def definePATH(self, endPATH):
+    return ''.join([self.menuName.__str__(),endPATH])
 
 '''
     Clean up and resize images if a change is detected, ignore default image
@@ -62,8 +70,11 @@ def cleanup(instance, self, x, y):
     return
 
 
-
-def deletion(self):
+def deletion(self, isMenu):
+    if isMenu:
+        if default_storage.exists(os.path.join(settings.MEDIA_ROOT,''.join([self.menuName]))):
+            shutil.rmtree(''.join([settings.MEDIA_ROOT,self.menuName]), ignore_errors=True)
+            return
     if default_storage.exists(os.path.join(settings.MEDIA_ROOT,self.logo.name)):
         if 'default.png' not in self.logo.name:
             os.remove(os.path.join(settings.MEDIA_ROOT,self.logo.name))
@@ -71,14 +82,6 @@ def deletion(self):
         if 'default.png' not in self.thumbnail.name:
             os.remove(os.path.join(settings.MEDIA_ROOT,self.thumbnail.name))
     return
-
-'''
-    Define upload path during runtime && generate unique filename
-'''
-def uploadPath(instance, filename):
-    ext = os.path.splitext(filename)[1]
-    filename = '{}{}'.format(uuid4().hex,ext)
-    return ''.join([instance.uploadPath, filename])
 
 '''
     Get average by ID, takes either food or menu ID passed as parameters (None if not searching)
@@ -154,17 +157,18 @@ class abstractMenuItem(models.Model):
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
-    uploadPath = 'menuLogo/'
 
+    def uploadPath(self):
+        PATH = definePATH(self, '/menuLogo/')
+        return PATH
     def save(self, *args, **kwargs):
         cleanup(Menu, self,200,200)
         set_menu_isActive(self)
         super(Menu, self).save()
     def delete(self):
-        deletion(self)
+        deletion(self, True)
         RTM = Menu.objects.filter(id=self.id)
         RTM.delete()
-
     def __str__(self):
         return self.menuName
     class Meta:
@@ -172,33 +176,37 @@ class Menu(abstractMenuItem):
         verbose_name_plural = 'Menu Management'
 
 class FoodItem(abstractMenuItem):
-    menuName = models.ForeignKey(Menu, default=None)
+    menuName = models.ForeignKey(Menu,default=None)
     dishName = models.CharField(max_length=30,default='')
     type = models.ManyToManyField(FoodType, default='')
-    uploadPath = 'foodLogo/'
 
-
+    def uploadPath(self):
+        PATH = definePATH(self, ''.join(['/foodLogo/',self.dishName,'/']))
+        return PATH
     def save(self, *args, **kwargs):
         cleanup(FoodItem, self,100,100)
         set_food_isActive(self)
         super(FoodItem, self).save()
     def delete(self):
-        deletion(self)
+        deletion(self, False)
         RTM = FoodItem.objects.filter(id=self.id)
         RTM.delete()
     def __str__(self):
         return self.dishName
 
 class Review(abstractMenuItem):
+    menuName = models.ForeignKey(Menu, default=None)
     foodItemName = models.ForeignKey(FoodItem, default=None)
     reviewComment = models.TextField(max_length=500, default=None)
-    uploadPath = 'reviewLogo/'
 
+    def uploadPath(self):
+        PATH = definePATH(self, '/reviewLogo/')
+        return PATH
     def save(self, *args, **kwargs):
         cleanup(Review, self, 100, 100)
         super(Review, self).save()
     def delete(self):
-        deletion(self)
+        deletion(self, False)
         RTM = Review.objects.filter(id=self.id)
         RTM.delete()
     def __str__(self):
