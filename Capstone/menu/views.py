@@ -51,6 +51,7 @@ def render_menu(request,m_id):
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
+    name = name.replace('-', ' ')  # deslug
     try:
         menu = Menu.objects.get(menuName=name)#checking for existing menu
         try:
@@ -184,16 +185,22 @@ def create_menu_by_gid(g_id, menuName):
     isActive = True
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
+    newMenu.save()
     try:
+            GID.objects.get(gid=g_id)
+    except GID.DoesNotExist:
+            add_menu_gid(g_id, newMenu)
             menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
             menuGID = add_menu_gid(g_id, newMenu)
-    newMenu.gid.add(menuGID)
+            newMenu.gid.add(menuGID)
     return newMenu
-def add_menu_gid(g_id, menu):
+
+def add_menu_gid(g_id, newMenu):
         menuGID = GID.objects.create(gid=g_id)
-        menu.gid.add(menuGID)
-        return menuGID
+        menuGID.save()
+        newMenu.gid.add(menuGID)
+        return newMenu
 def get_menu_food_random(menuId):
     food = list(FoodItem.objects.filter(menuName=menuId))
     foodSample = sample(food,math.ceil(len(food)/4))
@@ -205,6 +212,26 @@ Grab information from the database without reloading webpage
 Each Method expects certain URL parameters and throws error if they don't exist
 Generally return JSON response
 """
+
+def ajax_get_search(request):
+    if request.is_ajax():
+        try:
+            query_string=""
+            if 'search' in request.GET:
+                query_string = request.GET.get('search')
+                mentry = get_query(query_string,['menuName'])
+                fentry = get_query(query_string,['dishName'])
+                menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
+                food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
+                data = serializers.serialize('json',list(menu)+list(food))
+                return JsonResponse(data,safe=False)
+            else:
+                return HttpResponse("Error using AJAX (check params)")
+        except Exception as e:
+            return HttpResponse(e)
+    else:
+        return HttpResponse("You do not have permission to access this webpage")
+
 
 # get food by id
 def ajax_get_food_by_id(request):
