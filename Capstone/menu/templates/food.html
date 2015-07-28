@@ -32,8 +32,7 @@
                             {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
                                  <!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
                                  <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}">
-	<img src="/media/{{ r.thumbnail }}" alt="" />
-</a>
+									<img src="/media/{{ r.thumbnail }}" alt="" /></a>
                             {% endif %}
                             <p>{{ r.reviewComment }}</p>
                         </div>
