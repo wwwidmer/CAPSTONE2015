@@ -40,8 +40,6 @@ auto complete search
 ========
 R
 
-image enlarge
-
 format the types better
 
 tabbed filters
