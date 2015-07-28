@@ -119,6 +119,7 @@ class FoodAdmin(admin.StackedInline):
 class ReviewAdmin(admin.ModelAdmin):
     ordering = ['isActive']
     fieldsets = [
+        (None, {'fields':['menuName']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
         (None, {'fields':['reviewComment']}),
