@@ -106,6 +106,7 @@ class FoodAdmin(admin.StackedInline):
     fieldsets = [
         (None, {'fields':['dishName']}),
         (None, {'fields':['logo']}),
+        (None, {'fields':['description']}),
         #  (None, {'fields':['thumbnail']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),
@@ -134,6 +135,7 @@ class MenuAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),
+        (None, {'fields':['description']}),
         #  (None, {'fields':['thumbnail']}),
         (None, {'fields':['createdOn']}),
         (None, {'fields':['createdBy']}),

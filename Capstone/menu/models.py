@@ -157,6 +157,7 @@ class abstractMenuItem(models.Model):
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
     gid = models.ManyToManyField(GID,default='',blank=True)
+    description = models.TextField(max_length=500, default='',blank=True)
 
     def uploadPath(self):
         PATH = definePATH(self, '/menuLogo/')
@@ -179,6 +180,7 @@ class FoodItem(abstractMenuItem):
     menuName = models.ForeignKey(Menu,default=None)
     dishName = models.CharField(max_length=30,default='')
     type = models.ManyToManyField(FoodType, default='')
+    description = models.TextField(max_length=500, default='',blank=True)
 
     def uploadPath(self):
         PATH = definePATH(self, ''.join(['/foodLogo/',self.dishName,'/']))
