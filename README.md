@@ -29,8 +29,6 @@ Q
 
 URLS to catch groups of words and replace spaces with '-' vice versa
 
-resize images
-
 ========
 ========
 W
