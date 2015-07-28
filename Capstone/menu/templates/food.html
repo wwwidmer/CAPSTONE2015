@@ -45,7 +45,7 @@
             <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
-                <input type="submit" value="Submit"/>
+                <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
             </form>
         {% endif %}
         {%  if similar %}
