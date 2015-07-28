@@ -189,20 +189,20 @@ def create_menu_by_gid(g_id, menuName):
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
     newMenu.save()
     try:
-            GID.objects.get(gid=g_id)
+        GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
-            add_menu_gid(g_id, newMenu)
-            menuGID= GID.objects.get(gid=g_id)
+        add_menu_gid(g_id, newMenu)
+        menuGID= GID.objects.get(gid=g_id)
     except GID.DoesNotExist:
-            menuGID = add_menu_gid(g_id, newMenu)
-            newMenu.gid.add(menuGID)
+        menuGID = add_menu_gid(g_id, newMenu)
+        newMenu.gid.add(menuGID)
     return newMenu
 
 def add_menu_gid(g_id, newMenu):
-        menuGID = GID.objects.create(gid=g_id)
-        menuGID.save()
-        newMenu.gid.add(menuGID)
-        return newMenu
+    menuGID = GID.objects.create(gid=g_id)
+    menuGID.save()
+    newMenu.gid.add(menuGID)
+    return newMenu
 def get_menu_food_random(menuId):
     food = list(FoodItem.objects.filter(menuName=menuId))
     foodSample = sample(food,math.ceil(len(food)/4))
@@ -223,8 +223,8 @@ def ajax_get_search(request):
                 query_string = request.GET.get('search')
                 mentry = get_query(query_string,['menuName'])
                 fentry = get_query(query_string,['dishName'])
-                menu = Menu.objects.filter(mentry,isActive=True).order_by('-id')
-                food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
+                menu = Menu.objects.filter(mentry,isActive=True).order_by('?')[:10]
+                food = FoodItem.objects.filter(fentry,isActive=True).order_by('?')[:10]
                 data = serializers.serialize('json',list(menu)+list(food))
                 return JsonResponse(data,safe=False)
             else:

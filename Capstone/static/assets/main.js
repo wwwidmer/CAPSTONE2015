@@ -5,15 +5,28 @@
 $(document).ready(function(){
     $("#searchWarning").hide();
 
-   /* $(".getSearch").click(function(){
-        var search = $("#search").val();
-        if(search.length < 1) {
-            $("#searchWarning").show();
-            $("#searchWarning.alert.alert-danger").html("Please enter a search term.");
-        } else {
-            window.open("/search/results?search=" + search);
-        }
-    });*/
+    $("#search-low").click(function(){
+       var search = $("#search").val();
+        $.get("/ajax/search/", {"search":search}, function (data) {
+            console.log(data);
+            var dd = JSON.parse(data);
+            $(".controls .menu, .controls .food").html("");
+            $(".controls .menu, .controls .food").empty();
+            $(".controls .menu").append("<h3> Menus </h3>");
+            $(".controls .food").append("<h3> Food </h3>");
+            for(var i = 0; i < dd.length;i++){
+                if(dd[i].model == 'menu.menu') {
+                    var menuColumn = "<div class='col-md-3'><a href='/menus/"+dd[i].pk +"'>" + dd[i].fields['menuName'] + "</a></div>";
+                    $(".controls > .menu").append(menuColumn);
+                } else
+                {
+                    var foodColumn = "<div class='col-md-3'><a href='/menus/food/"+dd[i].pk +"'>" + dd[i].fields['dishName'] + "</a></div>";
+                    $(".controls > .food").append(foodColumn);
+                }
+            }
+         });
+
+    });
     $(".getSearch-menu").click(function(){
         var search = $("#search-menu").val();
         if(search.length < 1) {
@@ -25,7 +38,7 @@ $(document).ready(function(){
     });
 });
 
-
+/*
 $(document).ready(function(){
     // Ajax template
     $("form").click(function(){
@@ -37,7 +50,7 @@ $(document).ready(function(){
         return $("#fid").html();
     }
 });
-
+*/
 // Five star js
 $(document).ready(function(){
     var radioB = $("input[name=rating]");
@@ -98,7 +111,7 @@ $(document).ready(function() {
         }
     }
 });
-
+/*
  function food(){
      $.get("http://127.0.0.1:8000/ajax/food/", {fid: getID()}, function (data) {
          console.log(data);
@@ -125,6 +138,7 @@ $(document).ready(function() {
                 }
             });
  }
+ */
 function getID() {
     return $("#get").val();
 }
