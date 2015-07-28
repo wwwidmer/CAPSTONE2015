@@ -197,9 +197,9 @@ class FoodItem(abstractMenuItem):
         return self.dishName
 
 class Review(abstractMenuItem):
-    menuName = models.ForeignKey(Menu, default=None)
-    foodItemName = models.ForeignKey(FoodItem, default=None)
-    reviewComment = models.TextField(max_length=500, default=None)
+    menuName = models.ForeignKey(Menu, default='')
+    foodItemName = models.ForeignKey(FoodItem, default='')
+    reviewComment = models.TextField(max_length=500, default='')
 
     def uploadPath(self):
         PATH = definePATH(self, '/reviewLogo/')

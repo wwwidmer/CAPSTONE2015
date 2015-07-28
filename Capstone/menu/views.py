@@ -98,6 +98,8 @@ return a redirect to the same page.
 
 def render_new_review(form, request, f_id):
     instance = form.save(commit=False)
+    menu = FoodItem.objects.get(id=f_id)
+    instance.menuName = menu.menuName
     instance.foodItemName = FoodItem.objects.get(id=f_id)
     instance.createdBy = form.cleaned_data['createdBy']
     instance.logo = form.cleaned_data['logo']
