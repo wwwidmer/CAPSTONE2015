@@ -6,7 +6,8 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<li class="col-md-4">
-		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/> {{ m.menuName }} </a>
+		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a><br/>
+		<a href="/menus/{{ m.id }}">{{ m.menuName }} </a>
 	</li>
 	{% endfor %}
 </ul>
@@ -27,13 +28,12 @@
 		<p>
 			{{ f.dishName }}
 		</p> </a>
-				<p>
-		{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+		<p>
+			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}}
-		{% endfor %}
-        </p><a href="/menus/food/{{ f.id }}">
-			{% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
-		</a>
+			{% endfor %}
+		</p><a href="/menus/food/{{ f.id }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+		
 		<p>
 			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
 		</p>
