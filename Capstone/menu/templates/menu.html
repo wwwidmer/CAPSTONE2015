@@ -6,26 +6,40 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<li class="col-md-3">
-		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a> 
-		<p align="center"><a href="/menus/{{ m.id }}">{{ m.menuName }}</a></p>
-		<li class="col-md-4">
-		{{ m.description }} 
-		</li>
-		
+		<p>
+			<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
+		</p>
+		<p align="center">
+			<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
+		</p>
+	</li>
+
 	</li>
 	{% endfor %}
 </ul>
 {% endif %}
 
 {% if menu %}
+<div class="row-fluid">
 
-<h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+	<li class="col-md-3" style="border: 2px solid black">
+		<h3> {{ menu.menuName }}</h3
+	</li>
+	<li class="col-md-3" style="border: 2px solid black">
+	<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+	</li>
+	<li class="col-md-4" style="border: 2px solid black">
+	<p>
+		{{ menu.description }}
+	</p>
+	</li>
+</div>
 <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
 </p><!--Total Average Menu Rating-->
 <ul id="menu">
 	{% if food %}
-	{%  for f in food %}	
+	{%  for f in food %}
 	<li class="col-md-4">
 
 		<a href="/menus/food/{{ f.id }}">
@@ -36,10 +50,10 @@
 			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}}
 			{% endfor %}
-		</p><a href="/menus/food/{{ f.id }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
-		
+		</p>
+		<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
 		<p>
-			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
+			<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 		</p>
 	</li>
 	{% endfor %}
