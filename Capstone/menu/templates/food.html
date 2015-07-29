@@ -16,11 +16,31 @@
             </div>
         {% endfor %}
     {% elif food %}
+    <div class="row">
+		<li class="col-md-2">
+			<p>
+				<h3> {{ food.dishName }}</h3>
+				<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
+				<p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /></p> 
+				<p>Based on {{ reviews.count }} reviews : </p>
+			</p>
+			<p align="center">
+				<div id="fid" class="hidden hdn"> {{ food.id }}</div>
+			</p>
+		</li>
+		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+			<p>
+				{{ food.description }}
+			</p>
+		</li>		
+	</div>
+		<!--
         <div class="row">
             <h3> {{ food.dishName }}</h3>
 			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
             <div id="fid" class="hidden hdn"> {{ food.id }}</div>
             <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
+         -->
             <a href="/menus/ {{ food.menuName.id }}">Back</a>
             {% if reviews %}
                 <ul>
@@ -41,7 +61,7 @@
         </div>
         {% endif %}
         {% if form %}
-            <h3>Write a review:</h3>
+            <h3>Make a review:</h3>
             <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}

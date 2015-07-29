@@ -63,31 +63,33 @@
 			{% endblock %}
 			<!--{% block map %}
 			{% endblock %}
-		</div>
-		<!-- Footer -->
+			</div>
+			<!-- Footer -->
 
-		<footer>
-			<nav class="navbar navbar-default navbar-inner navbar-static-bottom" role="navigation2">
-				<div class="container-fluid">
-					<a class="navbar-brand" href="/">Copyright &copy;</a>
-				</div>
-			</nav>
-		</footer>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+			<footer>
+				<nav class="navbar navbar-default navbar-inner navbar-static-bottom" role="navigation2">
+					<div class="container-fluid">
+						<a class="navbar-brand" href="/">Copyright &copy;</a>
+					</div>
+				</nav>
+			</footer>
+			<!--BACKtoTOP-START-->
+			<a style="display:scroll;position:fixed;bottom:5px;right:5px;" href="#" title="" onFocus="if(this.blur)this.blur()"> <img alt='' border='0' onmouseover="this.src='{% static 'assets/TopLarge.png' %}'" src="{% static 'assets/TopMedium.png' %}" onmouseout="this.src='{% static 'assets/TopMedium.png' %}'" /></a>
+			<!--BACKtoTOP-STOP-->
+			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
-		<script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancyBox/source/jquery.fancybox.pack.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-buttons.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-media.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
-		<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-		<script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
-		<script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
-		<script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
-
+			<script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/fancyBox/lib/jquery.mousewheel-3.0.6.pack.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/fancyBox/source/jquery.fancybox.pack.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-buttons.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-media.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/fancyBox/source/helpers/jquery.fancybox-thumbs.js' %}"></script>
+			<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+			<script type="text/javascript" src="{% static 'assets/image.js' %}"></script>
+			<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+			<script type="text/javascript" src="{% static 'assets/main.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/google.js' %}"></script>
+			<script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
 

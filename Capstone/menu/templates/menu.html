@@ -6,19 +6,19 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<div class="row">
-	<li class="col-md-2">
-		<p>
-			<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
-		</p>
-		<p align="center">
-			<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
-		</p>
-	</li>
-	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
-	<p>
-		{{ m.description }}
-	</p>
-	</li>
+		<li class="col-md-2">
+			<p>
+				<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
+			</p>
+			<p align="center">
+				<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
+			</p>
+		</li>
+		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+			<p>
+				{{ m.description }}
+			</p>
+		</li>
 	</div>
 	{% endfor %}
 </ul>
@@ -31,9 +31,9 @@
 		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
 	</li>
 	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
-	<p>
-		{{ menu.description }}
-	</p>
+		<p>
+			{{ menu.description }}
+		</p>
 	</li>
 </div>
 <p>
@@ -41,20 +41,19 @@
 </p><!--Total Average Menu Rating-->
 <ul id="menu">
 	{% if food %}
-	{%  for f in food %}
-	<li class="col-md-4">
-
-		<a href="/menus/food/{{ f.id }}">
-		<p>
-			{{ f.dishName }}
-		</p> </a>
+	{%  for f in food  %}
+	<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
 		<p>
 			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-			{{types}}
+			{{types}} : 
 			{% endfor %}
 		</p>
-		<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
-		<p>
+		<a href="/menus/food/{{ f.id }}">
+		<p align="center">
+			{{ f.dishName }}
+		</p> </a>
+		<p align="center">
+			<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
 			<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 		</p>
 	</li>
