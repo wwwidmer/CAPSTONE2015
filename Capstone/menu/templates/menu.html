@@ -5,7 +5,8 @@
 {% if menus %}
 <ul id="menu">
 	{%  for m in menus %}
-	<li class="col-md-3">
+	<div class="row">
+	<li class="col-md-2">
 		<p>
 			<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
 		</p>
@@ -13,22 +14,23 @@
 			<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
 		</p>
 	</li>
-
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+	<p>
+		{{ m.description }}
+	</p>
 	</li>
+	</div>
 	{% endfor %}
 </ul>
 {% endif %}
 
 {% if menu %}
-<div class="row-fluid">
-
-	<li class="col-md-3" style="border: 2px solid black">
-		<h3> {{ menu.menuName }}</h3
+<div class="row">
+	<li class="col-xs-8 col-sm-5 col-md-3 col-lg-2">
+		<h3> {{ menu.menuName }}</h3>
+		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
 	</li>
-	<li class="col-md-3" style="border: 2px solid black">
-	<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
-	</li>
-	<li class="col-md-4" style="border: 2px solid black">
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
 	<p>
 		{{ menu.description }}
 	</p>
