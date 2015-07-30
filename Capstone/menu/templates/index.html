@@ -3,7 +3,7 @@
 {% block page %}
 
 <div class ="row">
-	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4" id="featured" style="border: 2px solid black">
+	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4" id="featured">
 		<h3> Featured: </h3>
 		{% if rand_menu %}
 		<p>
@@ -30,6 +30,9 @@
 		{% endif %}
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6" style="border: 2px solid black">
+
+	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6">
+
 		<p>
 			Search for a keyword (Steak, Starbucks...etc)
 			or take a look at whats near you.
@@ -47,21 +50,19 @@
 		</form>
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-2" style="border: 2px solid black">
+
+		<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
+		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
+
 		<!--<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
 		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
 		-->
+
 	</div>
 
-	<!--<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-	<p>
-	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
-	</p>
-	<p>
-	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
-	</p>
-	</div>-->
 
 </div>
+    </div>
 
 {% endblock %}
 <!--

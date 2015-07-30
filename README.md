@@ -27,25 +27,18 @@ TODO-per
 ========
 Q
 
-URLS to catch groups of words and replace spaces with '-' vice versa
-
-resize images
 
 ========
 ========
 W
 
-search also shows from db on search page 
-
-AJAX to call create_menu_by_gid instead of plain request
-
 filter menus by type
+
+auto complete search
 
 ========
 ========
 R
-
-image enlarge
 
 format the types better
 
