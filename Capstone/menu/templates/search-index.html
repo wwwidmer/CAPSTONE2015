@@ -30,6 +30,16 @@
 			</form>
 
         </div>
+					<span class="input-group-btn">
+						<button class="btn btn-info btn-lg getSearch" type="button">
+							Search
+						</button></span>
+				</div><!-- /input-group -->
+				<div id="map-canvas"></div>
+				<p class="alert alert-danger" id="searchWarning"></p>
+			</form>
+		</div>
+
 <!-- ARE WE STILL USING THE FUNCTION BELOW? -->
 		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" id="featured" style="border: 2px solid black">
 			<div class="control-group container">
@@ -51,7 +61,6 @@
 {% endblock %}
 {% block map %}
 
-<!-- Map container -->
 <!--
 <div class="maps">
 	<div id="map-canvas"></div>
