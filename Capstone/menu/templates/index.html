@@ -30,14 +30,10 @@
 		{% endif %}
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6" style="border: 2px solid black">
-
-	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6">
-
 		<p>
 			Search for a keyword (Steak, Starbucks...etc)
 			or take a look at whats near you.
 		</p>
-		<form class="navbar-form navbar-left navbar-search" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control input-lg" placeholder="Search for..." id ="search">
 				<span class="input-group-btn">
@@ -47,22 +43,21 @@
 			</div><!-- /input-group -->
 			<div id="map-canvas"></div>
 			<p class="alert alert-danger" id="searchWarning"></p>
-		</form>
 	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-2" style="border: 2px solid black">
 
-		<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-
-		<!--<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-		-->
-
 	</div>
 
+	<!--<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+	<p>
+	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+	</p>
+	<p>
+	Lorem ipsum solor di amet. consectetur adipicising elit, sed do euismod tempor incidudunt ut laobre et dlore magna aliqua. Ut enim ad minim verniam, uis notrud exercitation, ultamico, laboris nisi ut aliquip ex ea comoodo conequat.
+	</p>
+	</div>-->
 
 </div>
-    </div>
 
 {% endblock %}
 <!--
