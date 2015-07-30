@@ -3,44 +3,19 @@
 {% block page %}
 <div class="container">
 	<div class ="row">
-		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" style="border: 2px solid black">
+		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 			<h4> Look up a restaurant or a specific food or just narrow down by a specific type below.</h4>
-			<form class="navbar-form navbar-left navbar-search" role="search">
-				<div class="input-group">
-					<input type="text" class="form-control input-lg" placeholder="Search for..." id ="search">
-                    <span class="input-group-btn" id="search-low">
-						<button class="btn btn-info btn-lg getSearch" type="button">
-							Search
-						</button></span>
-                </div><!-- /input-group -->
-                <div id="featured">
-                        <div class="control-group container">
-                            <div class="controls">
-                                <div class="row menu">
-
-                                </div>
-                                <div class="row food">
-
-                                </div>
-                            </div>
-                        </div>
-                </div>
-				<div id="map-canvas"></div>
-				<p class="alert alert-danger" id="searchWarning"></p>
-			</form>
-
-        </div>
-					<span class="input-group-btn">
-						<button class="btn btn-info btn-lg getSearch" type="button">
-							Search
-						</button></span>
-				</div><!-- /input-group -->
-				<div id="map-canvas"></div>
-				<p class="alert alert-danger" id="searchWarning"></p>
-			</form>
+			<div class="input-group">
+				<input type="text" class="form-control input-lg" placeholder="Search for..." id ="search">
+				<span class="input-group-btn">
+					<button class="btn btn-info btn-lg getSearch" type="button">
+						Search
+					</button></span>
+			</div><!-- /input-group -->
+			<div id="map-canvas"></div>
+			<p class="alert alert-danger" id="searchWarning"></p>
 		</div>
-
-<!-- ARE WE STILL USING THE FUNCTION BELOW? -->
+		<!-- ARE WE STILL USING THE FUNCTION BELOW? -->
 		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" id="featured" style="border: 2px solid black">
 			<div class="control-group container">
 				{% if types %}
@@ -61,9 +36,10 @@
 {% endblock %}
 {% block map %}
 
+<!-- Map container -->
 <!--
 <div class="maps">
-	<div id="map-canvas"></div>
+<div id="map-canvas"></div>
 </div>
 -->
 {% endblock %}

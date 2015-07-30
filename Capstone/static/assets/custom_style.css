@@ -15,7 +15,7 @@
 
 footer {
 	clear: both;
-	margin-top: 70px;
+	margin-top: 50px;
 }
 
 ul.errorlist {
@@ -93,13 +93,23 @@ label {
 }
 
 .map, #map-canvas {
-	width: 500px;
+	width: 100%;
 	height: 400px;
 	margin: 1%;
 	position: relative;
 }
 
 body {
-	padding-top: 70px;
+	padding-top: 125px;
 }
 
+#description p{
+	font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 2px;
+   padding: 40px 20px 0 20px;	/* padding: top right buttom left */
+}
+
+#logo img{
+	padding: 10px 10px 10px 20px;
+}
