@@ -5,40 +5,72 @@
 {% if menus %}
 <ul id="menu">
 	{%  for m in menus %}
+
 	<li class="col-md-3">
 		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a> 
 		<p align="center"><a href="/menus/{{ m.id }}">{{ m.menuName }}</a></p>
 		<li class="col-md-4">
-		{{ m.description }}
+		{{ m.description }} 
 		</li>
 		
 	</li>
+
+	<div class="row">
+		<li class="col-md-2">
+			<p>
+				<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
+			</p>
+			<p align="center">
+				<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
+			</p>
+		</li>
+		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+			<p>
+				{{ m.description }}
+			</p>
+		</li>
+	</div>
+
 	{% endfor %}
 </ul>
 {% endif %}
 
 {% if menu %}
-
-<h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
-	<p>{{ menu.description }} </p>
+<div class="row">
+	<li class="col-xs-8 col-sm-5 col-md-3 col-lg-2">
+		<h3> {{ menu.menuName }}</h3>
+		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+	</li>
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
+		<p>
+			{{ menu.description }}
+		</p>
+	</li>
+</div>
 <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
 </p><!--Total Average Menu Rating-->
-	{% if TB0 != '' %}<button id=myButton0 type="button"  value=""><p>{{ TB0 }}</p></button>{% endif %}
-	{% if TB1 != '' %}<button id=myButton1 type="button"  value=""><p>{{ TB1 }}</p></button>{% endif %}
-	{% if TB2 != '' %}<button id=myButton2 type="button"  value=""><p>{{ TB2 }}</p></button>{% endif %}
-	{% if TB3 != '' %}<button id=myButton3 type="button"  value=""><p>{{ TB3 }}</p></button>{% endif %}
-	{% if TB4 != '' %}<button id=myButton4 type="button"  value=""><p>{{ TB4 }}</p></button>{% endif %}
-	{% if TB5 != '' %}<button id=myButton5 type="button"  value=""><p>{{ TB5 }}</p></button>{% endif %}
 <ul id="menu">
 	{% if food %}
+
 	{%  for f in food %}	
 	<li class="col-md-4">
 
 		<a href="/menus/food/{{ f.id }}">
+
+	{%  for f in food  %}
+	<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+
 		<p>
+			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+			{{types}} : 
+			{% endfor %}
+		</p>
+		<a href="/menus/food/{{ f.id }}">
+		<p align="center">
 			{{ f.dishName }}
 		</p> </a>
+
 		<p>
 			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}}
@@ -47,6 +79,9 @@
 		
 		<p>
 			<img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"/>
+		<p align="center">
+			<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+			<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 		</p>
 	</li>
 	{% endfor %}
