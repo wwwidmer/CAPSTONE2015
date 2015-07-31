@@ -50,7 +50,6 @@ def render_menu(request,m_id):
     food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     menu = Menu.objects.get(id=m_id)
     mct = menu.type.count()  # Menu Counted Types
-    #countTypes = food.type.count()
     index = 0
     TButton0 = ""
     TButton1 = ""
@@ -58,24 +57,37 @@ def render_menu(request,m_id):
     TButton3 = ""
     TButton4 = ""
     TButton5 = ""
+    TList0 = None
+    TList1 = None
+    TList2 = None
+    TList3 = None
+    TList4 = None
+    TList5 = None
     for t in menu.type.all():
         if index is 0:
             TButton0 = "All"
+            TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
         if index is 0:
             TButton1 = t
+            TList1 = FoodItem.objects.all().filter(type=t)
         elif index is 1:
             TButton2 = t
+            TList2 = FoodItem.objects.all().filter(type=t)
         elif index is 2:
             TButton3 = t
+            TList3 = FoodItem.objects.all().filter(type=t)
         elif index is 3:
             TButton4 = t
+            TList4 = FoodItem.objects.all().filter(type=t)
         elif index is 4:
             TButton5 = t
+            TList5 = FoodItem.objects.all().filter(type=t)
         index += 1
 
 
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id),
-               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5}
+               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5,
+               'TL0':TList0,'TL1':TList1,'TL2':TList2,'TL3':TList3,'TL4':TList4,'TL5':TList5}
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
