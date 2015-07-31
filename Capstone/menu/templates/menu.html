@@ -9,7 +9,7 @@
 		<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a> 
 		<p align="center"><a href="/menus/{{ m.id }}">{{ m.menuName }}</a></p>
 		<li class="col-md-4">
-		{{ m.description }} 
+		{{ m.description }}
 		</li>
 		
 	</li>
@@ -20,9 +20,16 @@
 {% if menu %}
 
 <h3> {{ menu.menuName }}</h3><img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+	<p>{{ menu.description }} </p>
 <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
 </p><!--Total Average Menu Rating-->
+	{% if TB0 != '' %}<button id=myButton0 type="button"  value=""><p>{{ TB0 }}</p></button>{% endif %}
+	{% if TB1 != '' %}<button id=myButton1 type="button"  value=""><p>{{ TB1 }}</p></button>{% endif %}
+	{% if TB2 != '' %}<button id=myButton2 type="button"  value=""><p>{{ TB2 }}</p></button>{% endif %}
+	{% if TB3 != '' %}<button id=myButton3 type="button"  value=""><p>{{ TB3 }}</p></button>{% endif %}
+	{% if TB4 != '' %}<button id=myButton4 type="button"  value=""><p>{{ TB4 }}</p></button>{% endif %}
+	{% if TB5 != '' %}<button id=myButton5 type="button"  value=""><p>{{ TB5 }}</p></button>{% endif %}
 <ul id="menu">
 	{% if food %}
 	{%  for f in food %}	
