@@ -1,85 +1,97 @@
 {% extends 'header.html' %}
 {% load staticfiles %}
 {% block page %}
-    {% if foodTypes %}
-        {% for f in foodTypes %}
-            <div class="col-sm-2">
-                <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
-            </div>
-        {% endfor %}
-    {% elif foodsAsType %}
-        <h1> {{ foodType }} </h1>
-        <!-- links to these in their menus -->
-        {% for f in foodsAsType %}
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-                <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
-            </div>
-        {% endfor %}
-    {% elif food %}
-    <div class="row">
-		<li class="col-md-2">
-			<p>
-				<h3> {{ food.dishName }}</h3>
-				<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-				<p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /></p> 
-				<p>Based on {{ reviews.count }} reviews : </p>
-			</p>
-			<p align="center">
-				<div id="fid" class="hidden hdn"> {{ food.id }}</div>
-			</p>
-		</li>
-		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
-			<p>
-				{{ food.description }}
-			</p>
-		</li>		
-	</div>
-		<!--
-        <div class="row">
-            <h3> {{ food.dishName }}</h3>
+{% if foodTypes %}
+{% for f in foodTypes %}
+<div class="col-sm-2">
+	<a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
+</div>
+{% endfor %}
+{% elif foodsAsType %}
+<h1> {{ foodType }} </h1>
+<!-- links to these in their menus -->
+{% for f in foodsAsType %}
+<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+	<a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
+</div>
+{% endfor %}
+{% elif food %}
+<div class="row">
+	<li class="col-md-2">
+		<p>
+			<h3> {{ food.dishName }}</h3>
 			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-            <div id="fid" class="hidden hdn"> {{ food.id }}</div>
-            <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
-         -->
-            <a href="/menus/ {{ food.menuName.id }}">Back</a>
-            {% if reviews %}
-                <ul>
-                    {% for r in reviews %}
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-                            <p>{{ r.createdOn }}</p>
-                            <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
-                            <p>Author: {{ r.createdBy }}</p>
-                            {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
-                                 <!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
-                                 <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}">
-									<img src="/media/{{ r.thumbnail }}" alt="" /></a>
-                            {% endif %}
-                            <p>{{ r.reviewComment }}</p>
-                        </div>
-                    {% endfor %}
-                </ul>
-        </div>
-        {% endif %}
-        {% if form %}
-            <h3>Make a review:</h3>
-            <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
-            </form>
-        {% endif %}
-        {%  if similar %}
-            <p> Related Food:</p>
-            <ul>
-            {% for s in similar %}
-                <li class="col-sm-3">
-                <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-                <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% else %}
-        <p> There doesn't appear to be anything here. </p>
-    {% endif %}
+		<p>
+			Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" />
+		</p>
+		<p>
+			Based on {{ reviews.count }} reviews :
+		</p>
+		</p>
+		<p align="center">
+			<div id="fid" class="hidden hdn">
+				{{ food.id }}
+			</div>
+		</p>
+	</li>
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+		<p>
+			{{ food.description }}
+		</p>
+	</li>
+</div>
+<a href="/menus/ {{ food.menuName.id }}">Back</a>
+{% if reviews %}
+<ul>
+	{% for r in reviews %}
+	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+		<p>
+			{{ r.createdOn }}
+		</p>
+		<p>
+			Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/>
+		</p>
+		<p>
+			Author: {{ r.createdBy }}
+		</p>
+		{% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
+		<!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
+		<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
+		{% endif %}
+		<p>
+			{{ r.reviewComment }}
+		</p>
+	</div>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+{% if form %}
+<h3>Make a review:</h3>
+<form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form }}
+	<button type="submit" class="btn btn-info btn-lg" value="Submit">
+		Submit
+	</button>
+</form>
+{% endif %}
+{%  if similar %}
+<p>
+	Related Food:
+</p>
+<ul>
+	{% for s in similar %}
+	<li class="col-sm-3">
+		<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
+		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% else %}
+<p>
+	There doesn't appear to be anything here.
+</p>
+{% endif %}
 {% endblock %}

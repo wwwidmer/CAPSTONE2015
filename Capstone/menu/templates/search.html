@@ -8,8 +8,21 @@
         {% if menu %}
             <h3> Menus </h3>
             {% for m in menu %}
-                <a href="/menus/{{ m.id }}">{{ m.menuName }}
-                 <img src="/media/{{ m.logo }}"> </a>
+                <div class="row">
+					<li class="col-xs-8 col-sm-5 col-md-3 col-lg-3">
+						<p>
+							<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
+						</p>
+						<p>
+							<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
+						</p>
+						</li>
+					<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
+						<p>
+							{{ m.description }}
+						</p>
+					</li>
+				</div>
             {% endfor %}
         {% endif %}
         {% if food %}
@@ -24,7 +37,7 @@
             <h3> Types </h3>
             {% for t in type %}
                 <a href="/menus/type/{{ t.id }}">{{ t.type }}
-                <img src="/media/{{ t.logo }}"> </a>
+                <img src="/media/{{ t.thumbnail }}"> </a>
             {% endfor %}
         {% endif %}
     {% else %}
