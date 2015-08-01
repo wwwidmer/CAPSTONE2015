@@ -67,7 +67,6 @@ def render_menu(request,m_id):
         if index is 0:
             TButton0 = "All"
             TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
-        if index is 0:
             TButton1 = t
             TList1 = FoodItem.objects.all().filter(type=t)
         elif index is 1:
