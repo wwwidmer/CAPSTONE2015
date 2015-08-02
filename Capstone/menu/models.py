@@ -156,6 +156,7 @@ class abstractMenuItem(models.Model):
 
 class Menu(abstractMenuItem):
     menuName = models.CharField(max_length=30, default='')
+    type = models.ManyToManyField(FoodType, default='', null=True, blank=True)
     gid = models.ManyToManyField(GID,default='',blank=True)
     description = models.TextField(max_length=500, default='',blank=True)
 
@@ -199,7 +200,7 @@ class FoodItem(abstractMenuItem):
 class Review(abstractMenuItem):
     menuName = models.ForeignKey(Menu, default='')
     foodItemName = models.ForeignKey(FoodItem, default='')
-    reviewComment = models.TextField(max_length=500, default='')
+    reviewComment = models.TextField(max_length=500, default=None)
 
     def uploadPath(self):
         PATH = definePATH(self, '/reviewLogo/')

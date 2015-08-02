@@ -131,11 +131,13 @@ class ReviewAdmin(admin.ModelAdmin):
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['menuName','id']
-    list_filter = ['createdOn','createdBy']
+    list_filter = ['createdOn','createdBy',]
+    filter_horizontal= ('type',)
     '''filter_horizontal= ('gid',) -Optional'''
     fieldsets = [
         (None, {'fields':['menuName']}),
         (None, {'fields':['logo']}),
+        (None, {'fields':['type']}),
         (None, {'fields':['description']}),
         #  (None, {'fields':['thumbnail']}),
         (None, {'fields':['createdOn']}),
