@@ -47,22 +47,27 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
-    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
-    menu = Menu.objects.get(id=m_id)
-    mct = menu.type.count()  # Menu Counted Types
+    try:
+        food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    except FoodItem.DoesNotExist:
+        raise Http404
+    #menu = Menu.objects.get(id=m_id)
+    #mct = menu.type.count()  # Menu Counted Types
     index = 0
-    TButton0 = ""
-    TButton1 = ""
-    TButton2 = ""
-    TButton3 = ""
-    TButton4 = ""
-    TButton5 = ""
-    TList0 = None
-    TList1 = None
-    TList2 = None
-    TList3 = None
-    TList4 = None
-    TList5 = None
+    TButton0 = ''
+    TButton1 = ''
+    TButton2 = ''
+    TButton3 = ''
+    TButton4 = ''
+    TButton5 = ''
+    TButton6 = ''
+    TList0 = ['']
+    TList1 = ['']
+    TList2 = ['']
+    TList3 = ['']
+    TList4 = ['']
+    TList5 = ['']
+    TList6 = ['']
     for t in menu.type.all():
         if index is 0:
             TButton0 = "All"
@@ -81,12 +86,15 @@ def render_menu(request,m_id):
         elif index is 4:
             TButton5 = t
             TList5 = FoodItem.objects.all().filter(type=t)
+        elif index is 5:
+            TButton6 = t
+            TList6 = FoodItem.objects.all().filter(type=t)
         index += 1
 
 
     context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id),
-               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5,
-               'TL0':TList0,'TL1':TList1,'TL2':TList2,'TL3':TList3,'TL4':TList4,'TL5':TList5}
+               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5, 'TB6':TButton6,
+               'TL0':TList0,'TL1':TList1,'TL2':TList2,'TL3':TList3,'TL4':TList4,'TL5':TList5,'TL6':TList6}
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
