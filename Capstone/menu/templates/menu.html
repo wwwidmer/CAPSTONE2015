@@ -72,13 +72,15 @@
         <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
 </p><!--Total Average Menu Rating-->
-	{% if TB0 != '' %}<button id="TB0"  onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
-	{% if TB1 != '' %}<button id="TB1"  onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
-	{% if TB2 != '' %}<button id="TB2"  onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
-	{% if TB3 != '' %}<button id="TB3"  onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
-	{% if TB4 != '' %}<button id="TB4"  onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
-	{% if TB5 != '' %}<button id="TB5"  onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
-	{% if TB6 != '' %}<button id="TB6"  onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
+    <div class="btn-group btn-group-lg" role="group" aria-label="...">
+	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
+	{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
+	{% if TB2 != '' %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
+	{% if TB3 != '' %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
+	{% if TB4 != '' %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
+	{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
+	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
+	</div>
 <ul id="menu">
 	{% if food %}
 		{% if TB0 != '' %}
