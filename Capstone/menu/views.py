@@ -54,7 +54,7 @@ def render_menu(request,m_id):
     #menu = Menu.objects.get(id=m_id)
     #mct = menu.type.count()  # Menu Counted Types
     index = 0
-    TButton0 = ''
+    TButton0 = 'All'
     TButton1 = ''
     TButton2 = ''
     TButton3 = ''
@@ -68,27 +68,26 @@ def render_menu(request,m_id):
     TList4 = ['']
     TList5 = ['']
     TList6 = ['']
+    TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     for t in menu.type.all():
         if index is 0:
-            TButton0 = "All"
-            TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
             TButton1 = t
-            TList1 = FoodItem.objects.all().filter(type=t)
+            TList1 = TList0.all().filter(type=t)
         elif index is 1:
             TButton2 = t
-            TList2 = FoodItem.objects.all().filter(type=t)
+            TList2 = TList0.all().filter(type=t)
         elif index is 2:
             TButton3 = t
-            TList3 = FoodItem.objects.all().filter(type=t)
+            TList3 = TList0.all().filter(type=t)
         elif index is 3:
             TButton4 = t
-            TList4 = FoodItem.objects.all().filter(type=t)
+            TList4 = TList0.all().filter(type=t)
         elif index is 4:
             TButton5 = t
-            TList5 = FoodItem.objects.all().filter(type=t)
+            TList5 = TList0.all().filter(type=t)
         elif index is 5:
             TButton6 = t
-            TList6 = FoodItem.objects.all().filter(type=t)
+            TList6 = TList0.all().filter(type=t)
         index += 1
 
 

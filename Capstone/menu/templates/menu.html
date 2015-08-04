@@ -33,7 +33,6 @@
 			</p>
 		</li>
 		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
-
 			<p>
 				{{ m.description }}
 			</p>
@@ -57,17 +56,17 @@
 	</div>
     <p>	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
     <div class="btn-group btn-group-lg" role="group" aria-label="...">
-	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0"  onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
-	{% if TB1 != '' %}<button type="button" class="btn btn-default" id="TB1"  onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
-	{% if TB2 != '' %}<button type="button" class="btn btn-default" id="TB2"  onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
-	{% if TB3 != '' %}<button type="button" class="btn btn-default" id="TB3"  onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
-	{% if TB4 != '' %}<button type="button" class="btn btn-default" id="TB4"  onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
-	{% if TB5 != '' %}<button type="button" class="btn btn-default" id="TB5"  onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
-	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6"  onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
+	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
+	{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
+	{% if TB2 != '' %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
+	{% if TB3 != '' %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
+	{% if TB4 != '' %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
+	{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
+	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
 	</div>
 	<ul id="menu">
 		{% if food %}
-			<!--{% if TB0 != '' %}-->
+			{% if TB0 != '' %}
 				<div class="toggle" id="toggleALL" style="display: block">
 				{%  for f in food  %}
 					<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
@@ -87,7 +86,7 @@
 					</li>
 				{% endfor %}
 			 </div>
-			<!--{% endif %}-->
+			{% endif %}
 			{% if TB1 != '' %}
 				<div class="col-xs-6 col-sm-3 col-md-4 col-lg-2 toggle" id="toggle1" style="display: none">
 				{%  for f in TL1  %}
