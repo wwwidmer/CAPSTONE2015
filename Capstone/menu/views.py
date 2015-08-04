@@ -12,6 +12,7 @@ from random import randrange, sample
 import re, datetime
 
 def index(request):
+    menus = Menu.objects.all().filter(isActive=True)
     try:
         rrand = randrange(0,Review.objects.all().filter(isActive=True).count())
         revs = Review.objects.all().filter(isActive=True)[rrand]
@@ -24,7 +25,7 @@ def index(request):
         revs = None
         avg = None
 
-    context = {'rand_menu':menus, 'rand_food':foods, 'rand_rev':revs, 'avg':avg}
+    context = {'rand_menu':menus, 'rand_food':foods, 'rand_rev':revs, 'avg':avg,menus:'menus'}
     return render_to_response("index.html",context)
 
 def render_search_index(request):
@@ -46,8 +47,54 @@ def render_menu(request,m_id):
         menu = Menu.objects.get(id=m_id)
     except Menu.DoesNotExist:
         raise Http404
-    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
-    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    try:
+        food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    except FoodItem.DoesNotExist:
+        raise Http404
+    #menu = Menu.objects.get(id=m_id)
+    #mct = menu.type.count()  # Menu Counted Types
+    index = 0
+    TButton0 = ''
+    TButton1 = ''
+    TButton2 = ''
+    TButton3 = ''
+    TButton4 = ''
+    TButton5 = ''
+    TButton6 = ''
+    TList0 = ['']
+    TList1 = ['']
+    TList2 = ['']
+    TList3 = ['']
+    TList4 = ['']
+    TList5 = ['']
+    TList6 = ['']
+    for t in menu.type.all():
+        if index is 0:
+            TButton0 = "All"
+            TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+            TButton1 = t
+            TList1 = FoodItem.objects.all().filter(type=t)
+        elif index is 1:
+            TButton2 = t
+            TList2 = FoodItem.objects.all().filter(type=t)
+        elif index is 2:
+            TButton3 = t
+            TList3 = FoodItem.objects.all().filter(type=t)
+        elif index is 3:
+            TButton4 = t
+            TList4 = FoodItem.objects.all().filter(type=t)
+        elif index is 4:
+            TButton5 = t
+            TList5 = FoodItem.objects.all().filter(type=t)
+        elif index is 5:
+            TButton6 = t
+            TList6 = FoodItem.objects.all().filter(type=t)
+        index += 1
+
+
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id),
+               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5, 'TB6':TButton6,
+               'TL0':TList0,'TL1':TList1,'TL2':TList2,'TL3':TList3,'TL4':TList4,'TL5':TList5,'TL6':TList6}
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
@@ -157,7 +204,7 @@ def render_search(request):
         food = FoodItem.objects.filter(fentry,isActive=True).order_by('-id')
         type = FoodType.objects.filter(tentry).order_by('-id')
 
-    context = {"GET":query_string,'menu':menu,'food':food,'type':type}
+    context = {"GET":query_string,'menu':menu,'food':food,'type':type,'keyword':query_string}
     return render_to_response("search.html",context)
 
 # Search function
