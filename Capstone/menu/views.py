@@ -61,12 +61,12 @@ def render_menu(request,m_id):
     TButton5 = ''
     TButton6 = ''
 
-    TList1 = ['']
-    TList2 = ['']
-    TList3 = ['']
-    TList4 = ['']
-    TList5 = ['']
-    TList6 = ['']
+    TList1 = []
+    TList2 = []
+    TList3 = []
+    TList4 = []
+    TList5 = []
+    TList6 = []
     TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     for t in menu.type.all():
         if index is 0:

@@ -2,21 +2,7 @@
 {% load staticfiles %}
 {% block page %}
 
-	<script language="javascript">
-	function showonlyone(choice) {
-      var toggle = document.getElementsByTagName("div");
-            for(var x=0; x<toggle.length; x++) {
-                  name = toggle[x].getAttribute("class");
-                  if (name == 'toggle') {
-                        if (toggle[x].id == choice) {
-							toggle[x].style.display = 'block';
-                  }
-                  else {
-                        toggle[x].style.display = 'none';
-                  }
-            }
-      }
-	}
+	<script type="text/javascript">
 	</script>
 
 
@@ -60,14 +46,12 @@
 		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
 	</li>
 
-	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
-
-	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-4" id="description">
+            <li class="col-xs-12 col-sm-6 col-md-3 col-lg-4" id="description">
 
 		<p>
 			{{ menu.description }}
 		</p>
-	</li>
+            </li>
 </div>
         <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
@@ -135,9 +119,9 @@
 			{%  for f in TL2  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
 					<p><font color="green">{{ TB2 }}:</font>
-					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB2 %}
-								{% if forloop.counter != f.type.all.count %}
+                        {% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+                            {% if types != TB2 %}
+                                {% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
 									{{types}}</p>
@@ -145,15 +129,18 @@
 						{% endif %}
 					{% endfor %}
 				<a href="/menus/food/{{ f.id }}">
+                    <p align="center">
+                    <h4>{{ f.dishName }}</h4>
+                    </p>
+                    </a>
 				<p align="center">
-					<h4>{{ f.dishName }}</h4>
-				</p></a>
-				<p align="center">
-					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
-					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %}
+                        <!-- We don't want to display a blank image-->
+                        <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+                    <a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 				</p>
 				</li>
-			{% endfor %}<!-2->
+			{% endfor %}<!--2-->
 			{%  for f in TL3  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
 

@@ -25,39 +25,10 @@
 ========
 TODO-per
 ========
-Q
 
+format the types better in type/id page
 
-========
-========
-W
-
-filter menus by type
-
-auto complete search
-
-========
-========
-R
-
-format the types better
-
-tabbed filters
-
-format the review submission
-
-borders style
-
-========
-========
-S
-map on menus
-
-shifted search button same row as input
-  
-too wide - or blurb - about schema - tiles?
-
-make search bar shorted
+format the review submission  - fix food.html
 
 ========
 
