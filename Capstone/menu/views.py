@@ -51,8 +51,7 @@ def render_menu(request,m_id):
         food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     except FoodItem.DoesNotExist:
         raise Http404
-    #menu = Menu.objects.get(id=m_id)
-    #mct = menu.type.count()  # Menu Counted Types
+
     index = 0
     TButton0 = 'All'
     TButton1 = ''
@@ -163,7 +162,7 @@ def render_browse_top_menu(request):
     context = {'menus':menus}
     return render_to_response("menu.html",context)
 def render_browse_type_index(request):
-    foodType = FoodType.objects.all().order_by("type")
+    foodType = FoodType.objects.all().order_by('?')
     context = {'foodTypes':foodType}
     return render_to_response("food.html",context)
 def render_browse_type_food(request,t_id):
