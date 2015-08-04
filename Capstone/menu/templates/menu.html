@@ -55,6 +55,32 @@
 		</li>
 	</div>
     <p>	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
+    		<nav class="navbar navbar-default" role="navigation1">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#type">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand">Type</a>
+				</div>
+				<div class="collapse navbar-collapse" id="type">
+					<ul class="nav navbar-nav">
+    
+	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
+	{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
+	{% if TB2 != '' %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
+	{% if TB3 != '' %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
+	{% if TB4 != '' %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
+	{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
+	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
+	
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</nav>
+		<!--
     <div class="btn-group btn-group-lg" role="group" aria-label="...">
 	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
 	{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
@@ -64,7 +90,8 @@
 	{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
 	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
 	</div>
-	<ul id="menu">
+	-->
+	<div id="menu">
 		{% if food %}
 			{% if TB0 != '' %}
 				<div class="toggle" id="toggleALL" style="display: block">
@@ -76,9 +103,9 @@
 						{% endfor %}
 					</p>
 					<a href="/menus/food/{{ f.id }}">
-					<p align="center">
+					<h4><p align="center">
 						{{ f.dishName }}
-					</p></a>
+					</p></h4></a>
 					<p align="center">
 						<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
 						<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
@@ -214,7 +241,7 @@
 			 </div>
 			{% endif %}
 	{% endif %}
-	</ul>
+	</div>
 
 {% endif  %}
 
