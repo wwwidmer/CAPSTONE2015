@@ -56,7 +56,7 @@
 		</li>
 	</div>
     <p>	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
-    <div class="btn-group" role="group" aria-label="...">
+    <div class="btn-group btn-group-lg" role="group" aria-label="...">
 	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0"  onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
 	{% if TB1 != '' %}<button type="button" class="btn btn-default" id="TB1"  onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
 	{% if TB2 != '' %}<button type="button" class="btn btn-default" id="TB2"  onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
@@ -89,9 +89,9 @@
 			 </div>
 			<!--{% endif %}-->
 			{% if TB1 != '' %}
-				<div class="toggle" id="toggle1" style="display: none">
+				<div class="col-xs-6 col-sm-3 col-md-4 col-lg-2 toggle" id="toggle1" style="display: none">
 				{%  for f in TL1  %}
-					<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+					
 					<p>
 						{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 						{{types}} :
@@ -105,7 +105,7 @@
 						<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %}<img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
 						<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 					</p>
-					</li>
+				
 				{% endfor %}
 			 </div>
 			{% endif %}
