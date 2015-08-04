@@ -83,13 +83,18 @@
 	{% if food %}
 		{% if TB0 != '' %}
 			<div class="toggle" id="toggleALL" style="display: block">
-			{%  for f in food  %}
+			{%  for f in TL1  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
+					<p>{{ TB1 }}:
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-					{{types}} :
+						{% if types != TB1 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -99,18 +104,135 @@
 					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
 				</p>
 				</li>
-			{% endfor %}
+			{% endfor %}<!-1->
+			{%  for f in TL2  %}
+				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+					<p>{{ TB2 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB2 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
+					{% endfor %}
+				<a href="/menus/food/{{ f.id }}">
+				<p align="center">
+					{{ f.dishName }}
+				</p></a>
+				<p align="center">
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+				</p>
+				</li>
+			{% endfor %}<!-2->
+			{%  for f in TL3  %}
+				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+
+					<p>{{ TB3 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB3 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
+					{% endfor %}
+
+				<a href="/menus/food/{{ f.id }}">
+				<p align="center">
+					{{ f.dishName }}
+				</p></a>
+				<p align="center">
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %}<img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+				</p>
+				</li>
+			{% endfor %}<!-3->
+			{%  for f in TL4  %}
+				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+					<p>{{ TB4 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB4 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
+					{% endfor %}
+				<a href="/menus/food/{{ f.id }}">
+				<p align="center">
+					{{ f.dishName }}
+				</p></a>
+				<p align="center">
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+				</p>
+				</li>
+			{% endfor %}<!-4->
+			{%  for f in TL5  %}
+				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+					<p>{{ TB5 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB5 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
+					{% endfor %}
+				<a href="/menus/food/{{ f.id }}">
+				<p align="center">
+					{{ f.dishName }}
+				</p></a>
+				<p align="center">
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+				</p>
+				</li>
+			{% endfor %}<!-5->
+			{%  for f in TL6  %}
+				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+					<p>{{ TB6 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB6 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
+					{% endfor %}
+				<a href="/menus/food/{{ f.id }}">
+				<p align="center">
+					{{ f.dishName }}
+				</p></a>
+				<p align="center">
+					<a id="single_1" href="/media/{{ f.logo }}" title="{{ f.dishName }}"> {% if f.thumbnail != 'default.png' %} <!-- We don't want to display a blank image--> <img src="/media/{{ f.thumbnail }}"> {% endif %} </a>
+					<a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
+				</p>
+				</li>
+			{% endfor %}<!-6->
 		 </div>
 		{% endif %}
 		{% if TB1 != '' %}
 			<div class="toggle" id="toggle1" style="display: none">
 			{%  for f in TL1  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
+					<p>{{ TB1 }}:
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-					{{types}} :
+						{% if types != TB1 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -127,11 +249,16 @@
 			<div class="toggle" id="toggle2" style="display: none">
 			{%  for f in TL2  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
-					{% for types in f.type.all %}
-					{{types}} :
+					<p>{{ TB2 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB2 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -148,11 +275,16 @@
 			<div class="toggle" id="toggle3" style="display: none">
 			{%  for f in TL3  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
-					{% for types in f.type.all %}
-						{{types}} :
+					<p>{{ TB3 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB3 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -169,11 +301,16 @@
 			<div class="toggle" id="toggle4" style="display: none">
 			{%  for f in TL4  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
-					{% for types in f.type.all %}
-					{{types}} :
+					<p>{{ TB4 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB4 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -190,11 +327,16 @@
 			<div class="toggle" id="toggle5" style="display: none">
 			{%  for f in TL5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
-					{% for types in f.type.all %}
-					{{types}} :
+					<p>{{ TB5 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB5 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}
@@ -211,11 +353,16 @@
 			<div class="toggle" id="toggle6" style="display: none">
 			{%  for f in TL6  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-				<p>
-					{% for types in f.type.all %}
-					{{types}} :
+					<p>{{ TB6 }}:
+					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
+						{% if types != TB6 %}
+								{% if forloop.counter != f.type.all.count %}
+									{{types}}{{ ', ' }}
+								{% elif forloop.counter == f.type.all.count %}
+									{{types}}</p>
+								{% endif %}
+						{% endif %}
 					{% endfor %}
-				</p>
 				<a href="/menus/food/{{ f.id }}">
 				<p align="center">
 					{{ f.dishName }}

@@ -61,7 +61,7 @@ def render_menu(request,m_id):
     TButton4 = ''
     TButton5 = ''
     TButton6 = ''
-    TList0 = ['']
+
     TList1 = ['']
     TList2 = ['']
     TList3 = ['']
