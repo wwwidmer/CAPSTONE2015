@@ -1,7 +1,7 @@
 {% extends 'header.html' %}
 {% load staticfiles %}
 {% block page %}
-<<<<<<< HEAD
+
     {% if foodTypes %}
         {% for f in foodTypes %}
             <div class="col-sm-2">
@@ -83,28 +83,28 @@
     {% else %}
         <p> There doesn't appear to be anything here. </p>
     {% endif %}
-=======
+
 {% if foodTypes %}
-{% for f in foodTypes %}
-<div class="col-sm-2">
-	<a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
-</div>
-{% endfor %}
+    {% for f in foodTypes %}
+        <div class="col-sm-2">
+            <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
+        </div>
+    {% endfor %}
 {% elif foodsAsType %}
-<h1> {{ foodType }} </h1>
-<!-- links to these in their menus -->
-{% for f in foodsAsType %}
-<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-	<a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
-</div>
-{% endfor %}
+    <h1> {{ foodType }} </h1>
+    <!-- links to these in their menus -->
+    {% for f in foodsAsType %}
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+            <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
+        </div>
+    {% endfor %}
 {% elif food %}
-<div class="row">
-	<li class="col-md-2">
-		<p>
-			<h3> {{ food.dishName }}</h3>
-			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-		<p>
+    <div class="row">
+        <li class="col-md-2">
+            <p>
+            <h3> {{ food.dishName }}</h3>
+            <a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
+            <p>
 			Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" />
 		</p>
 		<p>
@@ -177,5 +177,4 @@
 	There doesn't appear to be anything here.
 </p>
 {% endif %}
->>>>>>> origin/Richard
 {% endblock %}

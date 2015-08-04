@@ -30,8 +30,8 @@
 </ul>
 {% endif %}
 
-{% if menu %}
-<div class="row">
+    {% if menu %}
+        <div class="row">
 	<li class="col-xs-8 col-sm-5 col-md-3 col-lg-3">
 		<h3> {{ menu.menuName }}</h3>
 		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
@@ -46,13 +46,13 @@
 		</p>
 	</li>
 </div>
-<p>
+        <p>
 	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
 </p><!--Total Average Menu Rating-->
-<ul id="menu">
+        <ul id="menu">
  	{% if food %}
 
-	<div class="panel with-nav-tabs panel-default">
+        <div class="panel with-nav-tabs panel-default">
 		<div class="panel-heading">
 			<ul class="nav nav-tabs">
 				{%  for f in food  %}
@@ -84,8 +84,8 @@
 		</div>
 	</div>
 
-	{%  for f in food  %}
-	            <div class="panel with-nav-tabs panel-default">
+        {%  for f in food  %}
+            <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab1default" data-toggle="tab">Default</a></li>
@@ -110,8 +110,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-	<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
+            </div>
+            <li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
 		<p>
 			{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
 			{{types}} : 
@@ -127,9 +127,12 @@
 		</p>
 	</li>
 
-	{% endfor %}
-{% endif %}
+        {% endfor %}
+                {% endfor %}
+    {% endif %}
+
 </ul>
 
-{% endif  %}
+    {% endif  %}
+
 {% endblock %}
