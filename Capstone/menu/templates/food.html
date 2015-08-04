@@ -4,6 +4,7 @@
 
 
 {% if foodTypes %}
+    <p><h4>Browse what your stomach is craving!</h4></p>
     {% for f in foodTypes %}
         <div class="col-sm-2">
             <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
