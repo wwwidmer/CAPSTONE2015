@@ -14,7 +14,9 @@
     <!-- links to these in their menus -->
     {% for f in foodsAsType %}
         <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-            <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
+            <a href="/menus/food/{{ f.id }}"><h4>{{ f.dishName }}</h4></a>
+            <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ f.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ f.thumbnail }}" alt="" /></a>
+            <a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
         </div>
     {% endfor %}
 {% elif food %}
