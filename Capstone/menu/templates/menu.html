@@ -68,37 +68,27 @@
 				</div>
 				<div class="collapse navbar-collapse" id="type">
 					<ul class="nav navbar-nav">
-						{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
-						{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
-						{% if TB2 != '' %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
-						{% if TB3 != '' %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
-						{% if TB4 != '' %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
-						{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
-						{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
+						{% if TBL.0 != 0 %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TBL.0 }}</p></button>{% endif %}
+						{% if TBL.1 != 1 %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TBL.1 }}</p></button>{% endif %}
+						{% if TBL.2 != 2 %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TBL.2 }}</p></button>{% endif %}
+						{% if TBL.3 != 3 %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TBL.3 }}</p></button>{% endif %}
+						{% if TBL.4 != 4 %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TBL.4 }}</p></button>{% endif %}
+						{% if TBL.5 != 5 %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TBL.5 }}</p></button>{% endif %}
+						{% if TBL.6 != 6 %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TBL.6 }}</p></button>{% endif %}
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
-	<!--
-    <div class="btn-group btn-group-lg" role="group" aria-label="...">
-	{% if TB0 != '' %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TB0 }}</p></button>{% endif %}
-	{% if TB1 != '' %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TB1 }}</p></button>{% endif %}
-	{% if TB2 != '' %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TB2 }}</p></button>{% endif %}
-	{% if TB3 != '' %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TB3 }}</p></button>{% endif %}
-	{% if TB4 != '' %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TB4 }}</p></button>{% endif %}
-	{% if TB5 != '' %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TB5 }}</p></button>{% endif %}
-	{% if TB6 != '' %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TB6 }}</p></button>{% endif %}
-	</div>
-	-->
+
 <div id="menu">
 	{% if food %}
-		{% if TB0 != '' %}
+		{% if TBL.0 != 0 %}
 			<div class="toggle" id="toggleALL" style="display: block">
-			{%  for f in TL1  %}
+			{%  for f in TFL.1  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="blue">{{ TB1 }}:</font>
+					<p><font color="blue">{{ TBL.1 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB1 %}
+						{% if types != TBL.1 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -116,11 +106,11 @@
 				</p>
 				</li>
 			{% endfor %}<!-1->
-			{%  for f in TL2  %}
+			{%  for f in TFL.2  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="green">{{ TB2 }}:</font>
+					<p><font color="green">{{ TBL.2 }}:</font>
                         {% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-                            {% if types != TB2 %}
+                            {% if types != TBL.2 %}
                                 {% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -141,12 +131,12 @@
 				</p>
 				</li>
 			{% endfor %}<!--2-->
-			{%  for f in TL3  %}
+			{%  for f in TFL.3  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
 
-					<p><font color="#00a0b0">{{ TB3 }}:</font>
+					<p><font color="#00a0b0">{{ TBL.3 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB3 %}
+						{% if types != TBL.3 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -165,11 +155,11 @@
 				</p>
 				</li>
 			{% endfor %}<!-3->
-			{%  for f in TL4  %}
+			{%  for f in TFL.4  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="orange">{{ TB4 }}:</font>
+					<p><font color="orange">{{ TBL.4 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB4 %}
+						{% if types != TBL.4 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -187,11 +177,11 @@
 				</p>
 				</li>
 			{% endfor %}<!-4->
-			{%  for f in TL5  %}
+			{%  for f in TFL.5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="red">{{ TB5 }}:</font>
+					<p><font color="red">{{ TBL.5 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB5 %}
+						{% if types != TBL.5 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -209,11 +199,11 @@
 				</p>
 				</li>
 			{% endfor %}<!-5->
-			{%  for f in TL6  %}
+			{%  for f in TFL.6  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="#483d8b">{{ TB6 }}:</font>
+					<p><font color="#483d8b">{{ TBL.6 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB6 %}
+						{% if types != TBL.6 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -233,13 +223,13 @@
 			{% endfor %}<!-6->
 		 </div>
 		{% endif %}
-		{% if TB1 != '' %}
+		{% if TBL.1 != 1 %}
 			<div class="toggle" id="toggle1" style="display: none">
-			{%  for f in TL1  %}
+			{%  for f in TFL.1  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="blue">{{ TB1 }}:</font>
+					<p><font color="blue">{{ TBL.1 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB1 %}
+						{% if types != TBL.1 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -259,13 +249,13 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-				{% if TB2 != '' %}
+				{% if TBL.2 != '' %}
 			<div class="toggle" id="toggle2" style="display: none">
-			{%  for f in TL2  %}
+			{%  for f in TFL.2  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="green">{{ TB2 }}:</font>
+					<p><font color="green">{{ TBL.2 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB2 %}
+						{% if types != TBL.2 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -285,13 +275,13 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TB3 != '' %}
+		{% if TBL.3 != '' %}
 			<div class="toggle" id="toggle3" style="display: none">
-			{%  for f in TL3  %}
+			{%  for f in TFL.3  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="#00a0b0">{{ TB3 }}:</font>
+					<p><font color="#00a0b0">{{ TBL.3 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB3 %}
+						{% if types != TBL.3 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -311,13 +301,13 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TB4 != '' %}
+		{% if TBL.4 != '' %}
 			<div class="toggle" id="toggle4" style="display: none">
-			{%  for f in TL4  %}
+			{%  for f in TFL.4  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="orange">{{ TB4 }}:</font>
+					<p><font color="orange">{{ TBL.4 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB4 %}
+						{% if types != TBL.4 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -337,13 +327,13 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TB5 != '' %}
+		{% if TBL.5 != '' %}
 			<div class="toggle" id="toggle5" style="display: none">
-			{%  for f in TL5  %}
+			{%  for f in TFL.5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="red">{{ TB5 }}:</font>
+					<p><font color="red">{{ TBL.5 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB5 %}
+						{% if types != TBL.5 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
@@ -363,13 +353,13 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TB6 != '' %}
+		{% if TBL.6 != '' %}
 			<div class="toggle" id="toggle6" style="display: none">
-			{%  for f in TL6  %}
+			{%  for f in TFL.5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
-					<p><font color="#483d8b">{{ TB6 }}:</font>
+					<p><font color="#483d8b">{{ TBL.6 }}:</font>
 					{% for types in f.type.all %} <!--type is now a list manager, use .all to get the list of types -->
-						{% if types != TB6 %}
+						{% if types != TBL.6 %}
 								{% if forloop.counter != f.type.all.count %}
 									{{types}}{{ ', ' }}
 								{% elif forloop.counter == f.type.all.count %}
