@@ -52,47 +52,20 @@ def render_menu(request,m_id):
     except FoodItem.DoesNotExist:
         raise Http404
 
-    index = 0
-    TButton0 = 'All'
-    TButton1 = ''
-    TButton2 = ''
-    TButton3 = ''
-    TButton4 = ''
-    TButton5 = ''
-    TButton6 = ''
-
-    TList1 = []
-    TList2 = []
-    TList3 = []
-    TList4 = []
-    TList5 = []
-    TList6 = []
-    TList0 = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    index = 1
+    TBL=[0,1,2,3,4,5,6,7] # Type Button List
+    TFL=[0,1,2,3,4,5,6,7]  # Type Food List
+    for t in TFL:
+        TFL[t] = []
+    TBL[0] = 'All'
+    TFL[0] = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
     for t in menu.type.all():
-        if index is 0:
-            TButton1 = t
-            TList1 = TList0.all().filter(type=t)
-        elif index is 1:
-            TButton2 = t
-            TList2 = TList0.all().filter(type=t)
-        elif index is 2:
-            TButton3 = t
-            TList3 = TList0.all().filter(type=t)
-        elif index is 3:
-            TButton4 = t
-            TList4 = TList0.all().filter(type=t)
-        elif index is 4:
-            TButton5 = t
-            TList5 = TList0.all().filter(type=t)
-        elif index is 5:
-            TButton6 = t
-            TList6 = TList0.all().filter(type=t)
+        TBL[index] = t
+        TFL[index] = TFL[0].all().filter(type=t)
         index += 1
 
 
-    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id),
-               'TB0':TButton0,'TB1':TButton1,'TB2':TButton2,'TB3':TButton3,'TB4':TButton4,'TB5':TButton5, 'TB6':TButton6,
-               'TL0':TList0,'TL1':TList1,'TL2':TList2,'TL3':TList3,'TL4':TList4,'TL5':TList5,'TL6':TList6}
+    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id),'TBL':TBL,'TFL':TFL}
     return render_to_response("menu.html",context)
 
 def render_menu_by_gid(request,g_id,name="menu"):
