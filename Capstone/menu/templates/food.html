@@ -2,92 +2,12 @@
 {% load staticfiles %}
 {% block page %}
 
-    {% if foodTypes %}
-        {% for f in foodTypes %}
-            <div class="col-sm-2">
-                <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
-            </div>
-        {% endfor %}
-    {% elif foodsAsType %}
-        <h1> {{ foodType }} </h1>
-        <!-- links to these in their menus -->
-        {% for f in foodsAsType %}
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-                <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
-            </div>
-        {% endfor %}
-    {% elif food %}
-    <div class="row">
-		<li class="col-md-2">
-			<p>
-				<h3> {{ food.dishName }}</h3>
-				<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-				<p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /></p> 
-				<p>Based on {{ reviews.count }} reviews : </p>
-			</p>
-			<p align="center">
-				<div id="fid" class="hidden hdn"> {{ food.id }}</div>
-			</p>
-		</li>
-		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
-			<p>
-				{{ food.description }}
-			</p>
-		</li>		
-	</div>
-		<!--
-        <div class="row">
-            <h3> {{ food.dishName }}</h3>
-			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-            <div id="fid" class="hidden hdn"> {{ food.id }}</div>
-            <p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /> <p> Based on {{ reviews.count }} reviews</p>
-         -->
-            <a href="/menus/ {{ food.menuName.id }}">Back</a>
-            {% if reviews %}
-                <ul>
-                    {% for r in reviews %}
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-                            <p>{{ r.createdOn }}</p>
-                            <p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
-                            <p>Author: {{ r.createdBy }}</p>
-                            {% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
-                                 <!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
-                                 <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}">
-									<img src="/media/{{ r.thumbnail }}" alt="" /></a>
-                            {% endif %}
-                            <p>{{ r.reviewComment }}</p>
-                        </div>
-                    {% endfor %}
-                </ul>
-        </div>
-        {% endif %}
-        {% if form %}
-            <h3>Make a review:</h3>
-            <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
-                <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
-            </form>
-        {% endif %}
-        {%  if similar %}
-            <p> Related Food:</p>
-            <ul>
-            {% for s in similar %}
-                <li class="col-sm-3">
-                <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-                <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% else %}
-        <p> There doesn't appear to be anything here. </p>
-    {% endif %}
 
 {% if foodTypes %}
+    <p><h4>Browse what your stomach is craving!</h4></p>
     {% for f in foodTypes %}
         <div class="col-sm-2">
-            <a href="/menus/type/{{ f.id }}">{{ f.type }}</a>
+            <a href="/menus/type/{{ f.id }}"><p><h4>{{ f.type }}</h4></p></a>
         </div>
     {% endfor %}
 {% elif foodsAsType %}
@@ -95,35 +15,31 @@
     <!-- links to these in their menus -->
     {% for f in foodsAsType %}
         <div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-            <a href="/menus/food/{{ f.id }}">{{ f.dishName }}</a>
+            <a href="/menus/food/{{ f.id }}"><h4>{{ f.dishName }}</h4></a>
+            <a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ f.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ f.thumbnail }}" alt="" /></a>
+            <a href="/menus/food/{{ f.id }}"><img src="/static/assets/images/{{ f.rating }}.png" alt="{{ rating }}"></a>
         </div>
     {% endfor %}
 {% elif food %}
-    <div class="row">
-        <li class="col-md-2">
-            <p>
-            <h3> {{ food.dishName }}</h3>
-            <a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
-            <p>
-			Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" />
-		</p>
+<div class="row">
+	<li class="col-md-2">
 		<p>
-			Based on {{ reviews.count }} reviews :
-		</p>
+			<h3> {{ food.dishName }}</h3>
+			<a id="single_1" href="/media/{{ food.logo }}" title="{{ food.dishName }}"><img src="/media/{{ food.thumbnail }}" alt="" /></a>
+			<p>Rating: <img src="/static/assets/images/{{ avg}}.png" alt="{{ average }}" /></p>
+			<p>Based on {{ reviews.count }} reviews : </p>
 		</p>
 		<p align="center">
-			<div id="fid" class="hidden hdn">
-				{{ food.id }}
-			</div>
+			<div id="fid" class="hidden hdn"> {{ food.id }}</div>
 		</p>
 	</li>
-	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9">
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
 		<p>
 			{{ food.description }}
 		</p>
 	</li>
 </div>
-<a href="/menus/ {{ food.menuName.id }}">Back</a>
+<p><a href="/menus/ {{ food.menuName.id }}"><h4>Go to {{ food.menuName }} Menu</h4></a></p>
 {% if reviews %}
 <ul>
 	{% for r in reviews %}
@@ -138,7 +54,6 @@
 			Author: {{ r.createdBy }}
 		</p>
 		{% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
-		<!-- <img class="fancybox" src="/media/{{ r.logo }}" title="{{ food.dishName }}"/> -->
 		<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
 		{% endif %}
 		<p>
@@ -149,32 +64,29 @@
 </ul>
 </div>
 {% endif %}
-{% if form %}
-<h3>Make a review:</h3>
-<form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">
-	{% csrf_token %}
-	{{ form }}
-	<button type="submit" class="btn btn-info btn-lg" value="Submit">
-		Submit
-	</button>
-</form>
-{% endif %}
-{%  if similar %}
-<p>
-	Related Food:
-</p>
-<ul>
-	{% for s in similar %}
-	<li class="col-sm-3">
-		<a href="/menus/food/{{ s.id }}"> {{ s }} </a>
-		<a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
-	</li>
-	{% endfor %}
-</ul>
-{% endif %}
+    {% if form %}
+        <h3>Make a review:</h3>
+        <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_ul }}
+            <li><label for="id_for_createdBy">CreatedBy:</label> <input type="textarea" name="createdBy" id="id_for_createdBy" maxlength="80" /></li>
+			<li><label for="id_for_rating">Rating:</label> <input type="textarea" name="rating" id="id_for_rating" /></li>
+			<li><label for="id_for_logo">Select a Image:</label> <input type="RadioSelect" name="logo" id="id_for_logo" /></li>
+			<li><label for="id_for_reviewComment">ReviewComment:</label> <textarea rows="9" cols="40" name="reviewComment" id="id_for_reviewComment"> </textarea></li>
+            <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
+        </form>
+    {% endif %}
+    {%  if similar %}
+        <p> Related Food:</p>
+        <ul>
+        {% for s in similar %}
+            <li class="col-sm-3">
+            <a href="/menus/food/{{ s.id }}"> {{ s }} </a>
+            <a href="/menus/food/{{ s.id }}"> <img src="/media/{{ s.thumbnail }}"/></a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% else %}
-<p>
-	There doesn't appear to be anything here.
-</p>
+    <p> There doesn't appear to be anything here. </p>
 {% endif %}
 {% endblock %}

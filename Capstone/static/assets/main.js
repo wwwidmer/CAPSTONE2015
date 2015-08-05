@@ -38,6 +38,22 @@ $(document).ready(function(){
     });
 });
 
+function showonlyone(choice) {
+    var toggle = document.getElementsByTagName("div");
+    for(var x=0; x<toggle.length; x++) {
+        name = toggle[x].getAttribute("class");
+        if (name == 'toggle') {
+            if (toggle[x].id == choice) {
+                toggle[x].style.display = 'block';
+            }
+            else {
+                toggle[x].style.display = 'none';
+            }
+        }
+    }
+}
+
+
 /*
 $(document).ready(function(){
     // Ajax template
