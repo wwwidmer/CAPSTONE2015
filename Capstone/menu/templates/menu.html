@@ -2,60 +2,35 @@
 {% load staticfiles %}
 {% block page %}
 
-	<script type="text/javascript">
-	</script>
-
-
 {% if menus %}
 <ul id="menu">
 	{%  for m in menus %}
 	<div class="row">
-		<li class="col-xs-11 col-sm-5 col-md-3 col-lg-3" id="logo">
-			<p>
-				<a href="/menus/{{ m.id }}"> <img src="/media/{{ m.thumbnail }}"/></a>
-			</p>
-			<p>
-				<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a>
-			</p>
+		<li class="col-xs-10 col-sm-5 col-md-3 col-lg-2" id="logo">
+			<p><a href="/menus/{{ m.id }}"><img src="/media/{{ m.thumbnail }}"/></a>
+			<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a></p>
 		</li>
-		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
-
-			<p>
-				{{ m.description }}
-			</p>
-
-				<p>
-					{{ m.description }}
-				</p>
-
+		
+		<li class="col-xs-12 col-sm-6 col-md-3 col-lg-8" id="description">
+			<p>{{ m.description }}</p>
 		</li>
-	</div>
+	</div><br/>
 	{% endfor %}
 </ul>
 {% endif %}
 <!-----------------Display Menu----------------->
 {% if menu %}
+    <div class="row">
+		<li class="col-xs-8 col-sm-5 col-md-3 col-lg-3" id="logo">
+			<h3> {{ menu.menuName }}</h3>
+			<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
+			<p>Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/></p><!--Total Average Menu Rating-->
+		</li>
 
-
-
-    {% if menu %}
-        <div class="row">
-	<li class="col-xs-8 col-sm-5 col-md-3 col-lg-3">
-
-		<h3> {{ menu.menuName }}</h3>
-		<img src="/media/{{ menu.thumbnail }}"><!-- We should expect an image for each menu-->
-	</li>
-
-            <li class="col-xs-12 col-sm-6 col-md-3 col-lg-4" id="description">
-
-		<p>
-			{{ menu.description }}
-		</p>
-            </li>
-</div>
-        <p>
-	Menu Rating: <img src="/static/assets/images/{{ avg }}.png" alt="{{ rating }}"/>
-</p><!--Total Average Menu Rating-->
+     	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-8" id="description">
+			<p>{{ menu.description }}</p>
+         </li>
+	</div>
 		<nav class="navbar navbar-default" role="navigation1" id="header">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -64,17 +39,17 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand">Selection</a>
+					<a class="navbar-brand">Selection: </a>
 				</div>
 				<div class="collapse navbar-collapse" id="type">
 					<ul class="nav navbar-nav">
-						{% if TBL.0 != 0 %}<button type="button" class="btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TBL.0 }}</p></button>{% endif %}
-						{% if TBL.1 != 1 %}<button type="button" class="btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TBL.1 }}</p></button>{% endif %}
-						{% if TBL.2 != 2 %}<button type="button" class="btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TBL.2 }}</p></button>{% endif %}
-						{% if TBL.3 != 3 %}<button type="button" class="btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TBL.3 }}</p></button>{% endif %}
-						{% if TBL.4 != 4 %}<button type="button" class="btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TBL.4 }}</p></button>{% endif %}
-						{% if TBL.5 != 5 %}<button type="button" class="btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TBL.5 }}</p></button>{% endif %}
-						{% if TBL.6 != 6 %}<button type="button" class="btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TBL.6 }}</p></button>{% endif %}
+						{% if TBL.0 != 0 %}<button type="button" class="btn navbar-btn btn-default" id="TB0" onclick="javascript:showonlyone('toggleALL');"><p>{{ TBL.0 }}</p></button>{% endif %}
+						{% if TBL.1 != 1 %}<button type="button" class="btn navbar-btn btn-primary" id="TB1" onclick="javascript:showonlyone('toggle1');"><p>{{ TBL.1 }}</p></button>{% endif %}
+						{% if TBL.2 != 2 %}<button type="button" class="btn navbar-btn btn-success" id="TB2" onclick="javascript:showonlyone('toggle2');"><p>{{ TBL.2 }}</p></button>{% endif %}
+						{% if TBL.3 != 3 %}<button type="button" class="btn navbar-btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TBL.3 }}</p></button>{% endif %}
+						{% if TBL.4 != 4 %}<button type="button" class="btn navbar-btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TBL.4 }}</p></button>{% endif %}
+						{% if TBL.5 != 5 %}<button type="button" class="btn navbar-btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TBL.5 }}</p></button>{% endif %}
+						{% if TBL.6 != 6 %}<button type="button" class="btn navbar-btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TBL.6 }}</p></button>{% endif %}
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -379,10 +354,8 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-	{% endif %}
 {% endif %}
 </div>
 
 {% endif  %}
-
 {% endblock %}
