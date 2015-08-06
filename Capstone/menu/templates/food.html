@@ -43,7 +43,8 @@
 {% if reviews %}
 <ul>
 	{% for r in reviews %}
-	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
+	<div class="row">
+	<li class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
 		<p>
 			{{ r.createdOn }}
 		</p>
@@ -59,21 +60,32 @@
 		<p>
 			{{ r.reviewComment }}
 		</p>
-	</div>
+	</li></div>
 	{% endfor %}
 </ul>
-</div>
+
 {% endif %}
     {% if form %}
         <h3>Make a review:</h3>
         <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
-            {{ form.as_ul }}
-            <li><label for="id_for_createdBy">CreatedBy:</label> <input type="textarea" name="createdBy" id="id_for_createdBy" maxlength="80" /></li>
-			<li><label for="id_for_rating">Rating:</label> <input type="textarea" name="rating" id="id_for_rating" /></li>
-			<li><label for="id_for_logo">Select a Image:</label> <input type="RadioSelect" name="logo" id="id_for_logo" /></li>
-			<li><label for="id_for_reviewComment">ReviewComment:</label> <textarea rows="9" cols="40" name="reviewComment" id="id_for_reviewComment"> </textarea></li>
+        	<!-- <tr class="table_row">
+    			{% for field in form %}
+      			<td>
+       				<table>
+        				<tr><td>{{ field.label }}</td></tr>
+        				<tr><td>{{ field }}</td></tr>
+       				</table>
+      			</td>
+    			{% endfor %}
+  			</tr>
+        
+            {{ form.as_ul }}-->
+            <li><label for="id_for_createdBy">Created By:</label> {{ form.createdBy }} </li>
+			<li><label for="id_for_rating">Rating:</label> {{form.rating}} </li><br/>
+			<li><label for="id_for_logo">Select a Image : </label> {{ form.logo }}</li>
+			<li><label for="id_for_reviewComment">ReviewComment:</label><br/> <textarea name="reviewComment" id="id_for_reviewComment"></textarea></li>
             <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
-        </form>
+        </form><br />
     {% endif %}
     {%  if similar %}
         <p> Related Food:</p>

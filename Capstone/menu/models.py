@@ -144,8 +144,8 @@ class FoodType(models.Model):
         verbose_name_plural = 'Category for Food Type'
 
 class abstractMenuItem(models.Model):
-    createdOn = models.DateField('Published On', null=True, blank=True)
-    createdBy = models.CharField(max_length=30,default='', null=True, blank=True)
+    createdOn = models.DateField('Published On:', null=True, blank=True)
+    createdBy = models.CharField(max_length=30,default='', null=True, blank=True,verbose_name="Created By:")
     logo = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='logo')
     thumbnail = models.ImageField(upload_to=uploadPath, default='default.png', editable=True, verbose_name='thumbnail')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
@@ -155,10 +155,10 @@ class abstractMenuItem(models.Model):
         abstract = True
 
 class Menu(abstractMenuItem):
-    menuName = models.CharField(max_length=30, default='')
-    type = models.ManyToManyField(FoodType, default='', null=True, blank=True)
+    menuName = models.CharField(max_length=30, default='',verbose_name="Menu Name:")
+    type = models.ManyToManyField(FoodType, default='', null=True, blank=True,verbose_name="Menu Type:")
     gid = models.ManyToManyField(GID,default='',blank=True)
-    description = models.TextField(max_length=500, default='',blank=True)
+    description = models.TextField(max_length=500, default='',blank=True,verbose_name="Menu Description:")
 
     def uploadPath(self):
         PATH = definePATH(self, '/menuLogo/')
@@ -178,10 +178,10 @@ class Menu(abstractMenuItem):
         verbose_name_plural = 'Menu Management'
 
 class FoodItem(abstractMenuItem):
-    menuName = models.ForeignKey(Menu,default=None)
-    dishName = models.CharField(max_length=30,default='')
-    type = models.ManyToManyField(FoodType, default='')
-    description = models.TextField(max_length=500, default='',blank=True)
+    menuName = models.ForeignKey(Menu,default=None,verbose_name="Menu Name:")
+    dishName = models.CharField(max_length=30,default='',verbose_name="Dish Name:")
+    type = models.ManyToManyField(FoodType, default='',verbose_name="Food Type:")
+    description = models.TextField(max_length=500, default='',blank=True, verbose_name="Dish Description:")
 
     def uploadPath(self):
         PATH = definePATH(self, ''.join(['/foodLogo/',self.dishName,'/']))
@@ -200,7 +200,7 @@ class FoodItem(abstractMenuItem):
 class Review(abstractMenuItem):
     menuName = models.ForeignKey(Menu, default='')
     foodItemName = models.ForeignKey(FoodItem, default='')
-    reviewComment = models.TextField(max_length=500, default=None)
+    reviewComment = models.TextField(max_length=500, default=None, verbose_name="Review:")
 
     def uploadPath(self):
         PATH = definePATH(self, '/reviewLogo/')
