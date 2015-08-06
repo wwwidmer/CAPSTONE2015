@@ -53,7 +53,7 @@ def render_menu(request,m_id):
         raise Http404
 
     index = 1
-    TBL=[0,1,2,3,4,5,6,7] # Type Button List
+    TBL=[0,1,2,3,4,5,6,7]  # Type Button List
     TFL=[0,1,2,3,4,5,6,7]  # Type Food List
     for t in TFL:
         TFL[t] = []
@@ -71,18 +71,17 @@ def render_menu(request,m_id):
 def render_menu_by_gid(request,g_id,name="menu"):
     name = name.replace('-', ' ')  # deslug
     try:
-        menu = Menu.objects.get(menuName=name)#checking for existing menu
+        menu = Menu.objects.get(menuName=name) # checking for existing menu
         try:
-            GID.objects.get(gid=g_id) #checking for existing GID (they're unique)
+            GID.objects.get(gid=g_id)  # checking for existing GID (they're unique)
         except GID.DoesNotExist:
-            menu = add_menu_gid(g_id, menu) #adding this GID to this menu (passes the menu, modifies it and returns)
+            menu = add_menu_gid(g_id, menu)  # adding this GID to this menu (passes the menu, modifies it and returns)
     except Menu.DoesNotExist:
-        menu = create_menu_by_gid(g_id, name)#create new menu, add gid and return this menu
+        menu = create_menu_by_gid(g_id, name)  # create new menu, add gid and return this menu
     m_id = menu.id
-    #food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
-    #context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+
     return render_menu(request, m_id)
-    #return render_to_response("menu.html",context)
+
 '''
 Request method for comment form.
 if POST (ie we've submitted a form from this page)
@@ -166,7 +165,7 @@ def render_search(request):
     query_string = ''
     menu = ''
     food = ''
-    found = None
+
     if('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET.get('search')
         mentry = get_query(query_string,['menuName'])
