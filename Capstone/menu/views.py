@@ -79,9 +79,10 @@ def render_menu_by_gid(request,g_id,name="menu"):
     except Menu.DoesNotExist:
         menu = create_menu_by_gid(g_id, name)#create new menu, add gid and return this menu
     m_id = menu.id
-    food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
-    context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
-    return render_to_response("menu.html",context)
+    #food = FoodItem.objects.all().filter(menuName__id=m_id,isActive=True)
+    #context = {'menu':menu, 'food':food,'avg':get_Average(None,m_id)}
+    return render_menu(request, m_id)
+    #return render_to_response("menu.html",context)
 '''
 Request method for comment form.
 if POST (ie we've submitted a form from this page)
@@ -206,14 +207,7 @@ def create_menu_by_gid(g_id, menuName):
     createdBy = "auto"
     newMenu = Menu.objects.create(menuName=menuName,createdOn=createdOn,isActive=isActive,createdBy=createdBy)
     newMenu.save()
-    try:
-        GID.objects.get(gid=g_id)
-    except GID.DoesNotExist:
-        add_menu_gid(g_id, newMenu)
-        menuGID= GID.objects.get(gid=g_id)
-    except GID.DoesNotExist:
-        menuGID = add_menu_gid(g_id, newMenu)
-        newMenu.gid.add(menuGID)
+    newMenu=add_menu_gid(g_id, newMenu)
     return newMenu
 
 def add_menu_gid(g_id, newMenu):
