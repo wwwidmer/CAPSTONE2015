@@ -57,10 +57,14 @@
 		{% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
 		<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
 		{% endif %}
+
+	</li>
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
 		<p>
 			{{ r.reviewComment }}
 		</p>
-	</li></div>
+	</li>
+	</div>
 	{% endfor %}
 </ul>
 
@@ -83,7 +87,7 @@
             <li><label for="id_for_createdBy">Created By:</label> {{ form.createdBy }} </li>
 			<li><label for="id_for_rating">Rating:</label> {{form.rating}} </li><br/>
 			<li><label for="id_for_logo">Select a Image : </label> {{ form.logo }}</li>
-			<li><label for="id_for_reviewComment">ReviewComment:</label><br/> <textarea name="reviewComment" id="id_for_reviewComment"></textarea></li>
+			<li><label for="id_for_reviewComment">ReviewComment:</label><br/> {{ form.reviewComment }} </li>
             <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
         </form><br />
     {% endif %}
