@@ -45,19 +45,13 @@
 	{% for r in reviews %}
 	<div class="row">
 	<li class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-		<p>
-			{{ r.createdOn }}
-		</p>
-		<p>
-			Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/>
-		</p>
-		<p>
-			Author: {{ r.createdBy }}
-		</p>
-		{% if r.logo != 'default.png' %} <!-- display a user uploaded image-->
-		<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
-		{% endif %}
+		<p>{{ r.createdOn }}</p>
+		<p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+		<p>Author: {{ r.createdBy }}</p>
 
+		{% if r.thumbnail != 'default.png' %} <!-- display a user uploaded image-->
+			<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
+		{% endif %}
 	</li>
 	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
 		<p>
@@ -72,19 +66,7 @@
     {% if form %}
         <h3>Make a review:</h3>
         <form action="/menus/food/{{ food.id }}" method="post" enctype="multipart/form-data">{% csrf_token %}
-        	<!-- <tr class="table_row">
-    			{% for field in form %}
-      			<td>
-       				<table>
-        				<tr><td>{{ field.label }}</td></tr>
-        				<tr><td>{{ field }}</td></tr>
-       				</table>
-      			</td>
-    			{% endfor %}
-  			</tr>
-        
-            {{ form.as_ul }}-->
-            <li><label for="id_for_createdBy">Created By:</label> {{ form.createdBy }} </li>
+			<li><label for="id_for_createdBy">Created By:</label> {{ form.createdBy }} </li>
 			<li><label for="id_for_rating">Rating:</label> {{form.rating}} </li><br/>
 			<li><label for="id_for_logo">Select a Image : </label> {{ form.logo }}</li>
 			<li><label for="id_for_reviewComment">ReviewComment:</label><br/> {{ form.reviewComment }} </li>
@@ -92,7 +74,7 @@
         </form><br />
     {% endif %}
     {%  if similar %}
-        <p> Related Food:</p>
+        <p> Related Menu Items:</p>
         <ul>
         {% for s in similar %}
             <li class="col-sm-3">
