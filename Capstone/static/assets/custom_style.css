@@ -102,7 +102,6 @@ label {
 
 body {
 	padding-top: 125px;
-	background-color: #81D8D0;
 }
 
 #description p {
@@ -123,3 +122,7 @@ body {
 	margin-bottom: auto;
 }
 
+#id_for_reviewComment {
+	width: 400px;
+	height: 300px;
+}

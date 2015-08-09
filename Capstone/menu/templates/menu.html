@@ -6,7 +6,7 @@
 <ul id="menu">
 	{%  for m in menus %}
 	<div class="row">
-		<li class="col-xs-10 col-sm-5 col-md-3 col-lg-2" id="logo">
+		<li class="col-xs-11 col-sm-6 col-md-3 col-lg-3" id="logo">
 			<p><a href="/menus/{{ m.id }}"><img src="/media/{{ m.thumbnail }}"/></a>
 			<a href="/menus/{{ m.id }}"><h3>{{ m.menuName }}</h3></a></p>
 		</li>
@@ -31,7 +31,7 @@
 			<p>{{ menu.description }}</p>
          </li>
 	</div>
-		<nav class="navbar navbar-default" role="navigation1" id="header">
+		<nav class="navbar navbar-default" role="navigation1">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#type">
@@ -49,7 +49,7 @@
 						{% if TBL.3 != 3 %}<button type="button" class="btn navbar-btn btn-info" id="TB3" onclick="javascript:showonlyone('toggle3');"><p>{{ TBL.3 }}</p></button>{% endif %}
 						{% if TBL.4 != 4 %}<button type="button" class="btn navbar-btn btn-warning" id="TB4" onclick="javascript:showonlyone('toggle4');"><p>{{ TBL.4 }}</p></button>{% endif %}
 						{% if TBL.5 != 5 %}<button type="button" class="btn navbar-btn btn-danger" id="TB5" onclick="javascript:showonlyone('toggle5');"><p>{{ TBL.5 }}</p></button>{% endif %}
-						{% if TBL.6 != 6 %}<button type="button" class="btn navbar-btn btn-default" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TBL.6 }}</p></button>{% endif %}
+						{% if TBL.6 != 6 %}<button type="button" class="btn navbar-btn" style="color:white; background-color:#483d8b" id="TB6" onclick="javascript:showonlyone('toggle6');"><p>{{ TBL.6 }}</p></button>{% endif %}
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -224,7 +224,7 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-				{% if TBL.2 != '' %}
+				{% if TBL.2 != 2 %}
 			<div class="toggle" id="toggle2" style="display: none">
 			{%  for f in TFL.2  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
@@ -250,7 +250,7 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TBL.3 != '' %}
+		{% if TBL.3 != 3 %}
 			<div class="toggle" id="toggle3" style="display: none">
 			{%  for f in TFL.3  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
@@ -276,7 +276,7 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TBL.4 != '' %}
+		{% if TBL.4 != 4 %}
 			<div class="toggle" id="toggle4" style="display: none">
 			{%  for f in TFL.4  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
@@ -302,7 +302,7 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TBL.5 != '' %}
+		{% if TBL.5 != 5 %}
 			<div class="toggle" id="toggle5" style="display: none">
 			{%  for f in TFL.5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
@@ -328,7 +328,7 @@
 			{% endfor %}
 		 </div>
 		{% endif %}
-		{% if TBL.6 != '' %}
+		{% if TBL.6 != 6 %}
 			<div class="toggle" id="toggle6" style="display: none">
 			{%  for f in TFL.5  %}
 				<li class="col-xs-6 col-sm-3 col-md-4 col-lg-2">
