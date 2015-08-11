@@ -3,7 +3,7 @@
 {% block page %}
 
 <div class ="row">
-	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6">
+	<div class="col-xs-13 col-sm-7 col-md-9 col-lg-8">
 		<p>
 			Search for a keyword (Steak, Starbucks...etc)
 			or take a look at whats near you.
@@ -19,7 +19,7 @@
 		<div id="map-canvas"></div>
 		<p class="alert alert-danger" id="searchWarning"></p>
 
-	</div>	
+	</div>
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4" id="featured">
 		<h3> Featured: </h3>
 		{% if rand_menu %}
@@ -32,8 +32,7 @@
 		<p>
 			{{ rand_food.dishName }}
 		</p>
-		<p>
-			<img src="/static/assets/images/{{ rand_food.rating }}.png" alt="{{ rating }}"/>
+		<p><img src="/static/assets/images/{{ rand_food.rating }}.png" alt="{{ rating }}"/>
 		</p>
 		<p>
 			{{ rand_rev.reviewComment }}
@@ -45,9 +44,6 @@
 			We feature a random Food from a Random Restaurant - Reload the page for a new random food!
 		</p>
 		{% endif %}
-	</div>
-	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-2" style="border: 2px transparent">
-
 	</div>
 
 	<!--<div class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
