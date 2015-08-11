@@ -101,7 +101,7 @@ label {
 }
 
 body {
-	padding-top: 125px;
+	padding-top: 125px; /* 180px will show perfectly on small screen */
 }
 
 #description p {
