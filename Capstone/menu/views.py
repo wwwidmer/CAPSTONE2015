@@ -12,7 +12,6 @@ from random import randrange, sample
 import re, datetime
 
 def index(request):
-    menus = Menu.objects.all().filter(isActive=True)
     try:
         rrand = randrange(0,Review.objects.all().filter(isActive=True).count())
         revs = Review.objects.all().filter(isActive=True)[rrand]
@@ -20,10 +19,7 @@ def index(request):
         menus = Menu.objects.get(id=foods.menuName.id)
         avg = get_Average(foods.id,None)
     except ValueError:
-        menus = None
-        foods = None
-        revs = None
-        avg = None
+        menus = foods = revs = avg = None
 
     context = {'rand_menu':menus, 'rand_food':foods, 'rand_rev':revs, 'avg':avg,menus:'menus'}
     return render_to_response("index.html",context)
@@ -53,8 +49,7 @@ def render_menu(request,m_id):
         raise Http404
 
     index = 1
-    TBL=[0,1,2,3,4,5,6,7]  # Type Button List
-    TFL=[0,1,2,3,4,5,6,7]  # Type Food List
+    TBL = TFL = [0,1,2,3,4,5,6,7]  # Type Button List
     for t in TFL:
         TFL[t] = []
     TBL[0] = 'All'
@@ -155,7 +150,7 @@ def get_similar(food_id):
     food = FoodItem.objects.get(id=food_id)
     for x in food.type.all():
         similar.append(x.id)
-    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct()
+    similarFood = FoodItem.objects.filter(type__id__in=similar).distinct().exclude(id=food_id)
     return similarFood
 
 """
