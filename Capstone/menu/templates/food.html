@@ -22,6 +22,7 @@
     {% endfor %}
 {% elif food %}
 <div class="row">
+	<p><a href="/menus/ {{ food.menuName.id }}"><h4>Go to {{ food.menuName }} Menu</h4></a></p>
 	<li class="col-md-2">
 		<p>
 			<h3> {{ food.dishName }}</h3>
@@ -38,27 +39,24 @@
 			{{ food.description }}
 		</p>
 	</li>
-</div>
-<p><a href="/menus/ {{ food.menuName.id }}"><h4>Go to {{ food.menuName }} Menu</h4></a></p>
+</div><br />
+
 {% if reviews %}
 <ul>
 	{% for r in reviews %}
 	<div class="row">
-	<li class="col-xs-12 col-sm-6 col-md-8 col-lg-4">
-		<p>{{ r.createdOn }}</p>
-		<p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="review" style="border: 1px solid black">
 		<p>Author: {{ r.createdBy }}</p>
-
+		<p>Rating: <img src="/static/assets/images/{{ r.rating }}.png" alt="{{ rating }}"/></p>
+		<p>{{ r.createdOn }}</p>
 		{% if r.thumbnail != 'default.png' %} <!-- display a user uploaded image-->
 			<a class="fancybox-thumb" rel="fancybox-thumb" href="/media/{{ r.logo }}" title="{{ food.dishName }}"> <img src="/media/{{ r.thumbnail }}" alt="" /></a>
 		{% endif %}
-	</li>
-	<li class="col-xs-12 col-sm-6 col-md-3 col-lg-9" id="description">
-		<p>
+		<p style="font-weight: lighter font-size: 12px line-height: 24px letter-spacing: 2px padding: 25px 20px 0 20px"><br />
 			{{ r.reviewComment }}
 		</p>
 	</li>
-	</div>
+	</div><br />
 	{% endfor %}
 </ul>
 
@@ -73,7 +71,7 @@
             <button type="submit" class="btn btn-info btn-lg" value="Submit">Submit</button>
         </form><br />
     {% endif %}
-    {%  if similar %}
+    {% if similar %}
         <p> Related Menu Items:</p>
         <ul>
         {% for s in similar %}

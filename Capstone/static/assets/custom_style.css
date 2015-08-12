@@ -101,7 +101,7 @@ label {
 }
 
 body {
-	padding-top: 125px;
+	padding-top: 125px; /* 180px will show perfectly on small screen */
 }
 
 #description p {
@@ -111,6 +111,13 @@ body {
 	padding: 25px 20px 0 20px;	/* padding: top right buttom left */
 }
 
+#review p {
+	font-weight: 800;
+	font-size: 12px;
+	line-height: 24px;
+	letter-spacing: 2px;
+	padding: auto auto auto auto;	/* padding: top right buttom left */
+}
 #logo, #logo img {
 	padding: 10px 10px 10px 10px;
 }
@@ -123,6 +130,6 @@ body {
 }
 
 #id_for_reviewComment {
-	width: 400px;
+	width: 1000px;
 	height: 300px;
 }
